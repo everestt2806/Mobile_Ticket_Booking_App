@@ -1,4 +1,4 @@
-package com.midterm.movieticketbooking;
+package com.finalproject.movieticketbooking;
 
 import org.junit.Test;
 

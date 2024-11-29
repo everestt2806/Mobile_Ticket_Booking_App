@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace = "com.midterm.movieticketbooking"
+    namespace = "com.finalproject.movieticketbooking"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.midterm.movieticketbooking"
+        applicationId = "com.finalproject.movieticketbooking"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
