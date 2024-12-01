@@ -10,6 +10,7 @@
 
     <ScrollView
         android:id="@+id/scrollView2"
+        android:layout_marginBottom="60dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -63,10 +64,10 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <EditText
-                android:id="@+id/editTextText2"
+                android:id="@+id/searchBar"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_margin="16dp"
+                android:layout_margin="10dp"
                 android:background="@drawable/edittext_background"
                 android:drawableEnd="@drawable/search"
                 android:drawablePadding="8dp"
@@ -104,9 +105,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginEnd="10dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -135,8 +136,6 @@
                     android:id="@+id/topMovie"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:paddingStart="12dp"
-                    android:paddingEnd="12dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -156,8 +155,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="16dp"
                 android:orientation="horizontal">
 
@@ -209,7 +208,7 @@
     <com.ismaeldivita.chipnavigation.ChipNavigationBar
         android:id="@+id/bottom_nav"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="60dp"
         android:background="@color/nav_bg"
         android:elevation="8dp"
         android:padding="8dp"
