@@ -6,4 +6,9 @@
     <color name="light_purple">#8724c9</color>
     <color name="blue">#3524f2</color>
     <color name="dark_blue">#252836</color>
+    <color name="nav_bg">#0F1235</color>
+    <color name="nav_item_bg">#151842</color>
+    <color name="nav_icon_color">#8E92F1</color>
+    <color name="nav_text_color">#FFFFFF</color>
+    <color name="nav_selected_color">#6166E7</color>
 </resources>
