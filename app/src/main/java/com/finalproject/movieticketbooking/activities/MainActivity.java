@@ -184,11 +184,19 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 int currentItem = bannerViewPager.getCurrentItem();
-                bannerViewPager.setCurrentItem(currentItem + 1, true);
-                handler.postDelayed(this, 3000);
+                int totalItems = bannerViewPager.getAdapter() != null ? bannerViewPager.getAdapter().getItemCount() : 0;
+
+                if (currentItem == totalItems - 1) {
+                    bannerViewPager.setCurrentItem(0, true);
+                } else {
+                    bannerViewPager.setCurrentItem(currentItem + 1, true);
+                }
+
+                handler.postDelayed(this, 3500);
             }
         };
-        handler.postDelayed(bannerRunnable, 3000);
+
+        handler.postDelayed(bannerRunnable, 3500);
     }
 
     @Override
