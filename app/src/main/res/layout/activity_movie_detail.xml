@@ -28,10 +28,10 @@
 
             <ImageView
                 android:id="@+id/btnBack"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="48dp"
+                android:layout_marginTop="20dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/back_dark" />
@@ -108,15 +108,25 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="horizontal">
-
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            >
                         <TextView
                             android:id="@+id/year"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
                             android:text="year"
                             android:textColor="@color/white" />
-
+                            <TextView
+                                android:id="@+id/duration"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="duration"
+                                android:textColor="@color/white" />
+                        </LinearLayout>
                         <TextView
                             android:id="@+id/imdb"
                             android:layout_width="wrap_content"
@@ -131,7 +141,7 @@
                         android:id="@+id/textView14"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Summery"
+                        android:text="Description:"
                         android:textColor="@color/white"
                         android:textStyle="bold" />
 
@@ -168,15 +178,16 @@
                 android:id="@+id/btnBuyTicket"
                 style="@style/RoundedPurpleButton"
                 android:layout_width="300dp"
-                android:layout_height="40dp"
+                android:layout_height="45dp"
+                android:gravity="center_horizontal|center_vertical"
+                android:paddingBottom="16dp"
+                android:text="Buy Ticket"
+                android:textSize="16sp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/blurView"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:paddingBottom="16dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/blurView"
-                android:text="Mua vé" />
+                app:layout_constraintTop_toBottomOf="@+id/blurView" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

@@ -1,5 +1,6 @@
 package com.finalproject.movieticketbooking.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -160,22 +161,32 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupTopMoviesRecycler(List<Movie> movies) {
         if (movies != null && !movies.isEmpty()) {
-            MovieAdapter movieAdapter = new MovieAdapter(movies);
+            MovieAdapter movieAdapter = new MovieAdapter(movies, new MovieAdapter.OnMovieClickListener() {
+                @Override
+                public void onMovieClick(Movie movie) {
+                    Intent intent = new Intent(MainActivity.this, MovieDetailActivity.class);
+                    intent.putExtra("movie", movie);
+                    startActivity(intent);
+                }
+            });
             topMoviesRecycler.setAdapter(movieAdapter);
-        } else {
-            Log.e("MainActivity", "Top movies data is empty.");
         }
     }
 
+// Tương tự với setupUpcomingMoviesRecycler
+
 
     private void setupUpcomingMoviesRecycler(List<Movie> movies) {
-        if (movies != null && !movies.isEmpty()) {
-            MovieAdapter upcomingAdapter = new MovieAdapter(movies);
-            upcomingRecycler.setAdapter(upcomingAdapter);
-        }
-        else {
-            Log.e("MainActivity", "Top movies data is empty.");
-        }
+        MovieAdapter upcomingAdapter = new MovieAdapter(movies, new MovieAdapter.OnMovieClickListener() {
+            @Override
+            public void onMovieClick(Movie movie) {
+                Intent intent = new Intent(MainActivity.this, MovieDetailActivity.class);
+                intent.putExtra("movie", movie);
+                startActivity(intent);
+            }
+        });
+        upcomingRecycler.setAdapter(upcomingAdapter);
+
     }
     private Handler handler = new Handler(Looper.getMainLooper());
     private Runnable bannerRunnable;

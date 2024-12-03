@@ -1,8 +1,11 @@
 package com.finalproject.movieticketbooking.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 
-public class Movie {
+public class Movie implements Parcelable {
     private String Title;
     private String Description;
     private String Time;
@@ -96,4 +99,49 @@ public class Movie {
     public void setCasts(List<Cast> casts) {
         Casts = casts;
     }
+
+    // Parcelable implementation
+    protected Movie(Parcel in) {
+        Title = in.readString();
+        Description = in.readString();
+        Time = in.readString();
+        Poster = in.readString();
+        Trailer = in.readString();
+        Year = in.readInt();
+        Imdb = in.readDouble();
+        price = in.readDouble();
+        Genre = in.createStringArrayList();
+        Casts = in.createTypedArrayList(Cast.CREATOR);
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(Title);
+        dest.writeString(Description);
+        dest.writeString(Time);
+        dest.writeString(Poster);
+        dest.writeString(Trailer);
+        dest.writeInt(Year);
+        dest.writeDouble(Imdb);
+        dest.writeDouble(price);
+        dest.writeStringList(Genre);
+        dest.writeTypedList(Casts);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Parcelable.Creator<Movie> CREATOR = new Parcelable.Creator<Movie>() {
+        @Override
+        public Movie createFromParcel(Parcel in) {
+            return new Movie(in);
+        }
+
+        @Override
+        public Movie[] newArray(int size) {
+            return new Movie[size];
+        }
+    };
 }

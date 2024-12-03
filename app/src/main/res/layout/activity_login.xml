@@ -28,7 +28,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="128dp"
-                android:text="Đăng nhập"
+                android:text="LOGIN YOUR ACCOUNT"
                 android:textColor="@color/white"
                 android:textSize="50sp"
                 android:textStyle="bold" />
@@ -39,7 +39,7 @@
                 android:background="@drawable/edittext_background"
                 android:layout_height="50dp"
                 android:ems="10"
-                android:hint="Nhập Email"
+                android:hint="Enter your email"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
@@ -54,7 +54,7 @@
                 android:background="@drawable/edittext_background"
                 android:layout_height="50dp"
                 android:ems="10"
-                android:hint="Nhập mật khẩu"
+                android:hint="Enter your password"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
@@ -71,7 +71,7 @@
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 android:layout_marginTop="16dp"
-                android:text="Quên mật khẩu?" />
+                android:text="Forgot password?" />
 
             <androidx.appcompat.widget.AppCompatButton
                 style="@style/RoundedPurpleButton"
@@ -81,7 +81,7 @@
                 android:layout_marginStart="32dp"
                 android:layout_marginEnd="32dp"
                 android:layout_marginTop="64dp"
-                android:text="Đăng nhập" />
+                android:text="Login" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -94,7 +94,7 @@
                     android:layout_width="239dp"
                     android:layout_height="39dp"
                     android:gravity="center_horizontal|end"
-                    android:text="Bạn chưa có tài khoản?"
+                    android:text="Don't have an account?"
                     android:textColor="@color/white"
                     android:textSize="16sp" />
 
@@ -105,7 +105,7 @@
                     android:layout_weight="1"
                     android:gravity="start|center_horizontal"
                     android:layout_marginStart="5sp"
-                    android:text="Đăng kí ngay"
+                    android:text="Sign up now"
                     android:textColor="@color/blue"
                     android:textStyle="bold"
                     android:textSize="16sp" />

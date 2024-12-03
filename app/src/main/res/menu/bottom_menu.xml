@@ -4,28 +4,28 @@
     <item
         android:id="@+id/explorer"
         android:icon="@drawable/ic_explore"
-        android:title="Khám phá"
+        android:title="Discover"
         app:cnb_iconColor="@color/nav_icon_color"
         app:cnb_backgroundColor="@color/nav_item_bg" />
 
     <item
         android:id="@+id/favorites"
         android:icon="@drawable/ic_favorite"
-        android:title="Yêu thích"
+        android:title="Favorite"
         app:cnb_iconColor="@color/nav_icon_color"
         app:cnb_backgroundColor="@color/nav_item_bg" />
 
     <item
         android:id="@+id/cart"
         android:icon="@drawable/ic_shopping_bag"
-        android:title="Giỏ hàng"
+        android:title="Cart"
         app:cnb_iconColor="@color/nav_icon_color"
         app:cnb_backgroundColor="@color/nav_item_bg" />
 
     <item
         android:id="@+id/profile"
         android:icon="@drawable/ic_person"
-        android:title="Cá nhân"
+        android:title="Profile"
         app:cnb_iconColor="@color/nav_icon_color"
         app:cnb_backgroundColor="@color/nav_item_bg" />
 </menu>

@@ -21,13 +21,14 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     private Context context;
     private OnMovieClickListener listener;
 
+
     public interface OnMovieClickListener {
         void onMovieClick(Movie movie);
     }
 
-    public MovieAdapter(List<Movie> movieList) {
+    public MovieAdapter(List<Movie> movieList, OnMovieClickListener listener) {
         this.movieList = movieList;
-        this.listener = null;
+        this.listener = listener;
     }
 
     @NonNull

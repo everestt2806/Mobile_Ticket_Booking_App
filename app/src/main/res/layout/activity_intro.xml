@@ -60,7 +60,7 @@
                     android:id="@+id/textView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Khám phá"
+                    android:text="Discover"
                     android:textColor="@color/white"
                     android:textSize="27sp" />
 
@@ -68,7 +68,7 @@
                     android:id="@+id/textView2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Thế Giới Giải Trí"
+                    android:text="Entertainment World"
                     android:textColor="@color/light_purple"
                     android:textSize="27sp"
                     />
@@ -77,8 +77,9 @@
                     android:id="@+id/textView4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="KHÔNG GIỚI HẠN"
+                    android:text="UNLIMITED"
                     android:textSize="27sp"
+                    android:textStyle="bold"
                     android:textColor="@color/white"
                     />
 
@@ -88,9 +89,9 @@
                     android:layout_height="wrap_content"
                     android:textSize="17sp"
                     android:textColor="#9F9A9A"
-                    android:text="Đắm chìm trong thế giới điện ảnh đầy màu sắc với kho nội dung phong phú
-liên tục cập nhật. Dễ dàng tìm kiếm theo thể loại, tra cứu tựa phim yêu thích,
-hoặc để chúng tôi đề xuất những bộ phim phù hợp nhất với sở thích của bạn." />
+                    android:text="Immerse yourself in the colorful cinematic world with a rich content store
+continuously updated. Easily search by genre, look up your favorite movie titles,
+or let us recommend movies that best suit your interests." />
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnGetStarted"
@@ -99,7 +100,7 @@ hoặc để chúng tôi đề xuất những bộ phim phù hợp nhất với 
                     android:textSize="17sp"
                     android:layout_marginTop="25sp"
                     android:layout_height="wrap_content"
-                    android:text="Tiếp tục" />
+                    android:text="Get Started" />
 
             </LinearLayout>
 
