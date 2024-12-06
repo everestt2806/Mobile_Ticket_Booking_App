@@ -69,8 +69,8 @@ public class MainActivity extends AppCompatActivity {
     private void initFirebase() {
         database = FirebaseDatabase.getInstance();
         bannerRef = database.getReference("Banners");
-        itemsRef = database.getReference("Items");
-        upcomingRef = database.getReference("Upcomming");
+        itemsRef = database.getReference("Movies");
+        upcomingRef = database.getReference("Movies");
     }
 
     private void loadData() {

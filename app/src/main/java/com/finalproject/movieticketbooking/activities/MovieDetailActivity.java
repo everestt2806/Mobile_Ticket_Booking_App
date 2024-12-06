@@ -64,15 +64,15 @@ public class MovieDetailActivity extends AppCompatActivity {
 
         if (movie != null) {
             // Hiển thị dữ liệu movie lên các TextView và ImageView
-            movieDetailTitle.setText(movie.getTitle());
-            year.setText("Year: "+String.valueOf(movie.getYear()));
-            duration.setText("Duration: "+ String.valueOf(movie.getTime()));
-            imdb.setText("IMDb Rating: "+String.valueOf(movie.getImdb())+ "/10");
+            movieDetailTitle.setText(movie.getName());
+            year.setText("Year: "+String.valueOf(movie.getReleaseYear()));
+            duration.setText("Duration: "+ String.valueOf(movie.getRuntime()));
+            imdb.setText("IMDb Rating: "+String.valueOf(movie.getImdbRating())+ "/10");
             summaryText.setText(movie.getDescription());
 
-            // Tải hình ảnh cho poster sử dụng Glide (hoặc Picasso)
+
             Glide.with(this)
-                    .load(movie.getPoster()) // URL của poster
+                    .load(movie.getPoster())
                     .into(movieImg);
             setupBlurView();
             // Hiển thị genre (thể loại)

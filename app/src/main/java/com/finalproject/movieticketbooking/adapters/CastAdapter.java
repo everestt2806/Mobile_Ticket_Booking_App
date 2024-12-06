@@ -32,7 +32,6 @@ public class CastAdapter extends RecyclerView.Adapter<CastAdapter.CastViewHolder
     public void onBindViewHolder(CastViewHolder holder, int position) {
         Cast cast = casts.get(position);
         holder.actorName.setText(cast.getActor());
-        Glide.with(holder.itemView.getContext()).load(cast.getPicUrl()).into(holder.actorPic);
     }
 
     @Override
@@ -42,12 +41,10 @@ public class CastAdapter extends RecyclerView.Adapter<CastAdapter.CastViewHolder
 
     static class CastViewHolder extends RecyclerView.ViewHolder {
         TextView actorName;
-        ImageView actorPic;
 
         public CastViewHolder(View itemView) {
             super(itemView);
             actorName = itemView.findViewById(R.id.actorName);
-            actorPic = itemView.findViewById(R.id.actorPic);
         }
     }
 }

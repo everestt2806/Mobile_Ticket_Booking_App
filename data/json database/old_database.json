@@ -1,0 +1,674 @@
+{
+  "Banners": [
+    {
+      "age": "+13",
+      "genre": "War Action Adventure",
+      "image": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040379/wide_gzrai3.jpg",
+      "name": "1917",
+      "time": "2 Hour",
+      "year": "2023"
+    },
+    {
+      "age": "+17",
+      "genre": "War Action Adventure",
+      "image": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040376/wide4_ywmgey.jpg",
+      "name": "The Lord Of The Ring",
+      "time": "2 Hour",
+      "year": "2024"
+    },
+    {
+      "age": "15+",
+      "genre": "Adventure",
+      "image": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040376/wide1_i5ct0d.jpg",
+      "name": "Avengers",
+      "time": "2 Hour",
+      "year": "2023"
+    }
+  ],
+  "Items": [
+    {
+      "Casts": [
+        {
+          "Actor": "Will Smith",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040590/Will_Smith_j6u2r8.jpg"
+        },
+        {
+          "Actor": "Martin Lawrence",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040580/Martin_Lawrence_j2lfkp.jpg"
+        },
+        {
+          "Actor": "Vanessa Hudgens",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040588/Vanessa_Hudgens_nc6dm1.jpg"
+        },
+        {
+          "Actor": "Alexander Ludwig",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040596/Alexander_Ludwig_ywrksi.jpg"
+        }
+      ],
+      "Description": "When their late police captain gets linked to drug cartels, wisecracking Miami cops Mike Lowrey and Marcus Burnett embark on a dangerous mission to clear his name.",
+      "Genre": [
+        "Adventure",
+        "Action",
+        "Comedy",
+        "Crime",
+        "Drama"
+      ],
+      "Imdb": 6.6,
+      "price":120.0,
+      "Poster": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733044927/Bad_Boys_trxiel.jpg",
+      "Time": "1h 55m",
+      "Title": "Bad Boys",
+      "Trailer": "https://www.imdb.com/video/vi3000682009/?playlistId=tt4919268&ref_=tt_ov_vi",
+      "Year": 2024
+    },
+    {
+      "Casts": [
+        {
+          "Actor": "Timothée Chalamet",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040588/Timoth%C3%A9e_Chalamet_lgfijz.jpg"
+        },
+        {
+          "Actor": "Zendaya",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040594/Zendaya_aego9n.jpg"
+        },
+        {
+          "Actor": "Rebecca Ferguson",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040585/Rebecca_Ferguson_uytcyg.jpg"
+        },
+        {
+          "Actor": "Javier Bardem",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040578/Javier_Bardem_uqwjjm.jpg"
+        }
+      ],
+      "Description": "Paul Atreides unites with Chani and the Fremen while seeking revenge against the conspirators who destroyed his family.",
+      "Genre": [
+        "Adventure",
+        "Action",
+        "Drama"
+      ],
+      "Imdb": 8.5,
+      "price":120.0,
+      "Poster": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733044930/Dune_Part_Two_ncduvk.jpg",
+      "Time": "2h 46m",
+      "Title": "Dune: Part Two",
+      "Trailer": "https://www.imdb.com/video/vi3332425241/?playlistId=tt15239678&ref_=tt_pr_ov_vi",
+      "Year": 2024
+    },
+    {
+      "Casts": [
+        {
+          "Actor": "Hilary Swank",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040605/Hilary_Swank_vqyt4p.jpg"
+        },
+        {
+          "Actor": "Alan Ritchson",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040595/Alan_Ritchson_xcneqk.jpg"
+        },
+        {
+          "Actor": "Don Mike",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040601/Don_Mike_rir8a8.jpg"
+        },
+        {
+          "Actor": "Tamala Jones",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040590/Tamala_Jones_ilujbc.jpg"
+        }
+      ],
+      "Description": "Inspired by the incredible true story of a hairdresser who single-handedly rallies an entire community to help a widowed father save the life of his critically ill young daughter.",
+      "Genre": [
+        "Drama"
+      ],
+      "Imdb": 7.4,
+      "price":120.0,
+      "Poster": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733045409/Ordinary_Angels_pafht4.jpg",
+      "Time": "2h 6m",
+      "Title": "Ordinary Angels",
+      "Trailer": "https://www.imdb.com/video/vi3745105689/?ref_=tt_vi_i_2",
+      "Year": 2024
+    },
+    {
+      "Casts": [
+        {
+          "Actor": "Ryan Gosling",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040586/Ryan_Gosling_clibxa.jpg"
+        },
+        {
+          "Actor": "Emily Blunt",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040603/Emily_Blunt_aaid9f.jpg"
+        },
+        {
+          "Actor": "Aaron Johnson",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040595/Aaron_Taylor-Johnson_y4vhhj.jpg"
+        },
+        {
+          "Actor": "Hannah Waddingham",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040607/Hannah_Waddingham_ebsujf.jpg"
+        }
+      ],
+      "Description": "A stuntman, fresh off an almost career-ending accident, has to track down a missing movie star, solve a conspiracy and try to win back the love of his life while still doing his day job. What could possibly go right?",
+      "Genre": [
+        "Comedy",
+        "Action",
+        "Drama"
+      ],
+      "Imdb": 6.9,
+      "price":120.0,
+      "Poster": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733045418/The_Fall_Guy_wkgyq3.jpg",
+      "Time": "2h 6m",
+      "Title": "The Fall Guy",
+      "Trailer": "https://www.imdb.com/video/vi1681377049/?ref_=ttvi_vi_imdb_21",
+      "Year": 2024
+    },
+    {
+      "Casts": [
+        {
+          "Actor": "Sofia Boutella",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040592/Sofia-Boutella_uaydon.png"
+        },
+        {
+          "Actor": "Ed Skrein",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040604/Ed-Skrein_jc2kgy.png"
+        },
+        {
+          "Actor": "Michiel Huisman",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040591/Michiel-Huisman_zjqpcn.png"
+        },
+        {
+          "Actor": "Djimon Hounsou",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040601/Djimon-Hounsou_tqdvsv.png"
+        }
+      ],
+      "Description": "A young woman with a mysterious past is tasked with uniting different tribes to fight against an oppressive warlord who threatens their peaceful colony.",
+      "Genre": [
+        "Adventure",
+        "Action",
+        "Sci-Fi"
+      ],
+      "Imdb": 9,
+      "price":120.0,
+      "Poster": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733044919/aqKtSJdsUYNhEYfV42AYpamhEle_iwnpyb.jpg",
+      "Time": "2h 22m",
+      "Title": "Rebel Moon",
+      "Trailer": "https://www.youtube.com/watch?v=UEJuNHOd8Dw",
+      "Year": 2023
+    },
+    {
+      "Casts": [
+        {
+          "Actor": "Sydney Sweeney",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040587/Sydney-Sweeney_mrr0ke.png"
+        },
+        {
+          "Actor": " Alvaro Morte",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040597/Alvaro-Morte_gekpkz.png"
+        },
+        {
+          "Actor": "Simona Tabasco",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040582/Simona-Tabasco_q206ow.png"
+        },
+        {
+          "Actor": "Benedetta Porcaroli",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040598/Benedetta-Porcaroli_wptpdj.png"
+        }
+      ],
+      "Description": "A young woman who possesses the ability to heal others must fight to protect her gift from those who would exploit it.",
+      "Genre": [
+        "Drama",
+        "Fantasy"
+      ],
+      "Imdb": 8.3,
+      "price":120.0,
+      "Poster": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733044933/fdZpvODTX5wwkD0ikZNaClE4AoW_ilcoys.jpg",
+      "Time": "1h 36m",
+      "Title": "Immaculate",
+      "Trailer": "https://www.youtube.com/watch?v=ewxS9Z-XXYo",
+      "Year": 2023
+    },
+    {
+      "Casts": [
+        {
+          "Actor": "Rebecca Hall",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040584/Rebecca-Hall_gaetmw.png"
+        },
+        {
+          "Actor": "Brian Tyree Henry",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040599/Brian-Tyree-Henry_mzgquu.png"
+        },
+        {
+          "Actor": "Dan Stevens",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040603/Dan-Stevens_lfjmwb.png"
+        },
+        {
+          "Actor": "Kaylee Hottle",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040580/Kaylee-Hottle_uiqqom.png"
+        }
+      ],
+      "Description": "Godzilla and Kong must team up to battle a common enemy that threatens to destroy both of their worlds.",
+      "Genre": [
+        "Action",
+        "Adventure",
+        "Sci-Fi"
+      ],
+      "Imdb": 8.5,
+      "price":120.0,
+      "Poster": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733044940/gmGK5Gw5CIGMPhOmTO0bNA9Q66c_fgnfi7.jpg",
+      "Time": "1h 56m",
+      "Title": "Godzilla-Kong",
+      "Trailer": "https://www.youtube.com/watch?v=qqrpMRDuPfc",
+      "Year": 2023
+    },
+    {
+      "Casts": [
+        {
+          "Actor": "Colm Meaney",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040599/Colm-Meaney_mkandg.png"
+        },
+        {
+          "Actor": "Will Attenborough",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040593/Will-Attenborough_l6gerk.png"
+        },
+        {
+          "Actor": "Jeremias Amoore",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040580/Jeremias-Amoore_czz4qq.png"
+        },
+        {
+          "Actor": "Sophie McIntosh",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040582/Sophie-McIntosh_s97tnq.png"
+        }
+      ],
+      "Description": "A group of strangers trapped in an elevator must find a way to escape before they run out of air.",
+      "Genre": [
+        "Thriller",
+        "Drama"
+      ],
+      "Imdb": 7.5,
+      "price":120.0,
+      "Poster": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733044943/hu40Uxp9WtpL34jv3zyWLb5zEVY_w7qwgs.jpg",
+      "Time": "1h 38m",
+      "Title": "No Way Up",
+      "Trailer": "https://www.youtube.com/watch?v=PSEoAaSswgo",
+      "Year": 2023
+    },
+    {
+      "Casts": [
+        {
+          "Actor": "Jack Black",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040606/Jack-Black_hj2otk.png"
+        },
+        {
+          "Actor": "Awkwafina",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040597/Awkwafina_rjyuta.png"
+        },
+        {
+          "Actor": "Viola Davis",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040591/Viola-Davis_popakf.png"
+        },
+        {
+          "Actor": "Djimon Hounsou",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040601/Djimon-Hounsou_tqdvsv.png"
+        }
+      ],
+      "Description": "Po and the Furious Five must once again defend the Jade Palace from a new threat.",
+      "Genre": [
+        "Thriller",
+        "Drama"
+      ],
+      "Imdb": 7.5,
+      "price":120.0,
+      "Poster": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733045404/kDp1vUBnMpe8ak4rjgl3cLELqjU_jtyi6s.jpg",
+      "Time": "1h 42m",
+      "Title": "Kung Fu Panda 4",
+      "Trailer": "https://www.youtube.com/watch?v=_inKs4eeHiI",
+      "Year": 2024
+    },
+    {
+      "Casts": [
+        {
+          "Actor": "Franois Civil",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1733042723/Franois_Civil_icle0b.jpg"
+        },
+        {
+          "Actor": "Vincent Cassel",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040589/Vincent-Cassel_j8ipfk.png"
+        },
+        {
+          "Actor": "Romain Duris",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040581/Romain-Duris_qbupo6.png"
+        }
+      ],
+      "Description": "A young man named D'Artagnan travels to Paris to become a musketeer and joins forces with Athos, Porthos, and Aramis to stop a plot to overthrow the king.",
+      "Genre": [
+        "Action",
+        "Adventure"
+      ],
+      "Imdb": 8.2,
+      "price":120.0,
+      "Poster": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733045412/rtosxP5sXuoRFPH4sVbMccLIPiV_f7fdgd.jpg",
+      "Time": "2h 7m",
+      "Title": "The Three Musketeers",
+      "Trailer": "https://www.youtube.com/watch?v=FsuJMqePZtg",
+      "Year": 2023
+    },
+    {
+      "Casts": [
+        {
+          "Actor": "Samuel L. Jackson",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040580/Samuel-L.-Jackson_ux15ro.png"
+        },
+        {
+          "Actor": "Vincent Cassel",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040589/Vincent-Cassel_j8ipfk.png"
+        },
+        {
+          "Actor": "Gianni Capaldi",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040604/Gianni-Capaldi_ardyth.png"
+        },
+        {
+          "Actor": "Laura Haddock",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040585/Laura-Haddock_zgtfss.png"
+        }
+      ],
+      "Description": "A war veteran struggling with PTSD seeks revenge on the people who killed his family.",
+      "Genre": [
+        "Action",
+        "Thriller"
+      ],
+      "Imdb": 8.6,
+      "price":120.0,
+      "Poster": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733045415/tMO0YLXgJZBnIAjoTSz26zE33YN_upthuw.jpg",
+      "Time": "1h 54m",
+      "Title": "Damaged",
+      "Trailer": "https://www.youtube.com/watch?v=Sg8NuJL5P_8",
+      "Year": 2023
+    }
+  ],
+  "Upcomming": [
+    {
+      "Casts": [
+        {
+          "Actor": "Scarlett Johansson",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040583/Scarlett_Johansson_qf3bcd.jpg"
+        },
+        {
+          "Actor": "Channing Tatum",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040600/Channing_Tatum_jhzxej.jpg"
+        },
+        {
+          "Actor": "Woody Harrelson",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040594/Woody_Harrelson_hpbzyh.jpg"
+        },
+        {
+          "Actor": "Ray Romano",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040584/Ray_Romano_hha5ws.jpg"
+        }
+      ],
+      "Description": "Marketing maven Kelly Jones wreaks havoc on launch director Cole Davis's already difficult task. When the White House deems the mission too important to fail, the countdown truly begins.",
+      "Genre": [
+        "Comedy",
+        "Ramonce"
+      ],
+      "Imdb": 6.6,
+      "price":120.0,
+      "Poster": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733044937/Fly_Me_to_the_Moon_bgsj7y.jpg",
+      "Time": "2h 12m",
+      "Title": "Fly Me to the Moon",
+      "Trailer": "https://www.imdb.com/video/vi2956707353/?playlistId=tt1896747&ref_=tt_ov_vi",
+      "Year": 2024
+    },
+    {
+      "Casts": [
+        {
+          "Actor": "Jennifer Lopez",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040579/Jennifer_Lopez_bhgru5.jpg"
+        },
+        {
+          "Actor": "Simu Liu",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040583/Simu_Liu_sudj4c.jpg"
+        },
+        {
+          "Actor": "Sterling K. Brown",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040587/Sterling_Brown_mofkeu.jpg"
+        },
+        {
+          "Actor": "Greg Cohan",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040607/Greg_Cohan_ejtyff.jpg"
+        }
+      ],
+      "Description": "In a bleak-sounding future, an A.I. soldier has determined that the only way to end war is to end humanity.",
+      "Genre": [
+        "Action",
+        "Adventure",
+        "Thriller",
+        "Drama"
+      ],
+      "Imdb": 5.6,
+      "price":120.0,
+      "Poster": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733044921/Atlas_tik2v3.jpg",
+      "Time": "1h 58m",
+      "Title": "Atlas",
+      "Trailer": "https://www.imdb.com/video/vi1105249817/?playlistId=tt14856980&ref_=tt_pr_ov_vi",
+      "Year": 2024
+    },
+    {
+      "Casts": [
+        {
+          "Actor": "Franois Civil",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1733042723/Franois_Civil_icle0b.jpg"
+        },
+        {
+          "Actor": "Vincent Cassel",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040589/Vincent-Cassel_j8ipfk.png"
+        },
+        {
+          "Actor": "Romain Duris",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040581/Romain-Duris_qbupo6.png"
+        }
+      ],
+      "Description": "A young man named D'Artagnan travels to Paris to become a musketeer and joins forces with Athos, Porthos, and Aramis to stop a plot to overthrow the king.",
+      "Genre": [
+        "Action",
+        "Adventure"
+      ],
+      "Imdb": 8.2,
+      "price":120.0,
+      "Poster": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733045412/rtosxP5sXuoRFPH4sVbMccLIPiV_f7fdgd.jpg",
+      "Time": "2h 7m",
+      "Title": "The Three Musketeers",
+      "Trailer": "https://www.youtube.com/watch?v=FsuJMqePZtg",
+      "Year": 2023
+    },
+    {
+      "Casts": [
+        {
+          "Actor": "Samuel L. Jackson",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040580/Samuel-L.-Jackson_ux15ro.png"
+        },
+        {
+          "Actor": "Vincent Cassel",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040589/Vincent-Cassel_j8ipfk.png"
+        },
+        {
+          "Actor": "Gianni Capaldi",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040604/Gianni-Capaldi_ardyth.png"
+        },
+        {
+          "Actor": "Laura Haddock",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040585/Laura-Haddock_zgtfss.png"
+        }
+      ],
+      "Description": "A war veteran struggling with PTSD seeks revenge on the people who killed his family.",
+      "Genre": [
+        "Action",
+        "Thriller"
+      ],
+      "Imdb": 8.6,
+      "price":120.0,
+      "Poster": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733045415/tMO0YLXgJZBnIAjoTSz26zE33YN_upthuw.jpg",
+      "Time": "1h 54m",
+      "Title": "Damaged",
+      "Trailer": "https://www.youtube.com/watch?v=Sg8NuJL5P_8",
+      "Year": 2023
+    },
+    {
+      "Casts": [
+        {
+          "Actor": "Sofia Boutella",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040592/Sofia-Boutella_uaydon.png"
+        },
+        {
+          "Actor": "Ed Skrein",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040604/Ed-Skrein_jc2kgy.png"
+        },
+        {
+          "Actor": "Michiel Huisman",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040591/Michiel-Huisman_zjqpcn.png"
+        },
+        {
+          "Actor": "Djimon Hounsou",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040601/Djimon-Hounsou_tqdvsv.png"
+        }
+      ],
+      "Description": "A young woman with a mysterious past is tasked with uniting different tribes to fight against an oppressive warlord who threatens their peaceful colony.",
+      "Genre": [
+        "Adventure",
+        "Action",
+        "Sci-Fi"
+      ],
+      "Imdb": 9,
+      "price":120.0,
+      "Poster": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733044919/aqKtSJdsUYNhEYfV42AYpamhEle_iwnpyb.jpg",
+      "Time": "2h 22m",
+      "Title": "Rebel Moon",
+      "Trailer": "https://www.youtube.com/watch?v=UEJuNHOd8Dw",
+      "Year": 2023
+    },
+    {
+      "Casts": [
+        {
+          "Actor": "Sydney Sweeney",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040587/Sydney-Sweeney_mrr0ke.png"
+        },
+        {
+          "Actor": " Alvaro Morte",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040597/Alvaro-Morte_gekpkz.png"
+        },
+        {
+          "Actor": "Simona Tabasco",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040582/Simona-Tabasco_q206ow.png"
+        },
+        {
+          "Actor": "Benedetta Porcaroli",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040598/Benedetta-Porcaroli_wptpdj.png"
+        }
+      ],
+      "Description": "A young woman who possesses the ability to heal others must fight to protect her gift from those who would exploit it.",
+      "Genre": [
+        "Drama",
+        "Fantasy"
+      ],
+      "Imdb": 8.3,
+      "price":120.0,
+      "Poster": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733044933/fdZpvODTX5wwkD0ikZNaClE4AoW_ilcoys.jpg",
+      "Time": "1h 36m",
+      "Title": "Immaculate",
+      "Trailer": "https://www.youtube.com/watch?v=ewxS9Z-XXYo",
+      "Year": 2023
+    },
+    {
+      "Casts": [
+        {
+          "Actor": "Rebecca Hall",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040584/Rebecca-Hall_gaetmw.png"
+        },
+        {
+          "Actor": "Brian Tyree Henry",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040599/Brian-Tyree-Henry_mzgquu.png"
+        },
+        {
+          "Actor": "Dan Stevens",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040603/Dan-Stevens_lfjmwb.png"
+        },
+        {
+          "Actor": "Kaylee Hottle",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040580/Kaylee-Hottle_uiqqom.png"
+        }
+      ],
+      "Description": "Godzilla and Kong must team up to battle a common enemy that threatens to destroy both of their worlds.",
+      "Genre": [
+        "Action",
+        "Adventure",
+        "Sci-Fi"
+      ],
+      "Imdb": 8.5,
+      "price":120.0,
+      "Poster": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733044940/gmGK5Gw5CIGMPhOmTO0bNA9Q66c_fgnfi7.jpg",
+      "Time": "1h 56m",
+      "Title": "Godzilla-Kong",
+      "Trailer": "https://www.youtube.com/watch?v=qqrpMRDuPfc",
+      "Year": 2023
+    },
+    {
+      "Casts": [
+        {
+          "Actor": "Colm Meaney",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040599/Colm-Meaney_mkandg.png"
+        },
+        {
+          "Actor": "Will Attenborough",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040593/Will-Attenborough_l6gerk.png"
+        },
+        {
+          "Actor": "Jeremias Amoore",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040580/Jeremias-Amoore_czz4qq.png"
+        },
+        {
+          "Actor": "Sophie McIntosh",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040582/Sophie-McIntosh_s97tnq.png"
+        }
+      ],
+      "Description": "A group of strangers trapped in an elevator must find a way to escape before they run out of air.",
+      "Genre": [
+        "Thriller",
+        "Drama"
+      ],
+      "Imdb": 7.5,
+      "price":120.0,
+      "Poster": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733044943/hu40Uxp9WtpL34jv3zyWLb5zEVY_w7qwgs.jpg",
+      "Time": "1h 38m",
+      "Title": "No Way Up",
+      "Trailer": "https://www.youtube.com/watch?v=PSEoAaSswgo",
+      "Year": 2023
+    },
+    {
+      "Casts": [
+        {
+          "Actor": "Jack Black",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040606/Jack-Black_hj2otk.png"
+        },
+        {
+          "Actor": "Awkwafina",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040597/Awkwafina_rjyuta.png"
+        },
+        {
+          "Actor": "Viola Davis",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040591/Viola-Davis_popakf.png"
+        },
+        {
+          "Actor": "Djimon Hounsou",
+          "PicUrl": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040601/Djimon-Hounsou_tqdvsv.png"
+        }
+      ],
+      "Description": "Po and the Furious Five must once again defend the Jade Palace from a new threat.",
+      "Genre": [
+        "Thriller",
+        "Drama"
+      ],
+      "Imdb": 7.5,
+      "price":120.0,
+      "Poster": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733045404/kDp1vUBnMpe8ak4rjgl3cLELqjU_jtyi6s.jpg",
+      "Time": "1h 42m",
+      "Title": "Kung Fu Panda 4",
+      "Trailer": "https://www.youtube.com/watch?v=_inKs4eeHiI",
+      "Year": 2024
+    }
+  ]
+}

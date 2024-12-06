@@ -1,0 +1,469 @@
+{
+  "Banners": [
+    {
+      "age": "+13",
+      "genre": "War Action Adventure",
+      "image": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040379/wide_gzrai3.jpg",
+      "name": "1917",
+      "time": "2 Hour",
+      "year": "2023"
+    },
+    {
+      "age": "+17",
+      "genre": "War Action Adventure",
+      "image": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040376/wide4_ywmgey.jpg",
+      "name": "The Lord Of The Ring",
+      "time": "2 Hour",
+      "year": "2024"
+    },
+    {
+      "age": "15+",
+      "genre": "Adventure",
+      "image": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733040376/wide1_i5ct0d.jpg",
+      "name": "Avengers",
+      "time": "2 Hour",
+      "year": "2023"
+    }
+  ],
+    "Payments": [
+      {
+        "payment_id": "payment1",
+        "booking_id": "booking1",
+        "user_id": "user1",
+        "amount": 240.0,
+        "payment_method": "Credit Card",
+        "transaction_date": "2024-12-05T10:35:00",
+        "payment_status": "success",
+        "transaction_id": "unique_transaction_id"
+      }
+    ],
+  
+  "Tickets": [
+    {
+      "ticket_id": "ticket1",
+      "booking_id": "booking1",
+      "showtime_id": "showtime1",
+      "seat_id": "seat1",
+      "user_id": "user1",
+      "price": 120.0,
+      "status": "valid",
+      "qr_code": "unique_qr_code_here"
+    }
+  ],
+
+  "Bookings": [
+    {
+      "booking_id": "booking1",
+      "user_id": "user1",
+      "showtime_id": "showtime1",
+      "booking_date": "2024-12-05T10:30:00",
+      "total_tickets": 2,
+      "total_price": 240.0,
+      "booking_status": "confirmed",
+      "payment_status": "paid"
+    }
+  ],
+    "Seats": [
+      {
+        "seat_id": "seat1",
+        "showtime_id": "showtime1",
+        "row": "A",
+        "number": 1,
+        "type": "Standard",
+        "status": "available",
+        "price_modifier": 1.0
+      }
+    ],
+  
+  "Showtimes": [
+    {
+      "showtime_id": "showtime1",
+      "movie_id": "movie1",
+      "cinema_id": "cinema1",
+      "screen_number": 5,
+      "start_time": "2024-12-10T14:00:00",
+      "end_time": "2024-12-10T16:00:00",
+      "ticket_price": 120.0,
+      "available_seats": 150,
+      "total_seats": 200,
+      "format": "2D",
+      "language": "English",
+      "subtitles": "None"
+    }
+  ],
+  "Users": [
+    {
+      "user_id": "user1",
+      "username": "johndoe",
+      "email": "johndoe@example.com",
+      "full_name": "John Doe",
+      "phone_number": "+1234567890",
+      "password_hash": "hashed_password_here",
+      "registration_date": "2024-01-15T10:30:00",
+      "last_login": "2024-12-05T14:45:00",
+      "is_active": true,
+      "profile_picture": "https://example.com/profile_pics/johndoe.jpg"
+    }
+  ],
+  "Cinemas": [
+    {
+      "cinema_id": "cinema1",
+      "name": "Mega Cinema Downtown",
+      "address": "123 Main Street, City, Country",
+      "total_screens": 10,
+      "contact_number": "+1987654321",
+      "location": {
+        "latitude": 40.7128,
+        "longitude": -74.0060
+      },
+      "amenities": [
+        "Parking",
+        "Wheelchair Access",
+        "IMAX",
+        "4DX"
+      ]
+    }
+  ],
+  "Movies": [
+    {
+      "movie_id": "movie1",
+      "name": "Akira",
+      "genre": [
+        "Hoạt hình"
+      ],
+      "description": "Là thủ lĩnh của nhóm thanh niên côn đồ, Kaneda dành cả đêm để chạy qua những vùng đất hoang vu trong thành phố, đua xe máy tốc độ với các nhóm đối thủ. Một đêm nọ, khi đang đi cùng băng đảng của mình, người bạn Tetsuo đột nhiên bị tai nạn bởi gặp một cậu bé lạ mặt― sản phẩm của thí nghiệm trên con người. Ngay sau đó, một phi đội xuất hiện để đưa cậu bé và Tetsuo đến một cơ sở nghiên cứu của quân đội. Quyết tâm giải cứu Tetsuo, Kaneda lẻn vào cơ sở thí nghiệm. Tuy nhiên, chế độ thử nghiệm khắc nghiệt đã đánh thức sức mạnh mới trong người Tetsuo.",
+      "release_year": 2024,
+      "poster": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733418868/Akira_gvmw5k.jpg",
+      "imdb_rating": 9.3,
+      "runtime": "124 Minutes",
+      "price": 120000,
+      "showtimes": [
+        {
+          "showtime_id": "showtime1",
+          "time": "2024-12-10T14:00:00",
+          "cinema_id": "cinema1"
+        }
+      ],
+      "casts": [
+        {
+          "actor": "Will Smith"
+        },
+        {
+          "actor": "Martin Lawrence"
+        },
+        {
+          "actor": "Vanessa Hudgens"
+        },
+        {
+          "actor": "Alexander Ludwig"
+        }
+      ]
+    },
+    {
+      "movie_id": "movie2",
+      "name": "Akira",
+      "genre": [
+        "Hoạt hình"
+      ],
+      "description": "Là thủ lĩnh của nhóm thanh niên côn đồ, Kaneda dành cả đêm để chạy qua những vùng đất hoang vu trong thành phố, đua xe máy tốc độ với các nhóm đối thủ. Một đêm nọ, khi đang đi cùng băng đảng của mình, người bạn Tetsuo đột nhiên bị tai nạn bởi gặp một cậu bé lạ mặt― sản phẩm của thí nghiệm trên con người. Ngay sau đó, một phi đội xuất hiện để đưa cậu bé và Tetsuo đến một cơ sở nghiên cứu của quân đội. Quyết tâm giải cứu Tetsuo, Kaneda lẻn vào cơ sở thí nghiệm. Tuy nhiên, chế độ thử nghiệm khắc nghiệt đã đánh thức sức mạnh mới trong người Tetsuo.",
+      "release_year": 2024,
+      "poster": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733418868/Akira_gvmw5k.jpg",
+      "imdb_rating": 9.3,
+      "runtime": "124 Minutes",
+      "price": 120000,
+      "showtimes": [
+        {
+          "showtime_id": "showtime1",
+          "time": "2024-12-10T14:00:00",
+          "cinema_id": "cinema1"
+        }
+      ],
+      "casts": [
+        {
+          "actor": "Will Smith"
+        },
+        {
+          "actor": "Martin Lawrence"
+        },
+        {
+          "actor": "Vanessa Hudgens"
+        },
+        {
+          "actor": "Alexander Ludwig"
+        }
+      ]
+    },
+    {
+      "movie_id": "movie3",
+      "name": "Akira",
+      "genre": [
+        "Hoạt hình"
+      ],
+      "description": "Là thủ lĩnh của nhóm thanh niên côn đồ, Kaneda dành cả đêm để chạy qua những vùng đất hoang vu trong thành phố, đua xe máy tốc độ với các nhóm đối thủ. Một đêm nọ, khi đang đi cùng băng đảng của mình, người bạn Tetsuo đột nhiên bị tai nạn bởi gặp một cậu bé lạ mặt― sản phẩm của thí nghiệm trên con người. Ngay sau đó, một phi đội xuất hiện để đưa cậu bé và Tetsuo đến một cơ sở nghiên cứu của quân đội. Quyết tâm giải cứu Tetsuo, Kaneda lẻn vào cơ sở thí nghiệm. Tuy nhiên, chế độ thử nghiệm khắc nghiệt đã đánh thức sức mạnh mới trong người Tetsuo.",
+      "release_year": 2024,
+      "poster": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733418868/Akira_gvmw5k.jpg",
+      "imdb_rating": 9.3,
+      "runtime": "124 Minutes",
+      "price": 120000,
+      "showtimes": [
+        {
+          "showtime_id": "showtime1",
+          "time": "2024-12-10T14:00:00",
+          "cinema_id": "cinema1"
+        }
+      ],
+      "casts": [
+        {
+          "actor": "Will Smith"
+        },
+        {
+          "actor": "Martin Lawrence"
+        },
+        {
+          "actor": "Vanessa Hudgens"
+        },
+        {
+          "actor": "Alexander Ludwig"
+        }
+      ]
+    },
+    {
+      "movie_id": "movie4",
+      "name": "Akira",
+      "genre": [
+        "Hoạt hình"
+      ],
+      "description": "Là thủ lĩnh của nhóm thanh niên côn đồ, Kaneda dành cả đêm để chạy qua những vùng đất hoang vu trong thành phố, đua xe máy tốc độ với các nhóm đối thủ. Một đêm nọ, khi đang đi cùng băng đảng của mình, người bạn Tetsuo đột nhiên bị tai nạn bởi gặp một cậu bé lạ mặt― sản phẩm của thí nghiệm trên con người. Ngay sau đó, một phi đội xuất hiện để đưa cậu bé và Tetsuo đến một cơ sở nghiên cứu của quân đội. Quyết tâm giải cứu Tetsuo, Kaneda lẻn vào cơ sở thí nghiệm. Tuy nhiên, chế độ thử nghiệm khắc nghiệt đã đánh thức sức mạnh mới trong người Tetsuo.",
+      "release_year": 2024,
+      "poster": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733418868/Akira_gvmw5k.jpg",
+      "imdb_rating": 9.3,
+      "runtime": "124 Minutes",
+      "price": 120000,
+      "showtimes": [
+        {
+          "showtime_id": "showtime1",
+          "time": "2024-12-10T14:00:00",
+          "cinema_id": "cinema1"
+        }
+      ],
+      "casts": [
+        {
+          "actor": "Will Smith"
+        },
+        {
+          "actor": "Martin Lawrence"
+        },
+        {
+          "actor": "Vanessa Hudgens"
+        },
+        {
+          "actor": "Alexander Ludwig"
+        }
+      ]
+    },
+    {
+      "movie_id": "movie5",
+      "name": "Akira",
+      "genre": [
+        "Hoạt hình"
+      ],
+      "description": "Là thủ lĩnh của nhóm thanh niên côn đồ, Kaneda dành cả đêm để chạy qua những vùng đất hoang vu trong thành phố, đua xe máy tốc độ với các nhóm đối thủ. Một đêm nọ, khi đang đi cùng băng đảng của mình, người bạn Tetsuo đột nhiên bị tai nạn bởi gặp một cậu bé lạ mặt― sản phẩm của thí nghiệm trên con người. Ngay sau đó, một phi đội xuất hiện để đưa cậu bé và Tetsuo đến một cơ sở nghiên cứu của quân đội. Quyết tâm giải cứu Tetsuo, Kaneda lẻn vào cơ sở thí nghiệm. Tuy nhiên, chế độ thử nghiệm khắc nghiệt đã đánh thức sức mạnh mới trong người Tetsuo.",
+      "release_year": 2024,
+      "poster": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733418868/Akira_gvmw5k.jpg",
+      "imdb_rating": 9.3,
+      "runtime": "124 Minutes",
+      "price": 120000,
+      "showtimes": [
+        {
+          "showtime_id": "showtime1",
+          "time": "2024-12-10T14:00:00",
+          "cinema_id": "cinema1"
+        }
+      ],
+      "casts": [
+        {
+          "actor": "Will Smith"
+        },
+        {
+          "actor": "Martin Lawrence"
+        },
+        {
+          "actor": "Vanessa Hudgens"
+        },
+        {
+          "actor": "Alexander Ludwig"
+        }
+      ]
+    },
+    {
+      "movie_id": "movie6",
+      "name": "Akira",
+      "genre": [
+        "Hoạt hình"
+      ],
+      "description": "Là thủ lĩnh của nhóm thanh niên côn đồ, Kaneda dành cả đêm để chạy qua những vùng đất hoang vu trong thành phố, đua xe máy tốc độ với các nhóm đối thủ. Một đêm nọ, khi đang đi cùng băng đảng của mình, người bạn Tetsuo đột nhiên bị tai nạn bởi gặp một cậu bé lạ mặt― sản phẩm của thí nghiệm trên con người. Ngay sau đó, một phi đội xuất hiện để đưa cậu bé và Tetsuo đến một cơ sở nghiên cứu của quân đội. Quyết tâm giải cứu Tetsuo, Kaneda lẻn vào cơ sở thí nghiệm. Tuy nhiên, chế độ thử nghiệm khắc nghiệt đã đánh thức sức mạnh mới trong người Tetsuo.",
+      "release_year": 2024,
+      "poster": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733418868/Akira_gvmw5k.jpg",
+      "imdb_rating": 9.3,
+      "runtime": "124 Minutes",
+      "price": 120000,
+      "showtimes": [
+        {
+          "showtime_id": "showtime1",
+          "time": "2024-12-10T14:00:00",
+          "cinema_id": "cinema1"
+        }
+      ],
+      "casts": [
+        {
+          "actor": "Will Smith"
+        },
+        {
+          "actor": "Martin Lawrence"
+        },
+        {
+          "actor": "Vanessa Hudgens"
+        },
+        {
+          "actor": "Alexander Ludwig"
+        }
+      ]
+    },
+    {
+      "movie_id": "movie7",
+      "name": "Akira",
+      "genre": [
+        "Hoạt hình"
+      ],
+      "description": "Là thủ lĩnh của nhóm thanh niên côn đồ, Kaneda dành cả đêm để chạy qua những vùng đất hoang vu trong thành phố, đua xe máy tốc độ với các nhóm đối thủ. Một đêm nọ, khi đang đi cùng băng đảng của mình, người bạn Tetsuo đột nhiên bị tai nạn bởi gặp một cậu bé lạ mặt― sản phẩm của thí nghiệm trên con người. Ngay sau đó, một phi đội xuất hiện để đưa cậu bé và Tetsuo đến một cơ sở nghiên cứu của quân đội. Quyết tâm giải cứu Tetsuo, Kaneda lẻn vào cơ sở thí nghiệm. Tuy nhiên, chế độ thử nghiệm khắc nghiệt đã đánh thức sức mạnh mới trong người Tetsuo.",
+      "release_year": 2024,
+      "poster": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733418868/Akira_gvmw5k.jpg",
+      "imdb_rating": 9.3,
+      "runtime": "124 Minutes",
+      "price": 120000,
+      "showtimes": [
+        {
+          "showtime_id": "showtime1",
+          "time": "2024-12-10T14:00:00",
+          "cinema_id": "cinema1"
+        }
+      ],
+      "casts": [
+        {
+          "actor": "Will Smith"
+        },
+        {
+          "actor": "Martin Lawrence"
+        },
+        {
+          "actor": "Vanessa Hudgens"
+        },
+        {
+          "actor": "Alexander Ludwig"
+        }
+      ]
+    },
+    {
+      "movie_id": "movie8",
+      "name": "Akira",
+      "genre": [
+        "Hoạt hình"
+      ],
+      "description": "Là thủ lĩnh của nhóm thanh niên côn đồ, Kaneda dành cả đêm để chạy qua những vùng đất hoang vu trong thành phố, đua xe máy tốc độ với các nhóm đối thủ. Một đêm nọ, khi đang đi cùng băng đảng của mình, người bạn Tetsuo đột nhiên bị tai nạn bởi gặp một cậu bé lạ mặt― sản phẩm của thí nghiệm trên con người. Ngay sau đó, một phi đội xuất hiện để đưa cậu bé và Tetsuo đến một cơ sở nghiên cứu của quân đội. Quyết tâm giải cứu Tetsuo, Kaneda lẻn vào cơ sở thí nghiệm. Tuy nhiên, chế độ thử nghiệm khắc nghiệt đã đánh thức sức mạnh mới trong người Tetsuo.",
+      "release_year": 2024,
+      "poster": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733418868/Akira_gvmw5k.jpg",
+      "imdb_rating": 9.3,
+      "runtime": "124 Minutes",
+      "price": 120000,
+      "showtimes": [
+        {
+          "showtime_id": "showtime1",
+          "time": "2024-12-10T14:00:00",
+          "cinema_id": "cinema1"
+        }
+      ],
+      "casts": [
+        {
+          "actor": "Will Smith"
+        },
+        {
+          "actor": "Martin Lawrence"
+        },
+        {
+          "actor": "Vanessa Hudgens"
+        },
+        {
+          "actor": "Alexander Ludwig"
+        }
+      ]
+    },
+    {
+      "movie_id": "movie9",
+      "name": "Akira",
+      "genre": [
+        "Hoạt hình"
+      ],
+      "description": "Là thủ lĩnh của nhóm thanh niên côn đồ, Kaneda dành cả đêm để chạy qua những vùng đất hoang vu trong thành phố, đua xe máy tốc độ với các nhóm đối thủ. Một đêm nọ, khi đang đi cùng băng đảng của mình, người bạn Tetsuo đột nhiên bị tai nạn bởi gặp một cậu bé lạ mặt― sản phẩm của thí nghiệm trên con người. Ngay sau đó, một phi đội xuất hiện để đưa cậu bé và Tetsuo đến một cơ sở nghiên cứu của quân đội. Quyết tâm giải cứu Tetsuo, Kaneda lẻn vào cơ sở thí nghiệm. Tuy nhiên, chế độ thử nghiệm khắc nghiệt đã đánh thức sức mạnh mới trong người Tetsuo.",
+      "release_year": 2024,
+      "poster": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733418868/Akira_gvmw5k.jpg",
+      "imdb_rating": 9.3,
+      "runtime": "124 Minutes",
+      "price": 120000,
+      "showtimes": [
+        {
+          "showtime_id": "showtime1",
+          "time": "2024-12-10T14:00:00",
+          "cinema_id": "cinema1"
+        }
+      ],
+      "casts": [
+        {
+          "actor": "Will Smith"
+        },
+        {
+          "actor": "Martin Lawrence"
+        },
+        {
+          "actor": "Vanessa Hudgens"
+        },
+        {
+          "actor": "Alexander Ludwig"
+        }
+      ]
+    },
+    {
+      "movie_id": "movie10",
+      "name": "Akira",
+      "genre": [
+        "Hoạt hình"
+      ],
+      "description": "Là thủ lĩnh của nhóm thanh niên côn đồ, Kaneda dành cả đêm để chạy qua những vùng đất hoang vu trong thành phố, đua xe máy tốc độ với các nhóm đối thủ. Một đêm nọ, khi đang đi cùng băng đảng của mình, người bạn Tetsuo đột nhiên bị tai nạn bởi gặp một cậu bé lạ mặt― sản phẩm của thí nghiệm trên con người. Ngay sau đó, một phi đội xuất hiện để đưa cậu bé và Tetsuo đến một cơ sở nghiên cứu của quân đội. Quyết tâm giải cứu Tetsuo, Kaneda lẻn vào cơ sở thí nghiệm. Tuy nhiên, chế độ thử nghiệm khắc nghiệt đã đánh thức sức mạnh mới trong người Tetsuo.",
+      "release_year": 2024,
+      "poster": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733418868/Akira_gvmw5k.jpg",
+      "imdb_rating": 9.3,
+      "runtime": "124 Minutes",
+      "price": 120000,
+      "showtimes": [
+        {
+          "showtime_id": "showtime1",
+          "time": "2024-12-10T14:00:00",
+          "cinema_id": "cinema1"
+        }
+      ],
+      "casts": [
+        {
+          "actor": "Will Smith"
+        },
+        {
+          "actor": "Martin Lawrence"
+        },
+        {
+          "actor": "Vanessa Hudgens"
+        },
+        {
+          "actor": "Alexander Ludwig"
+        }
+      ]
+    }
+  ]
+}

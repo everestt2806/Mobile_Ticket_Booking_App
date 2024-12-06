@@ -8,15 +8,13 @@ import android.os.Parcelable;
 
 public class Cast implements Parcelable {
     private String Actor;
-    private String PicUrl;
 
     // Empty constructor
     public Cast() {}
 
     // Constructor with parameters
-    public Cast(String actor, String picUrl) {
+    public Cast(String actor) {
         Actor = actor;
-        PicUrl = picUrl;
     }
 
     // Getter and Setter methods
@@ -28,24 +26,15 @@ public class Cast implements Parcelable {
         Actor = actor;
     }
 
-    public String getPicUrl() {
-        return PicUrl;
-    }
-
-    public void setPicUrl(String picUrl) {
-        PicUrl = picUrl;
-    }
 
     // Implement Parcelable methods
     protected Cast(Parcel in) {
         Actor = in.readString();
-        PicUrl = in.readString();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(Actor);
-        dest.writeString(PicUrl);
     }
 
     @Override

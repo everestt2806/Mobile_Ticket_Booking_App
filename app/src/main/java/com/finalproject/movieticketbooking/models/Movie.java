@@ -3,130 +3,166 @@ package com.finalproject.movieticketbooking.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.firebase.database.PropertyName;
+
 import java.util.List;
 
 public class Movie implements Parcelable {
-    private String Title;
-    private String Description;
-    private String Time;
-    private String Poster;
-    private String Trailer;
-    private int Year;
-    private double Imdb;
+    private String movieId;
+    private String name;
+    private List<String> genre;
+    private String description;
+    private int releaseYear;
+    private String poster;
+    private double imdbRating;
+    private String runtime;
     private double price;
-    private List<String> Genre;
-    private List<Cast> Casts;
+    private List<Showtime> showtimes;
+    private List<Cast> casts;
 
-    // Empty constructor for Firebase
     public Movie() {}
 
-    public String getTitle() {
-        return Title;
+    @PropertyName("movie_id")
+    public String getMovieId() {
+        return movieId;
     }
 
-    public void setTitle(String title) {
-        Title = title;
+    @PropertyName("movie_id")
+    public void setMovieId(String movieId) {
+        this.movieId = movieId;
     }
 
+    @PropertyName("name")
+    public String getName() {
+        return name;
+    }
+
+    @PropertyName("name")
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @PropertyName("genre")
+    public List<String> getGenre() {
+        return genre;
+    }
+
+    @PropertyName("genre")
+    public void setGenre(List<String> genre) {
+        this.genre = genre;
+    }
+
+    @PropertyName("description")
     public String getDescription() {
-        return Description;
+        return description;
     }
 
+    @PropertyName("description")
     public void setDescription(String description) {
-        Description = description;
+        this.description = description;
     }
 
-    public String getTime() {
-        return Time;
+    @PropertyName("release_year")
+    public int getReleaseYear() {
+        return releaseYear;
     }
 
-    public void setTime(String time) {
-        Time = time;
+    @PropertyName("release_year")
+    public void setReleaseYear(int releaseYear) {
+        this.releaseYear = releaseYear;
     }
 
+    @PropertyName("poster")
     public String getPoster() {
-        return Poster;
+        return poster;
     }
 
+    @PropertyName("poster")
     public void setPoster(String poster) {
-        Poster = poster;
+        this.poster = poster;
     }
 
-    public String getTrailer() {
-        return Trailer;
+    @PropertyName("imdb_rating")
+    public double getImdbRating() {
+        return imdbRating;
     }
 
-    public void setTrailer(String trailer) {
-        Trailer = trailer;
+    @PropertyName("imdb_rating")
+    public void setImdbRating(double imdbRating) {
+        this.imdbRating = imdbRating;
     }
 
-    public int getYear() {
-        return Year;
+    @PropertyName("runtime")
+    public String getRuntime() {
+        return runtime;
     }
 
-    public void setYear(int year) {
-        Year = year;
+    @PropertyName("runtime")
+    public void setRuntime(String runtime) {
+        this.runtime = runtime;
     }
 
-    public double getImdb() {
-        return Imdb;
-    }
-
-    public void setImdb(double imdb) {
-        Imdb = imdb;
-    }
-
+    @PropertyName("price")
     public double getPrice() {
         return price;
     }
 
+    @PropertyName("price")
     public void setPrice(double price) {
         this.price = price;
     }
 
-    public List<String> getGenre() {
-        return Genre;
+    @PropertyName("showtimes")
+    public List<Showtime> getShowtimes() {
+        return showtimes;
     }
 
-    public void setGenre(List<String> genre) {
-        Genre = genre;
+    @PropertyName("showtimes")
+    public void setShowtimes(List<Showtime> showtimes) {
+        this.showtimes = showtimes;
     }
 
+    @PropertyName("casts")
     public List<Cast> getCasts() {
-        return Casts;
+        return casts;
     }
 
+    @PropertyName("casts")
     public void setCasts(List<Cast> casts) {
-        Casts = casts;
+        this.casts = casts;
     }
 
-    // Parcelable implementation
+
     protected Movie(Parcel in) {
-        Title = in.readString();
-        Description = in.readString();
-        Time = in.readString();
-        Poster = in.readString();
-        Trailer = in.readString();
-        Year = in.readInt();
-        Imdb = in.readDouble();
+        movieId = in.readString();
+        name = in.readString();
+        description = in.readString();
+        poster = in.readString();
+        runtime = in.readString();
+        releaseYear = in.readInt();
+        imdbRating = in.readDouble();
         price = in.readDouble();
-        Genre = in.createStringArrayList();
-        Casts = in.createTypedArrayList(Cast.CREATOR);
+        genre = in.createStringArrayList();
+        showtimes = in.createTypedArrayList(Showtime.CREATOR);
+        casts = in.createTypedArrayList(Cast.CREATOR);
     }
+
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(Title);
-        dest.writeString(Description);
-        dest.writeString(Time);
-        dest.writeString(Poster);
-        dest.writeString(Trailer);
-        dest.writeInt(Year);
-        dest.writeDouble(Imdb);
+        dest.writeString(movieId);
+        dest.writeString(name);
+        dest.writeString(description);
+        dest.writeString(poster);
+        dest.writeString(runtime);
+        dest.writeInt(releaseYear);
+        dest.writeDouble(imdbRating);
         dest.writeDouble(price);
-        dest.writeStringList(Genre);
-        dest.writeTypedList(Casts);
+        dest.writeStringList(genre);
+        dest.writeTypedList(showtimes);
+        dest.writeTypedList(casts);
     }
+
 
     @Override
     public int describeContents() {

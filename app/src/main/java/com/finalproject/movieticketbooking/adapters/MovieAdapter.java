@@ -45,13 +45,13 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
             Movie movie = movieList.get(position);
 
             // Set movie title
-            holder.movieTitle.setText(movie.getTitle());
+            holder.movieTitle.setText(movie.getName());
 
             // Set movie year
-            holder.movieYear.setText(String.valueOf(movie.getYear()));
+            holder.movieYear.setText(String.valueOf(movie.getReleaseYear()));
 
             // Set IMDb rating
-            holder.movieImdb.setText(String.format("%.1f", movie.getImdb()));
+            holder.movieImdb.setText(String.format("%.1f", movie.getImdbRating()));
 
             // Load movie poster
             Glide.with(context)
