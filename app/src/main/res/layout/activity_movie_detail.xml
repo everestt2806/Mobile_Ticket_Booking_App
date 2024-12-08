@@ -141,7 +141,7 @@
                         android:id="@+id/textView14"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Description:"
+                        android:text="Tóm tắt:"
                         android:textColor="@color/white"
                         android:textStyle="bold" />
 
@@ -158,7 +158,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
-                        android:text="Cast"
+                        android:text="Diễn viên"
                         android:textColor="@color/white"
                         android:textStyle="bold" />
 
@@ -181,7 +181,7 @@
                 android:layout_height="45dp"
                 android:gravity="center_horizontal|center_vertical"
                 android:paddingBottom="16dp"
-                android:text="Buy Ticket"
+                android:text="Mua vé"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/blurView"

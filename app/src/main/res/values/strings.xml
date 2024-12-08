@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MovieTicketBooking</string>
+    <string name="duration_format">%d min</string>
+    <string name="movie_poster">Movie Poster</string>
 </resources>

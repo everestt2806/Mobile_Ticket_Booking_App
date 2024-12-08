@@ -16,6 +16,9 @@
         android:theme="@style/Theme.MovieTicketBooking"
         tools:targetApi="31">
         <activity
+            android:name=".activities.ShowtimeActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.ShowtimesActivity"
             android:exported="false" />
         <activity

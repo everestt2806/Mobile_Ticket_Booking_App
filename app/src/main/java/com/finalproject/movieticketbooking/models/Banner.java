@@ -1,23 +1,23 @@
 package com.finalproject.movieticketbooking.models;
 
-public class Banner {
-    private String name;
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Banner implements Parcelable {
     private String image;
-    private String age;
-    private String genre;
-    private String time;
-    private String year;
 
-    public Banner() {}
-
-    public String getName() {
-        return name;
+    public  Banner(){}
+    // Constructor đầy đủ
+    public Banner(String image) {
+        this.image = image;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    // Constructor cho Parcelable
+    protected Banner(Parcel in) {
+        image = in.readString();
     }
 
+    // Getter và Setter
     public String getImage() {
         return image;
     }
@@ -26,35 +26,27 @@ public class Banner {
         this.image = image;
     }
 
-    public String getAge() {
-        return age;
+    // Phương thức của Parcelable
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(image);
     }
 
-    public void setAge(String age) {
-        this.age = age;
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
-    public String getGenre() {
-        return genre;
-    }
+    // Creator cho Parcelable
+    public static final Creator<Banner> CREATOR = new Creator<Banner>() {
+        @Override
+        public Banner createFromParcel(Parcel in) {
+            return new Banner(in);
+        }
 
-    public void setGenre(String genre) {
-        this.genre = genre;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
-    }
-
-    public String getYear() {
-        return year;
-    }
-
-    public void setYear(String year) {
-        this.year = year;
-    }
+        @Override
+        public Banner[] newArray(int size) {
+            return new Banner[size];
+        }
+    };
 }

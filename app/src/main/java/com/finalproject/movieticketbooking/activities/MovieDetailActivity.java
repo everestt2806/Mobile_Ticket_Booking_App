@@ -3,23 +3,21 @@ package com.finalproject.movieticketbooking.activities;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.VideoView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.finalproject.movieticketbooking.R;
-import com.finalproject.movieticketbooking.adapters.CastAdapter;
+import com.finalproject.movieticketbooking.adapters.ActorAdapter;
 import com.finalproject.movieticketbooking.adapters.GenreAdapter;
-import com.finalproject.movieticketbooking.models.Cast;
 import com.finalproject.movieticketbooking.models.Movie;
 import java.util.List;
 import eightbitlab.com.blurview.BlurView;
@@ -27,9 +25,11 @@ import eightbitlab.com.blurview.BlurView;
 public class MovieDetailActivity extends AppCompatActivity {
 
     private ImageView movieImg;
-    private TextView movieDetailTitle, year, imdb, summaryText, castTitle, duration;
+    private TextView movieDetailTitle, year, imdb, summaryText, duration;
     private RecyclerView genreRecyclerView, castRecyclerView;
     private ImageView bookmarkIcon, shareIcon, btnBack;
+
+    private Button buyTicket;
 
 
     private BlurView blurView;
@@ -46,12 +46,13 @@ public class MovieDetailActivity extends AppCompatActivity {
         duration = findViewById(R.id.duration);
         imdb = findViewById(R.id.imdb);
         summaryText = findViewById(R.id.textView15);
-        castTitle = findViewById(R.id.textView16);
         genreRecyclerView = findViewById(R.id.genre);
         castRecyclerView = findViewById(R.id.castList);
         bookmarkIcon = findViewById(R.id.imageView5);
         shareIcon = findViewById(R.id.imageView6);
         btnBack = findViewById(R.id.btnBack);
+        buyTicket = findViewById(R.id.btnBuyTicket);
+
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,12 +63,24 @@ public class MovieDetailActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Movie movie = intent.getParcelableExtra("movie");
 
+        buyTicket.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MovieDetailActivity.this, ShowtimeActivity.class);
+                intent.putExtra("movieId", movie.getId());
+                intent.putExtra("movieTitle", movie.getTitle());
+                intent.putExtra("moviePoster", movie.getPoster());
+                intent.putExtra("movieAgeRating", movie.getAgeRating());
+                intent.putExtra("movieDuration", String.valueOf(movie.getDuration()));
+                startActivity(intent);
+            }
+        });
         if (movie != null) {
             // Hiển thị dữ liệu movie lên các TextView và ImageView
-            movieDetailTitle.setText(movie.getName());
-            year.setText("Year: "+String.valueOf(movie.getReleaseYear()));
-            duration.setText("Duration: "+ String.valueOf(movie.getRuntime()));
-            imdb.setText("IMDb Rating: "+String.valueOf(movie.getImdbRating())+ "/10");
+            movieDetailTitle.setText(movie.getTitle());
+            year.setText("Độ tuổi: "+String.valueOf(movie.getAgeRating()));
+            duration.setText("Thời lượng: "+ String.valueOf(movie.getDuration()) +" phút");
+            imdb.setText("Ngôn ngữ: "+String.valueOf(movie.getLanguage()));
             summaryText.setText(movie.getDescription());
 
 
@@ -76,14 +89,14 @@ public class MovieDetailActivity extends AppCompatActivity {
                     .into(movieImg);
             setupBlurView();
             // Hiển thị genre (thể loại)
-            List<String> genres = movie.getGenre();
+            List<String> genres = movie.getGenres();
             GenreAdapter genreAdapter = new GenreAdapter(genres);
             genreRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
             genreRecyclerView.setAdapter(genreAdapter);
 
             // Hiển thị danh sách Cast
-            List<Cast> castList = movie.getCasts();
-            CastAdapter castAdapter = new CastAdapter(castList);
+            List<String> castList = movie.getActors();
+            ActorAdapter castAdapter = new ActorAdapter(castList);
             castRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
             castRecyclerView.setAdapter(castAdapter);
         }

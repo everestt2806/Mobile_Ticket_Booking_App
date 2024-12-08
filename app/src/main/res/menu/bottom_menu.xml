@@ -2,9 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/explorer"
-        android:icon="@drawable/ic_explore"
-        android:title="Discover"
+        android:id="@+id/home"
+        android:icon="@drawable/ic_home"
+        android:title="Home"
         app:cnb_iconColor="@color/nav_icon_color"
         app:cnb_backgroundColor="@color/nav_item_bg" />
 
@@ -16,8 +16,8 @@
         app:cnb_backgroundColor="@color/nav_item_bg" />
 
     <item
-        android:id="@+id/cart"
-        android:icon="@drawable/ic_shopping_bag"
+        android:id="@+id/blog"
+        android:icon="@drawable/ic_blog"
         android:title="Cart"
         app:cnb_iconColor="@color/nav_icon_color"
         app:cnb_backgroundColor="@color/nav_item_bg" />

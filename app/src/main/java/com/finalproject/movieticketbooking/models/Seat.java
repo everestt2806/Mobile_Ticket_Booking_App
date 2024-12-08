@@ -3,29 +3,35 @@ package com.finalproject.movieticketbooking.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.Objects;
+
 public class Seat implements Parcelable {
-    private String seatId;
-    private String showtimeId;
+    private String id;
     private String row;
     private int number;
     private String type;
     private String status;
-    private double priceModifier;
 
-    // Constructors
+    // Empty constructor for Firebase
     public Seat() {}
 
+    // Full constructor
+    public Seat(String id, String row, int number, String type, String status) {
+        this.id = id;
+        this.row = row;
+        this.number = number;
+        this.type = type;
+        this.status = status;
+    }
+
     protected Seat(Parcel in) {
-        seatId = in.readString();
-        showtimeId = in.readString();
+        id = in.readString();
         row = in.readString();
         number = in.readInt();
         type = in.readString();
         status = in.readString();
-        priceModifier = in.readDouble();
     }
 
-    // Parcelable Creator
     public static final Creator<Seat> CREATOR = new Creator<Seat>() {
         @Override
         public Seat createFromParcel(Parcel in) {
@@ -45,30 +51,20 @@ public class Seat implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(seatId);
-        dest.writeString(showtimeId);
+        dest.writeString(id);
         dest.writeString(row);
         dest.writeInt(number);
         dest.writeString(type);
         dest.writeString(status);
-        dest.writeDouble(priceModifier);
     }
 
-    // Getter and Setter Methods
-    public String getSeatId() {
-        return seatId;
+    // Getters and Setters
+    public String getId() {
+        return id;
     }
 
-    public void setSeatId(String seatId) {
-        this.seatId = seatId;
-    }
-
-    public String getShowtimeId() {
-        return showtimeId;
-    }
-
-    public void setShowtimeId(String showtimeId) {
-        this.showtimeId = showtimeId;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getRow() {
@@ -103,11 +99,32 @@ public class Seat implements Parcelable {
         this.status = status;
     }
 
-    public double getPriceModifier() {
-        return priceModifier;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Seat seat = (Seat) o;
+        return number == seat.number &&
+                Objects.equals(id, seat.id) &&
+                Objects.equals(row, seat.row) &&
+                Objects.equals(type, seat.type) &&
+                Objects.equals(status, seat.status);
     }
 
-    public void setPriceModifier(double priceModifier) {
-        this.priceModifier = priceModifier;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, row, number, type, status);
+    }
+
+    @Override
+    public String toString() {
+        return "Seat{" +
+                "id='" + id + '\'' +
+                ", row='" + row + '\'' +
+                ", number=" + number +
+                ", type='" + type + '\'' +
+                ", status='" + status + '\'' +
+                '}';
     }
 }
+

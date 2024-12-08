@@ -11,4 +11,9 @@
     <color name="nav_icon_color">#8E92F1</color>
     <color name="nav_text_color">#FFFFFF</color>
     <color name="nav_selected_color">#6166E7</color>
+    <color name="primary_color">#FF1976D2</color>
+    <color name="background_color">#FF242424</color>
+    <color name="gray">#FF808080</color>
+    <color name="red">#F01000</color>
+
 </resources>

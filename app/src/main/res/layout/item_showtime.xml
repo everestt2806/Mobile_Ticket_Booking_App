@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:elevation="4dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:backgroundTint="@android:color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <!-- Show Time Text -->
+        <TextView
+            android:id="@+id/tvShowtime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="14:00"
+            android:textSize="16sp"
+            android:textColor="@android:color/black"
+            android:layout_weight="1"/>
+
+        <!-- Cinema Screen Number -->
+        <TextView
+            android:id="@+id/tvCinemaName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Screen 1"
+            android:textSize="14sp"
+            android:textColor="@android:color/black"
+            android:layout_marginEnd="8dp"/>
+
+        <!-- Ticket Price -->
+        <TextView
+            android:id="@+id/tvTicketPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="$10.00"
+            android:textSize="14sp"
+            android:textColor="@android:color/black"/>
+
+        <!-- Book Now Button -->
+        <Button
+            android:id="@+id/btnBookNow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Book Now"
+            android:backgroundTint="@color/dark_blue"
+            android:textColor="@android:color/white"/>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

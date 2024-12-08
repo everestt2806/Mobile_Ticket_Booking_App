@@ -1,0 +1,1981 @@
+//Showtime.java:
+public class Showtime implements Parcelable {
+    private String id;
+    private String movieId;
+    private String cinemaId;
+    private String roomId;
+    private String startTime;
+    private Map<String, Integer> price;
+    // Empty constructor for Firebase
+    public Showtime() {}
+
+    // Full constructor
+    public Showtime(String id, String movieId, String cinemaId, String roomId,
+                    String startTime, Map<String, Integer> price) {
+        this.id = id;
+        this.movieId = movieId;
+        this.cinemaId = cinemaId;
+        this.roomId = roomId;
+        this.startTime = startTime;
+        this.price = price;
+    }
+
+    // Parcelable implementation
+    protected Showtime(Parcel in) {
+        id = in.readString();
+        movieId = in.readString();
+        cinemaId = in.readString();
+        roomId = in.readString();
+        startTime = in.readString();
+        price = new HashMap<>();
+        int priceSize = in.readInt();
+        for (int i = 0; i < priceSize; i++) {
+            String key = in.readString();
+            int value = in.readInt();
+            price.put(key, value);
+        }
+    }
+
+    public static final Creator<Showtime> CREATOR = new Creator<Showtime>() {
+        @Override
+        public Showtime createFromParcel(Parcel in) {
+            return new Showtime(in);
+        }
+
+        @Override
+        public Showtime[] newArray(int size) {
+            return new Showtime[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(movieId);
+        dest.writeString(cinemaId);
+        dest.writeString(roomId);
+        dest.writeString(startTime);
+        dest.writeInt(price.size());
+        for (Map.Entry<String, Integer> entry : price.entrySet()) {
+            dest.writeString(entry.getKey());
+            dest.writeInt(entry.getValue());
+        }
+    }
+
+
+
+    // Getters and Setters for Showtime
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getMovieId() {
+        return movieId;
+    }
+
+    public void setMovieId(String movieId) {
+        this.movieId = movieId;
+    }
+
+    public String getCinemaId() {
+        return cinemaId;
+    }
+
+    public void setCinemaId(String cinemaId) {
+        this.cinemaId = cinemaId;
+    }
+
+    public String getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(String roomId) {
+        this.roomId = roomId;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public Map<String, Integer> getPrice() {
+        return price;
+    }
+
+    public void setPrice(Map<String, Integer> price) {
+        this.price = price;
+    }
+}
+
+
+//Cinema.java:
+public class Cinema implements Parcelable {
+    private String id;
+    private String name;
+    private String address;
+    private String city;
+    private String image;
+
+    // Empty constructor for Firebase
+    public Cinema() {}
+
+    // Full constructor
+    public Cinema(String id, String name, String address, String city, String image) {
+        this.id = id;
+        this.name = name;
+        this.address = address;
+        this.city = city;
+        this.image = image;
+    }
+
+    protected Cinema(Parcel in) {
+        id = in.readString();
+        name = in.readString();
+        address = in.readString();
+        city = in.readString();
+        image = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(name);
+        dest.writeString(address);
+        dest.writeString(city);
+        dest.writeString(image);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Cinema> CREATOR = new Creator<Cinema>() {
+        @Override
+        public Cinema createFromParcel(Parcel in) {
+            return new Cinema(in);
+        }
+
+        @Override
+        public Cinema[] newArray(int size) {
+            return new Cinema[size];
+        }
+    };
+
+    // Getters and Setters
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+}
+
+
+//Room.java:
+public class Room implements Parcelable {
+    private String id;
+    private String cinemaId;
+    private String name;
+    private int rows;
+    private int columns;
+    private Map<String, SeatInfo> seatMap;
+
+    // Constructor
+    public Room() {
+        this.seatMap = new HashMap<>();
+    }
+
+    public Room(String id, String cinemaId, String name, int rows, int columns) {
+        this.id = id;
+        this.cinemaId = cinemaId;
+        this.name = name;
+        this.rows = rows;
+        this.columns = columns;
+        this.seatMap = new HashMap<>();
+    }
+
+    // Getters and Setters
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getCinemaId() {
+        return cinemaId;
+    }
+
+    public void setCinemaId(String cinemaId) {
+        this.cinemaId = cinemaId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getRows() {
+        return rows;
+    }
+
+    public void setRows(int rows) {
+        this.rows = rows;
+    }
+
+    public int getColumns() {
+        return columns;
+    }
+
+    public void setColumns(int columns) {
+        this.columns = columns;
+    }
+
+    public Map<String, SeatInfo> getSeatMap() {
+        return seatMap;
+    }
+
+    public void setSeatMap(Map<String, SeatInfo> seatMap) {
+        this.seatMap = seatMap;
+    }
+
+    // Parcelable implementation
+    protected Room(Parcel in) {
+        id = in.readString();
+        cinemaId = in.readString();
+        name = in.readString();
+        rows = in.readInt();
+        columns = in.readInt();
+        int seatMapSize = in.readInt();
+        seatMap = new HashMap<>();
+        for (int i = 0; i < seatMapSize; i++) {
+            String key = in.readString();
+            SeatInfo value = in.readParcelable(SeatInfo.class.getClassLoader());
+            seatMap.put(key, value);
+        }
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(cinemaId);
+        dest.writeString(name);
+        dest.writeInt(rows);
+        dest.writeInt(columns);
+        dest.writeInt(seatMap.size());
+        for (Map.Entry<String, SeatInfo> entry : seatMap.entrySet()) {
+            dest.writeString(entry.getKey());
+            dest.writeParcelable(entry.getValue(), flags);
+        }
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Room> CREATOR = new Creator<Room>() {
+        @Override
+        public Room createFromParcel(Parcel in) {
+            return new Room(in);
+        }
+
+        @Override
+        public Room[] newArray(int size) {
+            return new Room[size];
+        }
+    };
+
+    // Inner class SeatInfo
+    public static class SeatInfo implements Parcelable {
+        private String type; // standard, vip, couple
+
+        public SeatInfo() {
+        }
+
+        public SeatInfo(String type) {
+            this.type = type;
+        }
+
+        public String getType() {
+            return type;
+        }
+
+        public void setType(String type) {
+            this.type = type;
+        }
+
+        // Parcelable implementation for SeatInfo
+        protected SeatInfo(Parcel in) {
+            type = in.readString();
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(type);
+        }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        public static final Creator<SeatInfo> CREATOR = new Creator<SeatInfo>() {
+            @Override
+            public SeatInfo createFromParcel(Parcel in) {
+                return new SeatInfo(in);
+            }
+
+            @Override
+            public SeatInfo[] newArray(int size) {
+                return new SeatInfo[size];
+            }
+        };
+    }
+
+    // Optional: ToString method for debugging
+    @Override
+    public String toString() {
+        return "Room{" +
+                "id='" + id + '\'' +
+                ", cinemaId='" + cinemaId + '\'' +
+                ", name='" + name + '\'' +
+                ", rows=" + rows +
+                ", columns=" + columns +
+                ", seatMap=" + seatMap +
+                '}';
+    }
+}
+
+//Seat.java:
+public class Seat implements Parcelable {
+    private String id;
+    private String row;
+    private int number;
+    private String type;
+    private String status;
+
+    // Empty constructor for Firebase
+    public Seat() {}
+
+    // Full constructor
+    public Seat(String id, String row, int number, String type, String status) {
+        this.id = id;
+        this.row = row;
+        this.number = number;
+        this.type = type;
+        this.status = status;
+    }
+
+    protected Seat(Parcel in) {
+        id = in.readString();
+        row = in.readString();
+        number = in.readInt();
+        type = in.readString();
+        status = in.readString();
+    }
+
+    public static final Creator<Seat> CREATOR = new Creator<Seat>() {
+        @Override
+        public Seat createFromParcel(Parcel in) {
+            return new Seat(in);
+        }
+
+        @Override
+        public Seat[] newArray(int size) {
+            return new Seat[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(row);
+        dest.writeInt(number);
+        dest.writeString(type);
+        dest.writeString(status);
+    }
+
+    // Getters and Setters
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getRow() {
+        return row;
+    }
+
+    public void setRow(String row) {
+        this.row = row;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Seat seat = (Seat) o;
+        return number == seat.number &&
+                Objects.equals(id, seat.id) &&
+                Objects.equals(row, seat.row) &&
+                Objects.equals(type, seat.type) &&
+                Objects.equals(status, seat.status);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, row, number, type, status);
+    }
+
+    @Override
+    public String toString() {
+        return "Seat{" +
+                "id='" + id + '\'' +
+                ", row='" + row + '\'' +
+                ", number=" + number +
+                ", type='" + type + '\'' +
+                ", status='" + status + '\'' +
+                '}';
+    }
+}
+
+//CinemaWithShowtimes.java:
+public class CinemaWithShowtimes {
+    private Cinema cinema;
+    private List<Showtime> showtimes;
+
+    public CinemaWithShowtimes() {
+    }
+
+    public CinemaWithShowtimes(Cinema cinema, List<Showtime> showtimes) {
+        this.cinema = cinema;
+        this.showtimes = showtimes;
+    }
+
+    public Cinema getCinema() {
+        return cinema;
+    }
+
+    public void setCinema(Cinema cinema) {
+        this.cinema = cinema;
+    }
+
+    public List<Showtime> getShowtimes() {
+        return showtimes;
+    }
+
+    public void setShowtimes(List<Showtime> showtimes) {
+        this.showtimes = showtimes;
+    }
+}
+
+//CinemaShowtimeAdapter.java:
+public class CinemaShowtimeAdapter extends RecyclerView.Adapter<CinemaShowtimeAdapter.ViewHolder> {
+    private List<CinemaWithShowtimes> cinemaWithShowtimesList;
+    private OnShowtimeSelectedListener listener;
+
+    public interface OnShowtimeSelectedListener {
+        void onShowtimeSelected(Showtime showtime);
+    }
+
+
+    // Constructor
+    public CinemaShowtimeAdapter(List<CinemaWithShowtimes> cinemaWithShowtimesList, OnShowtimeSelectedListener listener) {
+        this.cinemaWithShowtimesList = cinemaWithShowtimesList;
+        this.listener = listener;
+    }
+
+    @NonNull
+    @Override
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_cinema_showtime, parent, false);
+        return new ViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        CinemaWithShowtimes item = cinemaWithShowtimesList.get(position);
+        holder.bind(item);
+    }
+
+    @Override
+    public int getItemCount() {
+        return cinemaWithShowtimesList.size();
+    }
+
+    class ViewHolder extends RecyclerView.ViewHolder {
+        TextView tvCinemaName;
+        TextView tvCinemaAddress;
+        FlexboxLayout flexboxShowtimes;
+
+        ViewHolder(View itemView) {
+            super(itemView);
+            tvCinemaName = itemView.findViewById(R.id.tvCinemaName);
+            tvCinemaAddress = itemView.findViewById(R.id.tvCinemaAddress);
+            flexboxShowtimes = itemView.findViewById(R.id.flexboxShowtimes);
+        }
+
+        void bind(CinemaWithShowtimes item) {
+            tvCinemaName.setText(item.getCinema().getName());
+            tvCinemaAddress.setText(item.getCinema().getAddress());
+
+            // Clear previous showtimes
+            flexboxShowtimes.removeAllViews();
+
+            // Add showtime buttons
+            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
+            for (Showtime showtime : item.getShowtimes()) {
+                Button btnShowtime = createShowtimeButton(showtime, sdf);
+                flexboxShowtimes.addView(btnShowtime);
+            }
+        }
+
+        private Button createShowtimeButton(Showtime showtime, SimpleDateFormat sdf) {
+            Button btnShowtime = new Button(itemView.getContext());
+
+            // Set button text (time)
+            String time = sdf.format(new Date(showtime.getStartTime()));
+            btnShowtime.setText(time);
+
+            // Set button style
+            btnShowtime.setTextSize(14);
+            btnShowtime.setPadding(24, 12, 24, 12);
+
+            // Set background drawable (you can create a custom drawable)
+            btnShowtime.setBackgroundResource(R.drawable.bg_showtime_button);
+
+            // Set margins
+            FlexboxLayout.LayoutParams params = new FlexboxLayout.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+            );
+            params.setMargins(8, 8, 8, 8);
+            btnShowtime.setLayoutParams(params);
+
+            // Set click listener
+            btnShowtime.setOnClickListener(v -> listener.onShowtimeSelected(showtime));
+
+            return btnShowtime;
+        }
+    }
+}
+
+
+//DateAdapter.java:
+public class DateAdapter extends RecyclerView.Adapter<DateAdapter.DateViewHolder> {
+    private List<LocalDate> dates;
+    private OnDateSelectedListener listener;
+    private int selectedPosition = 0;
+
+    public DateAdapter(List<LocalDate> dates, OnDateSelectedListener listener) {
+        this.dates = dates;
+        this.listener = listener;
+    }
+
+    @NonNull
+    @Override
+    public DateViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        ItemDateBinding binding = ItemDateBinding.inflate(
+                LayoutInflater.from(parent.getContext()), parent, false);
+        return new DateViewHolder(binding);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull DateViewHolder holder, int position) {
+        holder.bind(dates.get(position), position == selectedPosition);
+    }
+
+    @Override
+    public int getItemCount() {
+        return dates.size();
+    }
+
+    class DateViewHolder extends RecyclerView.ViewHolder {
+        private final ItemDateBinding binding;
+
+        DateViewHolder(ItemDateBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
+
+            itemView.setOnClickListener(v -> {
+                int oldPosition = selectedPosition;
+                selectedPosition = getAdapterPosition();
+                notifyItemChanged(oldPosition);
+                notifyItemChanged(selectedPosition);
+                listener.onDateSelected(dates.get(selectedPosition));
+            });
+        }
+
+        void bind(LocalDate date, boolean isSelected) {
+            // Format day of week
+            String dayOfWeek = null;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                dayOfWeek = date.getDayOfWeek()
+                        .getDisplayName(TextStyle.SHORT, Locale.getDefault());
+            }
+
+            // Format day of month
+            String dayOfMonth = null;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                dayOfMonth = String.valueOf(date.getDayOfMonth());
+            }
+
+            // Set text
+            binding.tvDayOfWeek.setText(dayOfWeek);
+            binding.tvDayOfMonth.setText(dayOfMonth);
+
+            // Update selected state
+            binding.getRoot().setSelected(isSelected);
+            binding.tvDayOfWeek.setSelected(isSelected);
+            binding.tvDayOfMonth.setSelected(isSelected);
+        }
+    }
+
+    public interface OnDateSelectedListener {
+        void onDateSelected(LocalDate date);
+    }
+}
+
+
+//ShowtimeActivity.java:
+public class ShowtimeActivity extends AppCompatActivity implements CinemaShowtimeAdapter.OnShowtimeSelectedListener {
+    private String movieId;
+    private String movieTitle;
+    private String moviePoster;
+    private RecyclerView rvShowtimes;
+    private CinemaShowtimeAdapter adapter;
+    private List<CinemaWithShowtimes> cinemaShowtimesList;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_showtime);
+
+        movieId = getIntent().getStringExtra("movieId");
+        movieTitle = getIntent().getStringExtra("movieTitle");
+        moviePoster = getIntent().getStringExtra("moviePoster");
+
+        // Log received data
+        Log.d("ShowtimeActivity", "MovieId: " + movieId);
+        Log.d("ShowtimeActivity", "MovieTitle: " + movieTitle);
+
+        // Khởi tạo RecyclerView và Adapter
+        rvShowtimes = findViewById(R.id.rvShowtimes);
+        cinemaShowtimesList = new ArrayList<>();
+        adapter = new CinemaShowtimeAdapter(cinemaShowtimesList, this);
+        rvShowtimes.setLayoutManager(new LinearLayoutManager(this));
+        rvShowtimes.setAdapter(adapter);
+
+        // Load danh sách rạp và suất chiếu
+        loadCinemasAndShowtimes();
+    }
+
+    private void loadCinemasAndShowtimes() {
+        DatabaseReference showtimesRef = FirebaseDatabase.getInstance().getReference("showtimes");
+        DatabaseReference cinemasRef = FirebaseDatabase.getInstance().getReference("cinemas");
+
+        // First, get all showtimes for the movie
+        showtimesRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Map<String, List<Showtime>> cinemaShowtimesMap = new HashMap<>();
+
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    try {
+                        // Get showtime data
+                        String id = snapshot.child("id").getValue(String.class);
+                        String movieId = snapshot.child("movieId").getValue(String.class);
+
+                        // Only process if it matches our movie
+                        if (movieId != null && movieId.equals(ShowtimeActivity.this.movieId)) {
+                            String cinemaId = snapshot.child("cinemaId").getValue(String.class);
+                            String roomId = snapshot.child("roomId").getValue(String.class);
+                            String startTime = snapshot.child("startTime").getValue(String.class);
+
+                            // Get price map
+                            Map<String, Integer> price = new HashMap<>();
+                            DataSnapshot priceSnapshot = snapshot.child("price");
+                            for (DataSnapshot priceChild : priceSnapshot.getChildren()) {
+                                price.put(priceChild.getKey(), priceChild.getValue(Integer.class));
+                            }
+
+                            // Create Showtime object
+                            Showtime showtime = new Showtime(id, movieId, cinemaId, roomId, startTime, price);
+
+                            // Group by cinema
+                            if (!cinemaShowtimesMap.containsKey(cinemaId)) {
+                                cinemaShowtimesMap.put(cinemaId, new ArrayList<>());
+                            }
+                            cinemaShowtimesMap.get(cinemaId).add(showtime);
+                        }
+                    } catch (Exception e) {
+                        Log.e("ShowtimeActivity", "Error parsing showtime: " + e.getMessage());
+                    }
+                }
+
+                // Then get cinema details
+                cinemasRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        cinemaShowtimesList.clear();
+
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            Cinema cinema = snapshot.getValue(Cinema.class);
+                            if (cinema != null && cinemaShowtimesMap.containsKey(cinema.getId())) {
+                                List<Showtime> showtimes = cinemaShowtimesMap.get(cinema.getId());
+                                // Sort showtimes by time
+                                Collections.sort(showtimes, (s1, s2) ->
+                                        s1.getStartTime().compareTo(s2.getStartTime()));
+                                cinemaShowtimesList.add(new CinemaWithShowtimes(cinema, showtimes));
+                            }
+                        }
+
+                        // Sort cinemas by name
+                        Collections.sort(cinemaShowtimesList, (c1, c2) ->
+                                c1.getCinema().getName().compareTo(c2.getCinema().getName()));
+
+                        adapter.notifyDataSetChanged();
+
+                        if (cinemaShowtimesList.isEmpty()) {
+                            Toast.makeText(ShowtimeActivity.this,
+                                    "No showtimes available", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Toast.makeText(ShowtimeActivity.this,
+                                "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(ShowtimeActivity.this,
+                        "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
+    @Override
+    public void onShowtimeSelected(Showtime showtime) {
+        // Xử lý khi người dùng chọn suất chiếu
+        Intent intent = new Intent(this, SeatSelectionActivity.class);
+        intent.putExtra("showtime", showtime);
+        intent.putExtra("movieId", movieId);
+        intent.putExtra("movieTitle", movieTitle);
+        startActivity(intent);
+    }
+}
+
+
+//MovieDetailActivity.java:
+public class MovieDetailActivity extends AppCompatActivity {
+
+    private ImageView movieImg;
+    private TextView movieDetailTitle, year, imdb, summaryText, duration;
+    private RecyclerView genreRecyclerView, castRecyclerView;
+    private ImageView bookmarkIcon, shareIcon, btnBack;
+
+    private Button buyTicket;
+
+
+    private BlurView blurView;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_movie_detail);
+
+        // Ánh xạ các view
+        blurView = findViewById(R.id.blurView);
+        movieImg = findViewById(R.id.movieImg);
+        movieDetailTitle = findViewById(R.id.movieDetailTitle);
+        year = findViewById(R.id.year);
+        duration = findViewById(R.id.duration);
+        imdb = findViewById(R.id.imdb);
+        summaryText = findViewById(R.id.textView15);
+        genreRecyclerView = findViewById(R.id.genre);
+        castRecyclerView = findViewById(R.id.castList);
+        bookmarkIcon = findViewById(R.id.imageView5);
+        shareIcon = findViewById(R.id.imageView6);
+        btnBack = findViewById(R.id.btnBack);
+        buyTicket = findViewById(R.id.btnBuyTicket);
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+        // Lấy dữ liệu từ Intent
+        Intent intent = getIntent();
+        Movie movie = intent.getParcelableExtra("movie");
+
+        buyTicket.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MovieDetailActivity.this, ShowtimeActivity.class);
+                intent.putExtra("movieId", movie.getId());
+                intent.putExtra("movieTitle", movie.getTitle());
+                intent.putExtra("moviePoster", movie.getPoster());
+                startActivity(intent);
+            }
+        });
+        if (movie != null) {
+            // Hiển thị dữ liệu movie lên các TextView và ImageView
+            movieDetailTitle.setText(movie.getTitle());
+            year.setText("Độ tuổi: "+String.valueOf(movie.getAgeRating()));
+            duration.setText("Thời lượng: "+ String.valueOf(movie.getDuration()) +" phút");
+            imdb.setText("Ngôn ngữ: "+String.valueOf(movie.getLanguage()));
+            summaryText.setText(movie.getDescription());
+
+
+            Glide.with(this)
+                    .load(movie.getPoster())
+                    .into(movieImg);
+            setupBlurView();
+            // Hiển thị genre (thể loại)
+            List<String> genres = movie.getGenres();
+            GenreAdapter genreAdapter = new GenreAdapter(genres);
+            genreRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+            genreRecyclerView.setAdapter(genreAdapter);
+
+            // Hiển thị danh sách Cast
+            List<String> castList = movie.getActors();
+            ActorAdapter castAdapter = new ActorAdapter(castList);
+            castRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+            castRecyclerView.setAdapter(castAdapter);
+        }
+
+        // Handle Bookmark and Share actions (you can add click listeners if needed)
+        bookmarkIcon.setOnClickListener(v -> {
+            // Handle bookmark action
+        });
+
+        shareIcon.setOnClickListener(v -> {
+            // Handle share action
+        });
+    }
+
+    private void setupBlurView() {
+        float blurRadius = 10f; // Độ mờ
+        ViewGroup rootView = findViewById(R.id.main);
+        Drawable windowBackground = getWindow().getDecorView().getBackground();
+
+        blurView.setupWith(rootView)
+                .setFrameClearDrawable(windowBackground)
+                .setBlurRadius(blurRadius) ;
+        blurView.setOutlineProvider(ViewOutlineProvider.BACKGROUND);
+        blurView.setClipToOutline(true);
+    }
+}
+
+//database.json:
+{
+    "banners": [
+        {
+          "image": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733572106/banner1_glnnum.jpg"
+        },
+        {
+            "image": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733572106/banner2_fhpjdn.jpg"
+        },
+        {
+            "image": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733572106/banner3_j27zyh.jpg"
+        }
+    ],
+    "cinemas": [
+        {
+            "id": "cinema_001",
+            "name": "CGV Vincom Thủ Đức",
+            "address": "216 Võ Văn Ngân, Bình Thọ, Thủ Đức",
+            "city": "TP.HCM",
+            "image": "url_cinema.jpg"
+        },
+        {
+            "id": "cinema_002",
+            "name": "CGV Landmark 81",
+            "address": "Tầng B1, Landmark 81, 720A Điện Biên Phủ, P.22, Q.Bình Thạnh",
+            "city": "TP.HCM",
+            "image": "url_cinema.jpg"
+        },
+        {
+            "id": "cinema_003",
+            "name": "CGV Aeon Tân Phú",
+            "address": "30 Bờ Bao Tân Thắng, Sơn Kỳ, Tân Phú",
+            "city": "TP.HCM",
+            "image": "url_cinema.jpg"
+        }
+    ],
+    "rooms": {
+        "room_001": {
+            "id": "room_001",
+            "cinemaId": "cinema_001",
+            "name": "Room 1",
+            "rows": 8,
+            "columns": 12,
+            "seatMap": {
+                "A1": {
+                    "type": "standard"
+                },
+                "A2": {
+                    "type": "standard"
+                },
+                "A3": {
+                    "type": "standard"
+                },
+                "A4": {
+                    "type": "standard"
+                },
+                "A5": {
+                    "type": "standard"
+                },
+                "A6": {
+                    "type": "standard"
+                },
+                "A7": {
+                    "type": "standard"
+                },
+                "A8": {
+                    "type": "standard"
+                },
+                "A9": {
+                    "type": "standard"
+                },
+                "A10": {
+                    "type": "standard"
+                },
+                "A11": {
+                    "type": "standard"
+                },
+                "A12": {
+                    "type": "standard"
+                },
+                "B1": {
+                    "type": "standard"
+                },
+                "B2": {
+                    "type": "standard"
+                },
+                "B3": {
+                    "type": "standard"
+                },
+                "B4": {
+                    "type": "standard"
+                },
+                "B5": {
+                    "type": "standard"
+                },
+                "B6": {
+                    "type": "standard"
+                },
+                "B7": {
+                    "type": "standard"
+                },
+                "B8": {
+                    "type": "standard"
+                },
+                "B9": {
+                    "type": "standard"
+                },
+                "B10": {
+                    "type": "standard"
+                },
+                "B11": {
+                    "type": "standard"
+                },
+                "B12": {
+                    "type": "standard"
+                },
+                "C1": {
+                    "type": "vip"
+                },
+                "C2": {
+                    "type": "vip"
+                },
+                "C3": {
+                    "type": "vip"
+                },
+                "C4": {
+                    "type": "vip"
+                },
+                "C5": {
+                    "type": "vip"
+                },
+                "C6": {
+                    "type": "vip"
+                },
+                "C7": {
+                    "type": "vip"
+                },
+                "C8": {
+                    "type": "vip"
+                },
+                "C9": {
+                    "type": "vip"
+                },
+                "C10": {
+                    "type": "vip"
+                },
+                "C11": {
+                    "type": "vip"
+                },
+                "C12": {
+                    "type": "vip"
+                },
+                "D1": {
+                    "type": "vip"
+                },
+                "D2": {
+                    "type": "vip"
+                },
+                "D3": {
+                    "type": "vip"
+                },
+                "D4": {
+                    "type": "vip"
+                },
+                "D5": {
+                    "type": "vip"
+                },
+                "D6": {
+                    "type": "vip"
+                },
+                "D7": {
+                    "type": "vip"
+                },
+                "D8": {
+                    "type": "vip"
+                },
+                "D9": {
+                    "type": "vip"
+                },
+                "D10": {
+                    "type": "vip"
+                },
+                "D11": {
+                    "type": "vip"
+                },
+                "D12": {
+                    "type": "vip"
+                },
+                "E1": {
+                    "type": "couple"
+                },
+                "E2": {
+                    "type": "couple"
+                },
+                "E3": {
+                    "type": "couple"
+                },
+                "E4": {
+                    "type": "couple"
+                },
+                "E5": {
+                    "type": "couple"
+                },
+                "E6": {
+                    "type": "couple"
+                },
+                "F1": {
+                    "type": "couple"
+                },
+                "F2": {
+                    "type": "couple"
+                },
+                "F3": {
+                    "type": "couple"
+                },
+                "F4": {
+                    "type": "couple"
+                },
+                "F5": {
+                    "type": "couple"
+                },
+                "F6": {
+                    "type": "couple"
+                },
+                "G1": {
+                    "type": "couple"
+                },
+                "G2": {
+                    "type": "couple"
+                },
+                "G3": {
+                    "type": "couple"
+                },
+                "G4": {
+                    "type": "couple"
+                },
+                "G5": {
+                    "type": "couple"
+                },
+                "G6": {
+                    "type": "couple"
+                },
+                "H1": {
+                    "type": "couple"
+                },
+                "H2": {
+                    "type": "couple"
+                },
+                "H3": {
+                    "type": "couple"
+                },
+                "H4": {
+                    "type": "couple"
+                },
+                "H5": {
+                    "type": "couple"
+                },
+                "H6": {
+                    "type": "couple"
+                }
+            }
+        },
+        "room_002": {
+            "id": "room_002",
+            "cinemaId": "cinema_001",
+            "name": "Room 2",
+            "rows": 10,
+            "columns": 10,
+            "seatMap": {
+                "A1": {
+                    "type": "standard"
+                },
+                "A2": {
+                    "type": "standard"
+                },
+                "A3": {
+                    "type": "standard"
+                },
+                "A4": {
+                    "type": "standard"
+                },
+                "A5": {
+                    "type": "standard"
+                },
+                "A6": {
+                    "type": "standard"
+                },
+                "A7": {
+                    "type": "standard"
+                },
+                "A8": {
+                    "type": "standard"
+                },
+                "A9": {
+                    "type": "standard"
+                },
+                "A10": {
+                    "type": "standard"
+                },
+                "B1": {
+                    "type": "standard"
+                },
+                "B2": {
+                    "type": "standard"
+                },
+                "B3": {
+                    "type": "standard"
+                },
+                "B4": {
+                    "type": "standard"
+                },
+                "B5": {
+                    "type": "standard"
+                },
+                "B6": {
+                    "type": "standard"
+                },
+                "B7": {
+                    "type": "standard"
+                },
+                "B8": {
+                    "type": "standard"
+                },
+                "B9": {
+                    "type": "standard"
+                },
+                "B10": {
+                    "type": "standard"
+                },
+                "C1": {
+                    "type": "standard"
+                },
+                "C2": {
+                    "type": "standard"
+                },
+                "C3": {
+                    "type": "standard"
+                },
+                "C4": {
+                    "type": "standard"
+                },
+                "C5": {
+                    "type": "standard"
+                },
+                "C6": {
+                    "type": "standard"
+                },
+                "C7": {
+                    "type": "standard"
+                },
+                "C8": {
+                    "type": "standard"
+                },
+                "C9": {
+                    "type": "standard"
+                },
+                "C10": {
+                    "type": "standard"
+                },
+                "D1": {
+                    "type": "vip"
+                },
+                "D2": {
+                    "type": "vip"
+                },
+                "D3": {
+                    "type": "vip"
+                },
+                "D4": {
+                    "type": "vip"
+                },
+                "D5": {
+                    "type": "vip"
+                },
+                "D6": {
+                    "type": "vip"
+                },
+                "D7": {
+                    "type": "vip"
+                },
+                "D8": {
+                    "type": "vip"
+                },
+                "D9": {
+                    "type": "vip"
+                },
+                "D10": {
+                    "type": "vip"
+                },
+                "E1": {
+                    "type": "vip"
+                },
+                "E2": {
+                    "type": "vip"
+                },
+                "E3": {
+                    "type": "vip"
+                },
+                "E4": {
+                    "type": "vip"
+                },
+                "E5": {
+                    "type": "vip"
+                },
+                "E6": {
+                    "type": "vip"
+                },
+                "E7": {
+                    "type": "vip"
+                },
+                "E8": {
+                    "type": "vip"
+                },
+                "E9": {
+                    "type": "vip"
+                },
+                "E10": {
+                    "type": "vip"
+                },
+                "F1": {
+                    "type": "vip"
+                },
+                "F2": {
+                    "type": "vip"
+                },
+                "F3": {
+                    "type": "vip"
+                },
+                "F4": {
+                    "type": "vip"
+                },
+                "F5": {
+                    "type": "vip"
+                },
+                "F6": {
+                    "type": "vip"
+                },
+                "F7": {
+                    "type": "vip"
+                },
+                "F8": {
+                    "type": "vip"
+                },
+                "F9": {
+                    "type": "vip"
+                },
+                "F10": {
+                    "type": "vip"
+                },
+                "G1": {
+                    "type": "couple"
+                },
+                "G2": {
+                    "type": "couple"
+                },
+                "G3": {
+                    "type": "couple"
+                },
+                "G4": {
+                    "type": "couple"
+                },
+                "G5": {
+                    "type": "couple"
+                },
+                "H1": {
+                    "type": "couple"
+                },
+                "H2": {
+                    "type": "couple"
+                },
+                "H3": {
+                    "type": "couple"
+                },
+                "H4": {
+                    "type": "couple"
+                },
+                "H5": {
+                    "type": "couple"
+                },
+                "I1": {
+                    "type": "couple"
+                },
+                "I2": {
+                    "type": "couple"
+                },
+                "I3": {
+                    "type": "couple"
+                },
+                "I4": {
+                    "type": "couple"
+                },
+                "I5": {
+                    "type": "couple"
+                },
+                "J1": {
+                    "type": "couple"
+                },
+                "J2": {
+                    "type": "couple"
+                },
+                "J3": {
+                    "type": "couple"
+                },
+                "J4": {
+                    "type": "couple"
+                },
+                "J5": {
+                    "type": "couple"
+                }
+            }
+        }
+    },
+    "showtimes": [
+        {
+            "id": "show_001",
+            "movieId": "movie1",
+            "cinemaId": "cinema_001",
+            "roomId": "room_001",
+            "startTime": "2024-12-08T10:00:00",
+            "price": {
+                "standard": 90000,
+                "vip": 120000,
+                "couple": 180000
+            }
+        },
+        {
+            "id": "show_002",
+            "movieId": "movie1",
+            "cinemaId": "cinema_001",
+            "roomId": "room_001",
+            "startTime": "2024-12-08T13:30:00",
+            "price": {
+                "standard": 90000,
+                "vip": 120000,
+                "couple": 180000
+            }
+        },
+        {
+            "id": "show_003",
+            "movieId": "movie1",
+            "cinemaId": "cinema_001",
+            "roomId": "room_001",
+            "startTime": "2024-12-08T16:00:00",
+            "price": {
+                "standard": 90000,
+                "vip": 120000,
+                "couple": 180000
+            }
+        },
+        {
+            "id": "show_004",
+            "movieId": "movie1",
+            "cinemaId": "cinema_002",
+            "roomId": "room_001",
+            "startTime": "2024-12-08T10:30:00",
+            "price": {
+                "standard": 95000,
+                "vip": 125000,
+                "couple": 190000
+            }
+        },
+        {
+            "id": "show_005",
+            "movieId": "movie1",
+            "cinemaId": "cinema_002",
+            "roomId": "room_001",
+            "startTime": "2024-12-08T14:00:00",
+            "price": {
+                "standard": 95000,
+                "vip": 125000,
+                "couple": 190000
+            }
+        },
+        {
+            "id": "show_006",
+            "movieId": "movie1",
+            "cinemaId": "cinema_003",
+            "roomId": "room_001",
+            "startTime": "2024-12-08T11:00:00",
+            "price": {
+                "standard": 85000,
+                "vip": 115000,
+                "couple": 170000
+            }
+        },
+        {
+            "id": "show_007",
+            "movieId": "movie1",
+            "cinemaId": "cinema_003",
+            "roomId": "room_001",
+            "startTime": "2024-12-08T15:30:00",
+            "price": {
+                "standard": 85000,
+                "vip": 115000,
+                "couple": 170000
+            }
+        },
+        {
+            "id": "show_008",
+            "movieId": "movie2",
+            "cinemaId": "cinema_001",
+            "roomId": "room_002",
+            "startTime": "2024-12-08T11:00:00",
+            "price": {
+                "standard": 90000,
+                "vip": 120000,
+                "couple": 180000
+            }
+        },
+        {
+            "id": "show_009",
+            "movieId": "movie2",
+            "cinemaId": "cinema_002",
+            "roomId": "room_002",
+            "startTime": "2024-12-08T15:30:00",
+            "price": {
+                "standard": 95000,
+                "vip": 125000,
+                "couple": 190000
+            }
+        },
+        {
+            "id": "show_010",
+            "movieId": "movie3",
+            "cinemaId": "cinema_002",
+            "roomId": "room_003",
+            "startTime": "2024-12-08T10:00:00",
+            "price": {
+                "standard": 95000,
+                "vip": 125000,
+                "couple": 190000
+            }
+        },
+        {
+            "id": "show_011",
+            "movieId": "movie3",
+            "cinemaId": "cinema_003",
+            "roomId": "room_001",
+            "startTime": "2024-12-08T13:30:00",
+            "price": {
+                "standard": 85000,
+                "vip": 115000,
+                "couple": 170000
+            }
+        },
+    
+        {
+            "id": "show_012",
+            "movieId": "movie5",
+            "cinemaId": "cinema_001",
+            "roomId": "room_001",
+            "startTime": "2024-12-08T19:30:00",
+            "price": {
+                "standard": 90000,
+                "vip": 120000,
+                "couple": 180000
+            }
+        },
+        {
+            "id": "show_013",
+            "movieId": "movie5",
+            "cinemaId": "cinema_002",
+            "roomId": "room_001",
+            "startTime": "2024-12-08T20:00:00",
+            "price": {
+                "standard": 95000,
+                "vip": 125000,
+                "couple": 190000
+            }
+        },
+        {
+            "id": "show_014",
+            "movieId": "movie5",
+            "cinemaId": "cinema_003",
+            "roomId": "room_002",
+            "startTime": "2024-12-08T19:00:00",
+            "price": {
+                "standard": 85000,
+                "vip": 115000,
+                "couple": 170000
+            }
+        }
+    ],
+    "bookings": [
+        {
+            "id": "booking_001",
+            "userId": "user_001",
+            "showtimeId": "show_001",
+            "seats": [
+                {
+                    "id": "A1",
+                    "type": "standard",
+                    "price": 90000
+                }
+            ],
+            "totalAmount": 90000,
+            "bookingTime": "2024-12-06T10:30:00",
+            "status": "confirmed",
+            "paymentMethod": "momo"
+        }
+    ],
+    "tickets": {
+        "ticket1": {
+            "id": "ticket1",
+            "userId": "user123",
+            "showtimeId": "showtime1",
+            "movieId": "movie1",
+            "cinemaId": "cinema1",
+            "purchaseDate": "2024-12-07T15:30:00",
+            "totalAmount": 240000,
+            "status": "CONFIRMED", 
+            "paymentMethod": "MOMO",
+            "seats": [
+                {
+                    "seatNumber": "G7",
+                    "type": "STANDARD",
+                    "price": 120000
+                },
+                {
+                    "seatNumber": "G8",
+                    "type": "STANDARD",
+                    "price": 120000
+                }
+            ],
+            "qrCode": "https://example.com/qr/ticket1.png",
+            "showInfo": {
+                "showDate": "2024-12-07",
+                "startTime": "19:30",
+                "endTime": "22:31",
+                "roomName": "SCREEN 1"
+            }
+        },
+        "ticket2": {
+            "id": "ticket2",
+            "userId": "user456",
+            "showtimeId": "showtime2",
+            "movieId": "movie2",
+            "cinemaId": "cinema2",
+            "purchaseDate": "2024-12-07T16:45:00",
+            "totalAmount": 360000,
+            "status": "CONFIRMED",
+            "paymentMethod": "ZALOPAY",
+            "seats": [
+                {
+                    "seatNumber": "D5",
+                    "type": "VIP",
+                    "price": 180000
+                },
+                {
+                    "seatNumber": "D6",
+                    "type": "VIP",
+                    "price": 180000
+                }
+            ],
+            "qrCode": "https://example.com/qr/ticket2.png",
+            "showInfo": {
+                "showDate": "2024-12-07",
+                "startTime": "20:00",
+                "endTime": "23:01",
+                "roomName": "SCREEN 2"
+            }
+        }
+    },
+    "users": {
+        "user123": {
+            "id": "user123",
+            "email": "user1@gmail.com",
+            "fullName": "Nguyễn Văn A",
+            "phoneNumber": "0901234567",
+            "password": "password",
+            "avatar": "https://example.com/avatars/user1.jpg",
+            "ticketHistory": [
+                "ticket1"
+            ]
+        },
+        "user456": {
+            "id": "user456",
+            "email": "user2@gmail.com",
+            "fullName": "Trần Thị B",
+            "phoneNumber": "0909876543",
+            "password": "password",
+            "avatar": "https://example.com/avatars/user2.jpg",
+            "ticketHistory": [
+                "ticket2"
+            ]
+        }
+    },
+    "movies": {
+        "movie1": {
+            "id": "movie1",
+            "title": "Nhà Bà Nữ",
+            "description": "Câu chuyện về những mâu thuẫn trong gia đình giữa ba thế hệ phụ nữ, đặc biệt là mối quan hệ giữa người mẹ độc đoán và cô con gái phản kháng.",
+            "duration": 132,
+            "releaseDate": "2024-01-22",
+            "poster": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733571421/nha_ba_nu_xbc9ko.jpg",
+            "trailer": "https://youtube.com/watch?v=nhabanu",
+            "status": "NOW_SHOWING",
+            "language": "Vietnamese",
+            "subtitle": "English",
+            "ageRating": "C16",
+            "actors": [
+                "Trấn Thành",
+                "Lê Giang",
+                "Uyển Ân",
+                "Khả Như"
+            ],
+            "genres": [
+                "Drama",
+                "Gia đình"
+            ]
+        },
+        "movie2": {
+            "id": "movie2",
+            "title": "Mai",
+            "description": "Câu chuyện về cuộc đời của một người phụ nữ tên Mai, với những thăng trầm và khát khao hạnh phúc.",
+            "duration": 131,
+            "releaseDate": "2024-02-10",
+            "poster": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733571420/mai_eelmxu.jpg",
+            "trailer": "https://youtube.com/watch?v=mai",
+            "status": "NOW_SHOWING",
+            "language": "Vietnamese",
+            "subtitle": "English",
+            "ageRating": "C16",
+            "actors": [
+                "Trúc Anh",
+                "Tuấn Trần",
+                "Phương Anh Đào",
+                "Trấn Thành"
+            ],
+            "genres": [
+                "Hài hước",
+                "Drama",
+                "Tình cảm"
+            ]
+        },
+        "movie3": {
+            "id": "movie3",
+            "title": "Đất Rừng Phương Nam",
+            "description": "Hành trình phiêu lưu của An, một cậu bé phải xa gia đình, trôi dạt về miền Tây Nam Bộ và những câu chuyện đầy tình người nơi đây.",
+            "duration": 120,
+            "releaseDate": "2023-12-20",
+            "poster": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733571419/dat_rung_phuong_nam_rgruae.jpg",
+            "trailer": "https://youtube.com/watch?v=datrungnamphuong",
+            "status": "NOW_SHOWING",
+            "language": "Vietnamese",
+            "subtitle": "English",
+            "ageRating": "P",
+            "actors": [
+                "Hồng Ánh",
+                "Huỳnh Hạo Khang",
+                "Mai Tài Phến",
+                "Công Ninh"
+            ],
+            "genres": [
+                "Phiêu lưu",
+                "Drama",
+                "Lịch sử"
+            ]
+        },
+        "movie4": {
+            "id": "movie4",
+            "title": "Chị Chị Em Em 2",
+            "description": "Câu chuyện về mối quan hệ phức tạp giữa hai người phụ nữ, đan xen những toan tính và tình cảm trong giới thượng lưu Sài Gòn xưa.",
+            "duration": 115,
+            "releaseDate": "2024-02-15",
+            "poster": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733571420/chi_chi_em_em_2_cnma8u.jpg",
+            "trailer": "https://youtube.com/watch?v=chichiem2",
+            "status": "COMING_SOON",
+            "language": "Vietnamese",
+            "subtitle": "English",
+            "ageRating": "C18",
+            "actors": [
+                "Minh Hằng",
+                "Ngọc Trinh",
+                "Lê Giang",
+                "NSƯT Công Ninh"
+            ],
+            "genres": [
+                "Hài hước",
+                "Giật gân"
+            ]
+        },
+        "movie5": {
+            "id": "movie5",
+            "title": "Gặp Lại Chị Bầu",
+            "description": "Câu chuyện hài hước và cảm động về một cuộc hội ngộ bất ngờ giữa những người bạn cũ và một người chị đang mang thai.",
+            "duration": 110,
+            "releaseDate": "2024-01-05",
+            "poster": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733571419/gap_lai_chi_bau_oppzvl.jpg",
+            "trailer": "https://youtube.com/watch?v=gapchibau",
+            "status": "NOW_SHOWING",
+            "language": "Vietnamese",
+            "subtitle": "English",
+            "ageRating": "C13",
+            "actors": [
+                "Thu Trang",
+                "Thái Hòa",
+                "Tiến Luật",
+                "Kiều Minh Tuấn"
+            ],
+            "genres": [
+                "Hài hước",
+                "Gia đình"
+            ]
+        },
+        "movie6": {
+            "id": "movie6",
+            "title": "Người Vợ Cuối Cùng",
+            "description": "Câu chuyện về những số phận phụ nữ trong xã hội phong kiến, với những mưu cầu, dục vọng và khát khao tự do.",
+            "duration": 132,
+            "releaseDate": "2024-03-01",
+            "poster": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733571420/Nguoi-Vo-Cuoi-Cung_r7yy2y.jpg",
+            "trailer": "https://youtube.com/watch?v=nguoivocuoicung",
+            "status": "COMING_SOON",
+            "language": "Vietnamese",
+            "subtitle": "English",
+            "ageRating": "C18",
+            "actors": [
+                "Kaity Nguyễn",
+                "Thuận Nguyễn",
+                "NSND Kim Xuân",
+                "Quang Thắng"
+            ],
+            "genres": [
+                "Drama",
+                "Lịch sử"
+            ]
+        },
+        "movie7": {
+            "id": "movie7",
+            "title": "Lật Mặt 6",
+            "description": "Phần mới nhất của series Lật Mặt với những pha hành động gay cấn và tình tiết bất ngờ.",
+            "duration": 128,
+            "releaseDate": "2024-04-15",
+            "poster": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733571419/Lat_mat_6_tpyfdx.jpg",
+            "trailer": "https://youtube.com/watch?v=latmat6",
+            "status": "COMING_SOON",
+            "language": "Vietnamese",
+            "subtitle": "English",
+            "ageRating": "C16",
+            "actors": [
+                "Lý Hải",
+                "Quốc Cường",
+                "Trung Dũng",
+                "Thanh Thức"
+            ],
+            "genres": [
+                "Hành động",
+                "Giật gân",
+                "Hài hước"
+            ]
+        },
+        "movie8": {
+            "id": "movie8",
+            "title": "Kẻ Ăn Hồn",
+            "description": "Một câu chuyện kinh dị dân gian Việt Nam về những linh hồn và những bí ẩn chưa được giải đáp.",
+            "duration": 105,
+            "releaseDate": "2024-02-28",
+            "poster": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733571419/ke-an-hon_y5t8ed.jpg",
+            "trailer": "https://youtube.com/watch?v=keanhon",
+            "status": "COMING_SOON",
+            "language": "Vietnamese",
+            "subtitle": "English",
+            "ageRating": "C18",
+            "actors": [
+                "Hoàng Hà",
+                "Võ Điền Gia Huy",
+                "Huỳnh Thanh Trực",
+                "NSƯT Chiều Xuân"
+            ],
+            "genres": [
+                "Kinh dị",
+                "Huyền bí"
+            ]
+        },
+        "movie9": {
+            "id": "movie9",
+            "title": "Con Nhót Mót Chồng",
+            "description": "Câu chuyện hài hước về một cô gái quê và hành trình tìm kiếm hạnh phúc của mình.",
+            "duration": 112,
+            "releaseDate": "2024-03-08",
+            "poster": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733571420/con_nhot_mot_chong_bg1yfl.jpg",
+            "trailer": "https://youtube.com/watch?v=conhot",
+            "status": "COMING_SOON",
+            "language": "Vietnamese",
+            "subtitle": "English",
+            "ageRating": "C16",
+            "actors": [
+                "Thái Hòa",
+                "Thu Trang",
+                "Tiến Luật",
+                "NSND Hồng Vân"
+            ],
+            "genres": [
+                "Hài hước",
+                "Tình cảm"
+            ]
+        },
+        "movie10": {
+            "id": "movie10",
+            "title": "Đào, Phở và Piano",
+            "description": "Một câu chuyện tình lãng mạn diễn ra trong không gian Hà Nội xưa, với những giai điệu của piano và hương vị phở truyền thống.",
+            "duration": 118,
+            "releaseDate": "2024-04-01",
+            "poster": "https://res.cloudinary.com/dppcpvsf7/image/upload/v1733571420/%C4%90%C3%A0o__ph%E1%BB%9F_v%C3%A0_piano_mqbdid.jpg",
+            "trailer": "https://youtube.com/watch?v=daopho",
+            "status": "COMING_SOON",
+            "language": "Vietnamese",
+            "subtitle": "English",
+            "ageRating": "C13",
+            "actors": [
+                "Doãn Quốc Đam",
+                "Bảo Hân",
+                "NSND Trung Anh",
+                "Hồng Diễm"
+            ],
+            "genres": [
+                "Tình cảm",
+                "Drama",
+                "Âm nhạc"
+            ]
+        }
+    }
+}

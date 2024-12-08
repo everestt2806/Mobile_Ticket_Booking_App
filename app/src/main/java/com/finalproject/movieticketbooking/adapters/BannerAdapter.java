@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide;
 import com.finalproject.movieticketbooking.R;
 import com.finalproject.movieticketbooking.models.Banner;
 
+import java.util.ArrayList;
 import java.util.List;
 
 // BannerAdapter.java
@@ -19,7 +20,7 @@ public class BannerAdapter extends RecyclerView.Adapter<BannerAdapter.BannerView
     private List<Banner> banners;
 
     public BannerAdapter(List<Banner> banners) {
-        this.banners = banners;
+        this.banners = banners != null ? banners : new ArrayList<>();
     }
 
     @NonNull
@@ -32,18 +33,35 @@ public class BannerAdapter extends RecyclerView.Adapter<BannerAdapter.BannerView
 
     @Override
     public void onBindViewHolder(@NonNull BannerViewHolder holder, int position) {
-        if (banners != null && banners.size() > 0) {
-            Banner banner = banners.get(position % banners.size());
-            // Load image using Glide with a check for null image URL
-            Glide.with(holder.itemView.getContext())
-                    .load(banner.getImage() != null ? banner.getImage() : R.drawable.placeholder_movie)
-                    .into(holder.imageView);
+        if (banners != null && !banners.isEmpty()) {
+            try {
+                Banner banner = banners.get(position % banners.size());
+                if (banner != null) {
+                    try {
+                        Glide.with(holder.itemView.getContext())
+                                .load(banner.getImage())
+                                .placeholder(R.drawable.placeholder_movie)
+                                .error(R.drawable.placeholder_movie)
+                                .centerCrop()
+                                .into(holder.imageView);
+                    } catch (Exception e) {
+                        holder.imageView.setImageResource(R.drawable.placeholder_movie);
+                    }
+                }
+            } catch (Exception e) {
+                holder.imageView.setImageResource(R.drawable.placeholder_movie);
+            }
         }
     }
 
     @Override
     public int getItemCount() {
-        return banners != null ? banners.size() : 0;  // Avoid returning Integer.MAX_VALUE if not necessary
+        return banners != null ? banners.size() : 0;
+    }
+
+    public void updateBanners(List<Banner> newBanners) {
+        this.banners = newBanners != null ? newBanners : new ArrayList<>();
+        notifyDataSetChanged();
     }
 
     static class BannerViewHolder extends RecyclerView.ViewHolder {
