@@ -3,6 +3,7 @@ package com.finalproject.movieticketbooking.activities;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,26 +57,38 @@ public class MovieDetailActivity extends AppCompatActivity {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                onBackPressed(); // hoặc finish()
             }
         });
-        // Lấy dữ liệu từ Intent
-        Intent intent = getIntent();
-        Movie movie = intent.getParcelableExtra("movie");
 
-        buyTicket.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MovieDetailActivity.this, ShowtimeActivity.class);
-                intent.putExtra("movieId", movie.getId());
-                intent.putExtra("movieTitle", movie.getTitle());
-                intent.putExtra("moviePoster", movie.getPoster());
-                intent.putExtra("movieAgeRating", movie.getAgeRating());
-                intent.putExtra("movieDuration", String.valueOf(movie.getDuration()));
-                startActivity(intent);
-            }
-        });
+        // Lấy dữ liệu từ Intent
+        Movie movie;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            movie = getIntent().getParcelableExtra("movie", Movie.class);
+        } else {
+            movie = getIntent().getParcelableExtra("movie");
+        }
+
+//        buyTicket.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(MovieDetailActivity.this, ShowtimeActivity.class);
+//                intent.putExtra("movieId", movie.getId());
+//                intent.putExtra("movieTitle", movie.getTitle());
+//                intent.putExtra("moviePoster", movie.getPoster());
+//                intent.putExtra("movieAgeRating", movie.getAgeRating());
+//                intent.putExtra("movieDuration", String.valueOf(movie.getDuration()));
+//                startActivity(intent);
+//            }
+//        });
         if (movie != null) {
+            if ("COMING_SOON".equals(movie.getStatus())) {
+                // Nếu phim sắp chiếu, ẩn nút Buy Ticket
+                buyTicket.setVisibility(View.GONE);
+            } else {
+                // Nếu phim đang chiếu, hiện nút và set onClick listener
+                buyTicket.setVisibility(View.VISIBLE);
+            }
             // Hiển thị dữ liệu movie lên các TextView và ImageView
             movieDetailTitle.setText(movie.getTitle());
             year.setText("Độ tuổi: "+String.valueOf(movie.getAgeRating()));

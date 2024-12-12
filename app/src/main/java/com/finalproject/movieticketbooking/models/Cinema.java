@@ -1,8 +1,10 @@
 package com.finalproject.movieticketbooking.models;
 import android.os.Parcel;
 import android.os.Parcelable;
+import com.google.firebase.database.IgnoreExtraProperties;
 
 
+@IgnoreExtraProperties
 public class Cinema implements Parcelable {
     private String id;
     private String name;
@@ -10,10 +12,10 @@ public class Cinema implements Parcelable {
     private String city;
     private String image;
 
-    // Empty constructor for Firebase
-    public Cinema() {}
+    public Cinema() {
+        // Required empty constructor for Firebase
+    }
 
-    // Full constructor
     public Cinema(String id, String name, String address, String city, String image) {
         this.id = id;
         this.name = name;
@@ -30,20 +32,6 @@ public class Cinema implements Parcelable {
         image = in.readString();
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(id);
-        dest.writeString(name);
-        dest.writeString(address);
-        dest.writeString(city);
-        dest.writeString(image);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
     public static final Creator<Cinema> CREATOR = new Creator<Cinema>() {
         @Override
         public Cinema createFromParcel(Parcel in) {
@@ -56,45 +44,31 @@ public class Cinema implements Parcelable {
         }
     };
 
-    // Getters and Setters
-    public String getId() {
-        return id;
+    // Getters
+    public String getId() { return id; }
+    public String getName() { return name; }
+    public String getAddress() { return address; }
+    public String getCity() { return city; }
+    public String getImage() { return image; }
+
+    // Setters
+    public void setId(String id) { this.id = id; }
+    public void setName(String name) { this.name = name; }
+    public void setAddress(String address) { this.address = address; }
+    public void setCity(String city) { this.city = city; }
+    public void setImage(String image) { this.image = image; }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(name);
+        dest.writeString(address);
+        dest.writeString(city);
+        dest.writeString(image);
     }
 }
-

@@ -2,36 +2,49 @@ package com.finalproject.movieticketbooking.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import java.util.Date;
+import com.google.firebase.database.IgnoreExtraProperties;
 import java.util.List;
+import java.util.ArrayList;
 
+@IgnoreExtraProperties
 public class Booking implements Parcelable {
-    private String bookingId;
+    private String id;
     private String userId;
     private String showtimeId;
-    private Date bookingDate;
-    private int totalTickets;
-    private double totalPrice;
-    private String bookingStatus;
-    private String paymentStatus;
-    private List<Ticket> tickets;
+    private List<BookingSeat> seats;
+    private double totalAmount;
+    private String bookingTime;
+    private String status;
+    private String paymentMethod;
 
-    // Constructors
-    public Booking() {}
-
-    protected Booking(Parcel in) {
-        bookingId = in.readString();
-        userId = in.readString();
-        showtimeId = in.readString();
-        bookingDate = new Date(in.readLong()); // Converting timestamp to Date
-        totalTickets = in.readInt();
-        totalPrice = in.readDouble();
-        bookingStatus = in.readString();
-        paymentStatus = in.readString();
-        tickets = in.createTypedArrayList(Ticket.CREATOR); // Assuming Ticket implements Parcelable
+    public Booking() {
+        // Required empty constructor for Firebase
     }
 
-    // Parcelable Creator
+    public Booking(String id, String userId, String showtimeId, List<BookingSeat> seats,
+                   double totalAmount, String bookingTime, String status, String paymentMethod) {
+        this.id = id;
+        this.userId = userId;
+        this.showtimeId = showtimeId;
+        this.seats = seats;
+        this.totalAmount = totalAmount;
+        this.bookingTime = bookingTime;
+        this.status = status;
+        this.paymentMethod = paymentMethod;
+    }
+
+    protected Booking(Parcel in) {
+        id = in.readString();
+        userId = in.readString();
+        showtimeId = in.readString();
+        seats = new ArrayList<>();
+        in.readTypedList(seats, BookingSeat.CREATOR);
+        totalAmount = in.readDouble();
+        bookingTime = in.readString();
+        status = in.readString();
+        paymentMethod = in.readString();
+    }
+
     public static final Creator<Booking> CREATOR = new Creator<Booking>() {
         @Override
         public Booking createFromParcel(Parcel in) {
@@ -44,6 +57,26 @@ public class Booking implements Parcelable {
         }
     };
 
+    // Getters
+    public String getId() { return id; }
+    public String getUserId() { return userId; }
+    public String getShowtimeId() { return showtimeId; }
+    public List<BookingSeat> getSeats() { return seats; }
+    public double getTotalAmount() { return totalAmount; }
+    public String getBookingTime() { return bookingTime; }
+    public String getStatus() { return status; }
+    public String getPaymentMethod() { return paymentMethod; }
+
+    // Setters
+    public void setId(String id) { this.id = id; }
+    public void setUserId(String userId) { this.userId = userId; }
+    public void setShowtimeId(String showtimeId) { this.showtimeId = showtimeId; }
+    public void setSeats(List<BookingSeat> seats) { this.seats = seats; }
+    public void setTotalAmount(double totalAmount) { this.totalAmount = totalAmount; }
+    public void setBookingTime(String bookingTime) { this.bookingTime = bookingTime; }
+    public void setStatus(String status) { this.status = status; }
+    public void setPaymentMethod(String paymentMethod) { this.paymentMethod = paymentMethod; }
+
     @Override
     public int describeContents() {
         return 0;
@@ -51,87 +84,13 @@ public class Booking implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(bookingId);
+        dest.writeString(id);
         dest.writeString(userId);
         dest.writeString(showtimeId);
-        dest.writeLong(bookingDate.getTime()); // Storing Date as timestamp
-        dest.writeInt(totalTickets);
-        dest.writeDouble(totalPrice);
-        dest.writeString(bookingStatus);
-        dest.writeString(paymentStatus);
-        dest.writeTypedList(tickets); // Assuming Ticket implements Parcelable
-    }
-
-    // Getter and Setter Methods
-    public String getBookingId() {
-        return bookingId;
-    }
-
-    public void setBookingId(String bookingId) {
-        this.bookingId = bookingId;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public String getShowtimeId() {
-        return showtimeId;
-    }
-
-    public void setShowtimeId(String showtimeId) {
-        this.showtimeId = showtimeId;
-    }
-
-    public Date getBookingDate() {
-        return bookingDate;
-    }
-
-    public void setBookingDate(Date bookingDate) {
-        this.bookingDate = bookingDate;
-    }
-
-    public int getTotalTickets() {
-        return totalTickets;
-    }
-
-    public void setTotalTickets(int totalTickets) {
-        this.totalTickets = totalTickets;
-    }
-
-    public double getTotalPrice() {
-        return totalPrice;
-    }
-
-    public void setTotalPrice(double totalPrice) {
-        this.totalPrice = totalPrice;
-    }
-
-    public String getBookingStatus() {
-        return bookingStatus;
-    }
-
-    public void setBookingStatus(String bookingStatus) {
-        this.bookingStatus = bookingStatus;
-    }
-
-    public String getPaymentStatus() {
-        return paymentStatus;
-    }
-
-    public void setPaymentStatus(String paymentStatus) {
-        this.paymentStatus = paymentStatus;
-    }
-
-    public List<Ticket> getTickets() {
-        return tickets;
-    }
-
-    public void setTickets(List<Ticket> tickets) {
-        this.tickets = tickets;
+        dest.writeTypedList(seats);
+        dest.writeDouble(totalAmount);
+        dest.writeString(bookingTime);
+        dest.writeString(status);
+        dest.writeString(paymentMethod);
     }
 }

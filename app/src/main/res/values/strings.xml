@@ -2,4 +2,10 @@
     <string name="app_name">MovieTicketBooking</string>
     <string name="duration_format">%d min</string>
     <string name="movie_poster">Movie Poster</string>
+    <string name="error_loading_movies">error loading movies</string>
+    <string name="tab_layout_description">Movie categories navigation tabs</string>
+    <string name="now_showing_tab_description">Now showing movies tab</string>
+    <string name="upcoming_tab_description">Upcoming movies tab</string>
+    <string name="now_showing">Now Showing</string>
+    <string name="upcoming">Upcoming</string>
 </resources>

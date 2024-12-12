@@ -2,9 +2,11 @@ package com.finalproject.movieticketbooking.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import com.google.firebase.database.IgnoreExtraProperties;
 import java.util.HashMap;
 import java.util.Map;
 
+@IgnoreExtraProperties
 public class Showtime implements Parcelable {
     private String id;
     private String movieId;
@@ -12,10 +14,11 @@ public class Showtime implements Parcelable {
     private String roomId;
     private String startTime;
     private Map<String, Integer> price;
-    // Empty constructor for Firebase
-    public Showtime() {}
 
-    // Full constructor
+    public Showtime() {
+        // Required empty constructor for Firebase
+    }
+
     public Showtime(String id, String movieId, String cinemaId, String roomId,
                     String startTime, Map<String, Integer> price) {
         this.id = id;
@@ -26,7 +29,6 @@ public class Showtime implements Parcelable {
         this.price = price;
     }
 
-    // Parcelable implementation
     protected Showtime(Parcel in) {
         id = in.readString();
         movieId = in.readString();
@@ -34,10 +36,10 @@ public class Showtime implements Parcelable {
         roomId = in.readString();
         startTime = in.readString();
         price = new HashMap<>();
-        int priceSize = in.readInt();
-        for (int i = 0; i < priceSize; i++) {
+        int size = in.readInt();
+        for (int i = 0; i < size; i++) {
             String key = in.readString();
-            int value = in.readInt();
+            Integer value = in.readInt();
             price.put(key, value);
         }
     }
@@ -53,6 +55,22 @@ public class Showtime implements Parcelable {
             return new Showtime[size];
         }
     };
+
+    // Getters
+    public String getId() { return id; }
+    public String getMovieId() { return movieId; }
+    public String getCinemaId() { return cinemaId; }
+    public String getRoomId() { return roomId; }
+    public String getStartTime() { return startTime; }
+    public Map<String, Integer> getPrice() { return price; }
+
+    // Setters
+    public void setId(String id) { this.id = id; }
+    public void setMovieId(String movieId) { this.movieId = movieId; }
+    public void setCinemaId(String cinemaId) { this.cinemaId = cinemaId; }
+    public void setRoomId(String roomId) { this.roomId = roomId; }
+    public void setStartTime(String startTime) { this.startTime = startTime; }
+    public void setPrice(Map<String, Integer> price) { this.price = price; }
 
     @Override
     public int describeContents() {
@@ -72,57 +90,4 @@ public class Showtime implements Parcelable {
             dest.writeInt(entry.getValue());
         }
     }
-
-
-
-    // Getters and Setters for Showtime
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getMovieId() {
-        return movieId;
-    }
-
-    public void setMovieId(String movieId) {
-        this.movieId = movieId;
-    }
-
-    public String getCinemaId() {
-        return cinemaId;
-    }
-
-    public void setCinemaId(String cinemaId) {
-        this.cinemaId = cinemaId;
-    }
-
-    public String getRoomId() {
-        return roomId;
-    }
-
-    public void setRoomId(String roomId) {
-        this.roomId = roomId;
-    }
-
-    public String getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(String startTime) {
-        this.startTime = startTime;
-    }
-
-    public Map<String, Integer> getPrice() {
-        return price;
-    }
-
-    public void setPrice(Map<String, Integer> price) {
-        this.price = price;
-    }
-
-
 }

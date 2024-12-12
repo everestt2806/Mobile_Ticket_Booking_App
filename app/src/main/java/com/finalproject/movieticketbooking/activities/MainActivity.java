@@ -14,15 +14,14 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.finalproject.movieticketbooking.R;
 import com.finalproject.movieticketbooking.adapters.BannerAdapter;
-import com.finalproject.movieticketbooking.adapters.MovieAdapter;
+import com.finalproject.movieticketbooking.adapters.ViewPagerAdapter;
 import com.finalproject.movieticketbooking.models.Banner;
-import com.finalproject.movieticketbooking.models.Movie;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -40,12 +39,10 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference bannerRef, moviesRef;
 
     private ViewPager2 bannerViewPager;
-    private RecyclerView topMoviesRecycler, upcomingRecycler;
-    private ProgressBar progressBar3, progressBarTopMovie, progressBarUpcoming;
+    private ProgressBar progressBar3;
     private Handler handler;
     private Runnable bannerRunnable;
     private BannerAdapter bannerAdapter;
-    private MovieAdapter topMovieAdapter, upcomingAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
             initAdapters();
             loadData();
             handler = new Handler(Looper.getMainLooper());
+            setupViewPagerAndTabs();
         } catch (Exception e) {
             Log.e(TAG, "Error in onCreate: " + e.getMessage());
             showError("Failed to initialize app");
@@ -68,15 +66,7 @@ public class MainActivity extends AppCompatActivity {
     private void initViews() {
         try {
             bannerViewPager = findViewById(R.id.banner);
-            topMoviesRecycler = findViewById(R.id.topMovie);
-            upcomingRecycler = findViewById(R.id.recycleUpcoming);
             progressBar3 = findViewById(R.id.progressBar3);
-            progressBarTopMovie = findViewById(R.id.progressBarTopMovie);
-            progressBarUpcoming = findViewById(R.id.progressBarUpcoming);
-
-            // Initialize RecyclerViews
-            topMoviesRecycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-            upcomingRecycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         } catch (Exception e) {
             Log.e(TAG, "Error in initViews: " + e.getMessage());
         }
@@ -85,15 +75,16 @@ public class MainActivity extends AppCompatActivity {
     private void initAdapters() {
         try {
             bannerAdapter = new BannerAdapter(new ArrayList<>());
-            topMovieAdapter = new MovieAdapter(new ArrayList<>(), this::navigateToMovieDetail);
-            upcomingAdapter = new MovieAdapter(new ArrayList<>(), this::navigateToMovieDetail);
-
             bannerViewPager.setAdapter(bannerAdapter);
-            topMoviesRecycler.setAdapter(topMovieAdapter);
-            upcomingRecycler.setAdapter(upcomingAdapter);
         } catch (Exception e) {
             Log.e(TAG, "Error in initAdapters: " + e.getMessage());
         }
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
     }
 
     private void initFirebase() {
@@ -110,10 +101,29 @@ public class MainActivity extends AppCompatActivity {
     private void loadData() {
         if (isNetworkAvailable()) {
             loadBanners();
-            loadMovies();
         } else {
             showError("No internet connection");
         }
+    }
+
+    private void setupViewPagerAndTabs() {
+        TabLayout tabLayout = findViewById(R.id.tabLayout);
+        ViewPager2 viewPagerTabs = findViewById(R.id.viewPagerTabs);
+
+        // Tạo adapter với số lượng tab cụ thể
+        ViewPagerAdapter adapter = new ViewPagerAdapter(this);
+        viewPagerTabs.setAdapter(adapter);
+
+        // Giới hạn số trang được giữ trong bộ nhớ
+        viewPagerTabs.setOffscreenPageLimit(ViewPager2.OFFSCREEN_PAGE_LIMIT_DEFAULT);
+
+        // Kết nối TabLayout với ViewPager2
+        new TabLayoutMediator(tabLayout, viewPagerTabs, (tab, position) -> {
+            tab.setText(position == 0 ? "Đang khởi chiếu" : "Sắp khởi chiếu");
+        }).attach();
+
+        // Đảm bảo người dùng có thể tương tác với ViewPager2
+        viewPagerTabs.setUserInputEnabled(true);
     }
 
     private void loadBanners() {
@@ -158,92 +168,11 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
-    private void loadMovies() {
-        progressBarTopMovie.setVisibility(View.VISIBLE);
-        progressBarUpcoming.setVisibility(View.VISIBLE);
-
-        moviesRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                try {
-                    List<Movie> nowShowingMovies = new ArrayList<>();
-                    List<Movie> upcomingMovies = new ArrayList<>();
-
-                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        Movie movie = dataSnapshot.getValue(Movie.class);
-                        if (movie != null) {
-                            if ("NOW_SHOWING".equals(movie.getStatus())) {
-                                nowShowingMovies.add(movie);
-                            } else if ("COMING_SOON".equals(movie.getStatus())) {
-                                upcomingMovies.add(movie);
-                            }
-                        }
-                    }
-
-                    setupTopMoviesRecycler(nowShowingMovies);
-                    setupUpcomingMoviesRecycler(upcomingMovies);
-                } catch (Exception e) {
-                    Log.e(TAG, "Error loading movies: " + e.getMessage());
-                } finally {
-                    progressBarTopMovie.setVisibility(View.GONE);
-                    progressBarUpcoming.setVisibility(View.GONE);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                handleError(error, progressBarTopMovie);
-                handleError(error, progressBarUpcoming);
-            }
-        });
-    }
-
     private void setupBannerViewPager(List<Banner> banners) {
         if (!isFinishing() && banners != null && !banners.isEmpty()) {
             bannerAdapter = new BannerAdapter(banners);
             bannerViewPager.setAdapter(bannerAdapter);
             autoScrollBanner();
-        }
-    }
-
-    private void setupTopMoviesRecycler(List<Movie> movies) {
-        if (!isFinishing() && movies != null && !movies.isEmpty()) {
-            topMovieAdapter = new MovieAdapter(movies, this::navigateToMovieDetail);
-            topMoviesRecycler.setAdapter(topMovieAdapter);
-        }
-    }
-
-    private void setupUpcomingMoviesRecycler(List<Movie> movies) {
-        if (!isFinishing() && movies != null && !movies.isEmpty()) {
-            upcomingAdapter = new MovieAdapter(movies, this::navigateToMovieDetail);
-            upcomingRecycler.setAdapter(upcomingAdapter);
-        }
-    }
-
-    private void navigateToMovieDetail(Movie movie) {
-        try {
-            if (movie != null) {
-                Intent intent = new Intent(MainActivity.this, MovieDetailActivity.class);
-                intent.putExtra("movie", movie);
-                startActivity(intent);
-            }
-        } catch (Exception e) {
-            Log.e(TAG, "Error navigating to movie detail: " + e.getMessage());
-            showError("Cannot open movie details");
-        }
-    }
-
-    private void handleError(DatabaseError error, ProgressBar progressBar) {
-        if (progressBar != null) {
-            progressBar.setVisibility(View.GONE);
-        }
-        showError(error.getMessage());
-    }
-
-    private void showError(String message) {
-        if (!isFinishing()) {
-            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -280,6 +209,19 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
+    private void showError(String message) {
+        if (!isFinishing()) {
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void handleError(DatabaseError error, ProgressBar progressBar) {
+        if (progressBar != null) {
+            progressBar.setVisibility(View.GONE);
+        }
+        showError(error.getMessage());
+    }
+
     @Override
     protected void onPause() {
         super.onPause();
@@ -303,6 +245,6 @@ public class MainActivity extends AppCompatActivity {
         if (handler != null && bannerRunnable != null) {
             handler.removeCallbacks(bannerRunnable);
         }
+        handler = null;
     }
 }
-

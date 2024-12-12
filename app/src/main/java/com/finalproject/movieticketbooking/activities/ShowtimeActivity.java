@@ -111,12 +111,12 @@ public class ShowtimeActivity extends AppCompatActivity implements CinemaShowtim
     public void onShowtimeSelected(Showtime showtime) {
         // Xử lý khi người dùng chọn một showtime
         if (showtime != null) {
-            Intent intent = new Intent(this, SeatSelectionActivity.class);
-            intent.putExtra("showtime", showtime);
-            intent.putExtra("movieId", movieId);
-            intent.putExtra("movieTitle", movieTitle);
-            intent.putExtra("moviePoster", moviePoster);
-            startActivity(intent);
+//            Intent intent = new Intent(this, SeatSelectionActivity.class);
+//            intent.putExtra("showtime", showtime);
+//            intent.putExtra("movieId", movieId);
+//            intent.putExtra("movieTitle", movieTitle);
+//            intent.putExtra("moviePoster", moviePoster);
+//            startActivity(intent);
         } else {
             Toast.makeText(this, "Invalid showtime selected", Toast.LENGTH_SHORT).show();
         }

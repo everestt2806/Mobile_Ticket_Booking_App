@@ -5,7 +5,8 @@
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     app:cardCornerRadius="8dp"
-    app:cardElevation="4dp">
+    app:cardElevation="4dp"
+    app:cardBackgroundColor="#111442">  <!-- Màu nền card hơi sáng hơn main_color -->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,7 +21,7 @@
             android:layout_height="wrap_content"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:textColor="@color/white"/>
+            android:textColor="#FFFFFF"/>
 
         <TextView
             android:id="@+id/tvCinemaAddress"
@@ -28,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:textSize="14sp"
-            android:textColor="@color/gray"/>
+            android:textColor="#B3B3B3"/>
 
         <com.google.android.flexbox.FlexboxLayout
             android:id="@+id/flexboxShowtimes"
