@@ -13,6 +13,7 @@
         <item name="android:minHeight">48dp</item>
     </style>
 
+
     <!-- Style for circular shape -->
     <style name="CircularShape">
         <item name="shapeAppearanceOverlay">@style/CircularShapeAppearance</item>
@@ -23,4 +24,8 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
     </style>
+    <style name="RoundedImageView">
+        <item name="cornerSize">8dp</item>
+    </style>
 </resources>
+

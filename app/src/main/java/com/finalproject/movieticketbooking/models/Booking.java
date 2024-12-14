@@ -11,38 +11,26 @@ public class Booking implements Parcelable {
     private String id;
     private String userId;
     private String showtimeId;
-    private List<BookingSeat> seats;
-    private double totalAmount;
-    private String bookingTime;
-    private String status;
-    private String paymentMethod;
+    private List<String> seatIds;
+    private double totalPrice;
+    private String createdAt;
 
-    public Booking() {
-        // Required empty constructor for Firebase
-    }
-
-    public Booking(String id, String userId, String showtimeId, List<BookingSeat> seats,
-                   double totalAmount, String bookingTime, String status, String paymentMethod) {
+    public Booking(String id, String userId, String showtimeId, List<String> seatIds, double totalPrice, String createdAt) {
         this.id = id;
         this.userId = userId;
         this.showtimeId = showtimeId;
-        this.seats = seats;
-        this.totalAmount = totalAmount;
-        this.bookingTime = bookingTime;
-        this.status = status;
-        this.paymentMethod = paymentMethod;
+        this.seatIds = seatIds;
+        this.totalPrice = totalPrice;
+        this.createdAt = createdAt;
     }
 
     protected Booking(Parcel in) {
         id = in.readString();
         userId = in.readString();
         showtimeId = in.readString();
-        seats = new ArrayList<>();
-        in.readTypedList(seats, BookingSeat.CREATOR);
-        totalAmount = in.readDouble();
-        bookingTime = in.readString();
-        status = in.readString();
-        paymentMethod = in.readString();
+        seatIds = in.createStringArrayList();
+        totalPrice = in.readDouble();
+        createdAt = in.readString();
     }
 
     public static final Creator<Booking> CREATOR = new Creator<Booking>() {
@@ -57,26 +45,6 @@ public class Booking implements Parcelable {
         }
     };
 
-    // Getters
-    public String getId() { return id; }
-    public String getUserId() { return userId; }
-    public String getShowtimeId() { return showtimeId; }
-    public List<BookingSeat> getSeats() { return seats; }
-    public double getTotalAmount() { return totalAmount; }
-    public String getBookingTime() { return bookingTime; }
-    public String getStatus() { return status; }
-    public String getPaymentMethod() { return paymentMethod; }
-
-    // Setters
-    public void setId(String id) { this.id = id; }
-    public void setUserId(String userId) { this.userId = userId; }
-    public void setShowtimeId(String showtimeId) { this.showtimeId = showtimeId; }
-    public void setSeats(List<BookingSeat> seats) { this.seats = seats; }
-    public void setTotalAmount(double totalAmount) { this.totalAmount = totalAmount; }
-    public void setBookingTime(String bookingTime) { this.bookingTime = bookingTime; }
-    public void setStatus(String status) { this.status = status; }
-    public void setPaymentMethod(String paymentMethod) { this.paymentMethod = paymentMethod; }
-
     @Override
     public int describeContents() {
         return 0;
@@ -87,10 +55,26 @@ public class Booking implements Parcelable {
         dest.writeString(id);
         dest.writeString(userId);
         dest.writeString(showtimeId);
-        dest.writeTypedList(seats);
-        dest.writeDouble(totalAmount);
-        dest.writeString(bookingTime);
-        dest.writeString(status);
-        dest.writeString(paymentMethod);
+        dest.writeStringList(seatIds);
+        dest.writeDouble(totalPrice);
+        dest.writeString(createdAt);
     }
+
+    // Getters
+    public String getId() { return id; }
+    public String getUserId() { return userId; }
+    public String getShowtimeId() { return showtimeId; }
+    public List<String> getSeats() { return seatIds; }
+    public double getTotalPrice() { return totalPrice; }
+    public String getBookingTime() { return createdAt; }
+
+
+    // Setters
+    public void setId(String id) { this.id = id; }
+    public void setUserId(String userId) { this.userId = userId; }
+    public void setShowtimeId(String showtimeId) { this.showtimeId = showtimeId; }
+    public void setSeats(List<BookingSeat> seats) { this.seatIds = seatIds; }
+    public void setTotalAmount(double totalAmount) { this.totalPrice = totalPrice; }
+    public void setBookingTime(String bookingTime) { this.createdAt = createdAt; }
+
 }

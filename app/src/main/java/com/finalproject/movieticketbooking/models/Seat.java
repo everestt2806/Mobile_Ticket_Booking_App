@@ -7,11 +7,7 @@ import com.google.firebase.database.IgnoreExtraProperties;
 
 @IgnoreExtraProperties
 public class Seat implements Parcelable {
-    private String type; // standard, vip, couple
-
-    public Seat() {
-        // Required empty constructor for Firebase
-    }
+    private String type;
 
     public Seat(String type) {
         this.type = type;
@@ -33,9 +29,6 @@ public class Seat implements Parcelable {
         }
     };
 
-    public String getType() { return type; }
-    public void setType(String type) { this.type = type; }
-
     @Override
     public int describeContents() {
         return 0;
@@ -45,6 +38,9 @@ public class Seat implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(type);
     }
+
+    public String getType() { return type; }
+    public void setType(String type) { this.type = type; }
 }
 
 

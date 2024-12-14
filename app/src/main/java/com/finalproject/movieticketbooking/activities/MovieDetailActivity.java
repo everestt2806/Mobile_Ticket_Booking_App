@@ -69,18 +69,15 @@ public class MovieDetailActivity extends AppCompatActivity {
             movie = getIntent().getParcelableExtra("movie");
         }
 
-//        buyTicket.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(MovieDetailActivity.this, ShowtimeActivity.class);
-//                intent.putExtra("movieId", movie.getId());
-//                intent.putExtra("movieTitle", movie.getTitle());
-//                intent.putExtra("moviePoster", movie.getPoster());
-//                intent.putExtra("movieAgeRating", movie.getAgeRating());
-//                intent.putExtra("movieDuration", String.valueOf(movie.getDuration()));
-//                startActivity(intent);
-//            }
-//        });
+        buyTicket.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MovieDetailActivity.this, ShowtimeActivity.class);
+                intent.putExtra("MOVIE_DATA", movie); // Truyền đối tượng Movie
+                startActivity(intent);
+            }
+        });
+
         if (movie != null) {
             if ("COMING_SOON".equals(movie.getStatus())) {
                 // Nếu phim sắp chiếu, ẩn nút Buy Ticket

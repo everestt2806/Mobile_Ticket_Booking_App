@@ -1,28 +1,25 @@
 package com.finalproject.movieticketbooking.adapters;
 
-import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.finalproject.movieticketbooking.R;
-import com.finalproject.movieticketbooking.databinding.ItemDateBinding;
 
-import java.time.LocalDate;
-import java.time.format.TextStyle;
 import java.util.List;
-import java.util.Locale;
+
+
+
 
 public class DateAdapter extends RecyclerView.Adapter<DateAdapter.DateViewHolder> {
-    private List<LocalDate> dates;
-    private OnDateSelectedListener listener;
-    private int selectedPosition = 0;
 
-    public DateAdapter(List<LocalDate> dates, OnDateSelectedListener listener) {
+    private final List<String> dates;
+    private final OnDateSelectedListener listener;
+
+    private int selectedPosition = 0;
+    public DateAdapter(List<String> dates, OnDateSelectedListener listener) {
         this.dates = dates;
         this.listener = listener;
     }
@@ -30,63 +27,57 @@ public class DateAdapter extends RecyclerView.Adapter<DateAdapter.DateViewHolder
     @NonNull
     @Override
     public DateViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ItemDateBinding binding = ItemDateBinding.inflate(
-                LayoutInflater.from(parent.getContext()), parent, false);
-        return new DateViewHolder(binding);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_date, parent, false);
+        return new DateViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull DateViewHolder holder, int position) {
-        holder.bind(dates.get(position), position == selectedPosition);
+        String date = dates.get(position);
+        holder.dateText.setText(date);
+
+        // Set selected state
+        holder.dateText.setSelected(position == selectedPosition);
+
+        holder.itemView.setOnClickListener(v -> {
+            int previousSelected = selectedPosition;
+            selectedPosition = holder.getAdapterPosition();
+            notifyItemChanged(previousSelected);
+            notifyItemChanged(selectedPosition);
+            listener.onDateSelected(date);
+        });
     }
+
+    public void setSelectedPosition(int position) {
+        int previousSelected = selectedPosition;
+        selectedPosition = position;
+        notifyItemChanged(previousSelected);
+        notifyItemChanged(selectedPosition);
+
+        // Trigger the date selection
+        if (position >= 0 && position < dates.size()) {
+            listener.onDateSelected(dates.get(position));
+        }
+    }
+
 
     @Override
     public int getItemCount() {
         return dates.size();
     }
 
-    class DateViewHolder extends RecyclerView.ViewHolder {
-        private final ItemDateBinding binding;
+    static class DateViewHolder extends RecyclerView.ViewHolder {
+        TextView dateText;
 
-        DateViewHolder(ItemDateBinding binding) {
-            super(binding.getRoot());
-            this.binding = binding;
-
-            itemView.setOnClickListener(v -> {
-                int oldPosition = selectedPosition;
-                selectedPosition = getAdapterPosition();
-                notifyItemChanged(oldPosition);
-                notifyItemChanged(selectedPosition);
-                listener.onDateSelected(dates.get(selectedPosition));
-            });
-        }
-
-        void bind(LocalDate date, boolean isSelected) {
-            // Format day of week
-            String dayOfWeek = null;
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                dayOfWeek = date.getDayOfWeek()
-                        .getDisplayName(TextStyle.SHORT, Locale.getDefault());
-            }
-
-            // Format day of month
-            String dayOfMonth = null;
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                dayOfMonth = String.valueOf(date.getDayOfMonth());
-            }
-
-            // Set text
-            binding.tvDayOfWeek.setText(dayOfWeek);
-            binding.tvDayOfMonth.setText(dayOfMonth);
-
-            // Update selected state
-            binding.getRoot().setSelected(isSelected);
-            binding.tvDayOfWeek.setSelected(isSelected);
-            binding.tvDayOfMonth.setSelected(isSelected);
+        public DateViewHolder(@NonNull View itemView) {
+            super(itemView);
+            dateText = itemView.findViewById(R.id.date_text);
         }
     }
 
     public interface OnDateSelectedListener {
-        void onDateSelected(LocalDate date);
+        void onDateSelected(String selectedDate);
     }
 }
+
+
