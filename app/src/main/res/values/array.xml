@@ -1,0 +1,7 @@
+<resources>
+    <string-array name="gender_options">
+        <item>Nam</item>
+        <item>Nữ</item>
+        <item>Không muốn trả lời</item>
+    </string-array>
+</resources>

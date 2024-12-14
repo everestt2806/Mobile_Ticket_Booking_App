@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Style for a rounded button -->
     <style name="RoundedPurpleButton" parent="Widget.AppCompat.Button">
         <item name="android:background">@drawable/rounded_button</item>
         <item name="android:textColor">@android:color/white</item>
@@ -10,5 +11,16 @@
         <item name="android:paddingBottom">8dp</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:minHeight">48dp</item>
+    </style>
+
+    <!-- Style for circular shape -->
+    <style name="CircularShape">
+        <item name="shapeAppearanceOverlay">@style/CircularShapeAppearance</item>
+    </style>
+
+    <!-- Define a circular shape appearance -->
+    <style name="CircularShapeAppearance">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
     </style>
 </resources>
