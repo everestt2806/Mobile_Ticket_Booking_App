@@ -1,6 +1,6 @@
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/users"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -78,9 +78,10 @@
             <!-- Avatar -->
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/avatar"
-                android:layout_width="97dp"
-                android:layout_height="97dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:layout_gravity="center"
+                android:src="@drawable/paconnie"
                 android:background="@drawable/circle_background"
                 android:scaleType="centerCrop"
                 app:shapeAppearanceOverlay="@style/CircularShape" />
@@ -192,6 +193,7 @@
                         android:layout_height="18dp"
                         android:src="@drawable/ic_arrowright" />
                 </LinearLayout>
+
                 <!-- point -->
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -275,8 +277,26 @@
                 </LinearLayout>
 
             </LinearLayout>
-
+            <Button
+                android:id="@+id/logoutButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:backgroundTint="#871919"
+                android:text="Đăng xuất"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold" />
         </LinearLayout>
     </ScrollView>
-
+    <ProgressBar
+        android:id="@+id/logoutProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:indeterminate="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:ignore="MissingConstraints" />
 </androidx.constraintlayout.widget.ConstraintLayout>

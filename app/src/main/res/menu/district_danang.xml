@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/district_haichau" android:title="Hải Châu"/>
+    <item android:id="@+id/district_lamha" android:title="Liên Chiểu"/>
+    <item android:id="@+id/district_nguhanhson" android:title="Ngũ Hành Sơn"/>
+    <item android:id="@+id/district_sontra" android:title="Sơn Trà"/>
+    <item android:id="@+id/district_camon" android:title="Cẩm Lệ"/>
+</menu>

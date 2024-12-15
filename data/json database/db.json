@@ -761,6 +761,7 @@
         }
     },
     "users": {
+
         "user123": {
             "id": "user123",
             "email": "user1@gmail.com",
@@ -768,6 +769,8 @@
             "phoneNumber": "0901234567",
             "password": "password",
             "avatar": "https://example.com/avatars/user1.jpg",
+            "address": "Ba Đình, Hà Nội",
+            "birthDate": "15/12/2023",
             "ticketHistory": [
                 "ticket1"
             ]
@@ -779,6 +782,8 @@
             "phoneNumber": "0909876543",
             "password": "password",
             "avatar": "https://example.com/avatars/user2.jpg",
+            "address": "Quận 7, HCM",
+            "birthDate": "4/1/2024",
             "ticketHistory": [
                 "ticket2"
             ]

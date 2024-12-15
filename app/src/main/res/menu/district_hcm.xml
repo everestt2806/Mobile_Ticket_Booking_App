@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/district_1" android:title="Quận 1"/>
+    <item android:id="@+id/district_2" android:title="Quận 2"/>
+    <item android:id="@+id/district_3" android:title="Quận 3"/>
+    <item android:id="@+id/district_4" android:title="Quận 4"/>
+    <item android:id="@+id/district_5" android:title="Quận 5"/>
+    <item android:id="@+id/district_6" android:title="Quận 6"/>
+    <item android:id="@+id/district_7" android:title="Quận 7"/>
+    <item android:id="@+id/district_8" android:title="Quận 8"/>
+    <item android:id="@+id/district_binhthanh" android:title="Bình Thạnh"/>
+    <item android:id="@+id/district_govap" android:title="Gò Vấp"/>
+    <item android:id="@+id/district_phuNhuan" android:title="Phú Nhuận"/>
+    <item android:id="@+id/district_thuduc" android:title="Thủ Đức"/>
+    <item android:id="@+id/district_tanbinh" android:title="Tân Bình"/>
+    <item android:id="@+id/district_tanphu" android:title="Tân Phú"/>
+</menu>

@@ -19,18 +19,19 @@
             android:name=".activities.ShowtimeActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.ShowtimesActivity"
-            android:exported="false" />
-        <activity
             android:name=".activities.SeatSelectionActivity"
             android:exported="false" />
         <activity
             android:name=".activities.MovieDetailActivity"
-            android:exported="false" /> <!-- <activity -->
-        <!-- android:name=".activities.MainActivity" -->
-        <!-- android:exported="false" /> -->
+            android:exported="false" />
         <activity
             android:name=".activities.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.UserActivity"
             android:exported="false" />
         <activity
             android:name=".activities.MainActivity"

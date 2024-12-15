@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/district_hongbang" android:title="Hồng Bàng"/>
+    <item android:id="@+id/district_lachtray" android:title="Lạch Tray"/>
+    <item android:id="@+id/district_dongkhe" android:title="Đồng Khê"/>
+    <item android:id="@+id/district_kienan" android:title="Kiến An"/>
+    <item android:id="@+id/district_hoangbich" android:title="Hoàng Bích"/>
+</menu>

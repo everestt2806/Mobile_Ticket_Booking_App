@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <gradient
-        android:endColor="#DEDEDE"
-        android:startColor="#8D8E94" />
+    <!-- Viền tròn -->
+    <stroke
+        android:width="2dp"
+        android:color="#332F2F"/>
+
+    <!-- Bo góc tròn -->
     <corners android:radius="1000dp"/>
+
+    <solid android:color="@android:color/transparent" />
 </shape>

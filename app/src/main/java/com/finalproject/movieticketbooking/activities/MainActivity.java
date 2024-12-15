@@ -2,6 +2,7 @@ package com.finalproject.movieticketbooking.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkCapabilities;
 import android.os.Bundle;
@@ -28,6 +29,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -35,9 +37,9 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
+    private ChipNavigationBar bottomNav;
     private FirebaseDatabase database;
     private DatabaseReference bannerRef, moviesRef;
-
     private ViewPager2 bannerViewPager;
     private ProgressBar progressBar3;
     private Handler handler;
@@ -57,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
             loadData();
             handler = new Handler(Looper.getMainLooper());
             setupViewPagerAndTabs();
+            setupBottomNavigation();
         } catch (Exception e) {
             Log.e(TAG, "Error in onCreate: " + e.getMessage());
             showError("Failed to initialize app");
@@ -110,19 +113,15 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabLayout = findViewById(R.id.tabLayout);
         ViewPager2 viewPagerTabs = findViewById(R.id.viewPagerTabs);
 
-        // Tạo adapter với số lượng tab cụ thể
         ViewPagerAdapter adapter = new ViewPagerAdapter(this);
         viewPagerTabs.setAdapter(adapter);
 
-        // Giới hạn số trang được giữ trong bộ nhớ
         viewPagerTabs.setOffscreenPageLimit(ViewPager2.OFFSCREEN_PAGE_LIMIT_DEFAULT);
 
-        // Kết nối TabLayout với ViewPager2
         new TabLayoutMediator(tabLayout, viewPagerTabs, (tab, position) -> {
             tab.setText(position == 0 ? "Đang khởi chiếu" : "Sắp khởi chiếu");
         }).attach();
 
-        // Đảm bảo người dùng có thể tương tác với ViewPager2
         viewPagerTabs.setUserInputEnabled(true);
     }
 
@@ -237,6 +236,7 @@ public class MainActivity extends AppCompatActivity {
                 bannerViewPager.getAdapter().getItemCount() > 0) {
             autoScrollBanner();
         }
+        bottomNav.setItemSelected(R.id.home, true);
     }
 
     @Override
@@ -246,5 +246,29 @@ public class MainActivity extends AppCompatActivity {
             handler.removeCallbacks(bannerRunnable);
         }
         handler = null;
+    }
+
+    private void setupBottomNavigation() {
+        bottomNav = findViewById(R.id.bottom_nav);
+        SharedPreferences preferences = getSharedPreferences("appPreferences", MODE_PRIVATE);
+        boolean isLoggedIn = preferences.getBoolean("isLoggedIn", false);
+        bottomNav.setOnItemSelectedListener(itemId -> {
+            if (itemId == R.id.home) {
+                // Xử lý cho Home
+            } else if (itemId == R.id.favorites) {
+                // Xử lý cho Favorites
+            } else if (itemId == R.id.blog) {
+                // Xử lý cho Blog
+            } else if (itemId == R.id.profile) {
+                // Chuyển sang LoginActivity
+                if (isLoggedIn) {
+                    Intent intent = new Intent(MainActivity.this, UserActivity.class);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
     }
 }

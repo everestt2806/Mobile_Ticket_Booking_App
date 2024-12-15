@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Quận/Huyện của Hà Nội -->
+    <item android:id="@+id/district_bading" android:title="Ba Đình"/>
+    <item android:id="@+id/district_hoankiem" android:title="Hoàn Kiếm"/>
+    <item android:id="@+id/district_caugiay" android:title="Cầu Giấy"/>
+    <item android:id="@+id/district_hadong" android:title="Hà Đông"/>
+    <item android:id="@+id/district_tayho" android:title="Tây Hồ"/>
+    <item android:id="@+id/district_longbien" android:title="Long Biên"/>
+    <item android:id="@+id/district_hoaiduc" android:title="Hoài Đức"/>
+    <item android:id="@+id/district_maiha" android:title="Mỹ Đức"/>
+    <item android:id="@+id/district_sonla" android:title="Sóc Sơn"/>
+</menu>
