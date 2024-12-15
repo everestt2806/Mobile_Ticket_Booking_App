@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- Home -->
     <item
         android:id="@+id/home"
         android:icon="@drawable/ic_home"
@@ -8,13 +10,7 @@
         app:cnb_iconColor="@color/nav_icon_color"
         app:cnb_backgroundColor="@color/nav_item_bg" />
 
-    <item
-        android:id="@+id/favorites"
-        android:icon="@drawable/ic_favorite"
-        android:title="Favorite"
-        app:cnb_iconColor="@color/nav_icon_color"
-        app:cnb_backgroundColor="@color/nav_item_bg" />
-
+    <!-- Blog -->
     <item
         android:id="@+id/blog"
         android:icon="@drawable/ic_blog"
@@ -22,6 +18,7 @@
         app:cnb_iconColor="@color/nav_icon_color"
         app:cnb_backgroundColor="@color/nav_item_bg" />
 
+    <!-- Profile -->
     <item
         android:id="@+id/profile"
         android:icon="@drawable/ic_person"

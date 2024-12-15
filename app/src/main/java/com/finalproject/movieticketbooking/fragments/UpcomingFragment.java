@@ -19,7 +19,7 @@ import com.finalproject.movieticketbooking.activities.MovieDetailActivity;
 import com.finalproject.movieticketbooking.adapters.MovieAdapter;
 import com.finalproject.movieticketbooking.custom.GridSpacingItemDecoration;
 import com.finalproject.movieticketbooking.models.Movie;
-import com.finalproject.movieticketbooking.services.MovieService;
+import com.finalproject.movieticketbooking.services.DatabaseService;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -31,7 +31,7 @@ public class UpcomingFragment extends Fragment {
     private RecyclerView recyclerView;
     private MovieAdapter movieAdapter;
     private ProgressBar progressBar;
-    private MovieService movieService;
+    private DatabaseService databaseService;
     private ValueEventListener movieListener;
 
     @Override
@@ -52,7 +52,7 @@ public class UpcomingFragment extends Fragment {
     private void initViews(@NonNull View view) {
         recyclerView = view.findViewById(R.id.movieRecyclerView);
         progressBar = view.findViewById(R.id.movieProgressBar);
-        movieService = new MovieService();
+        databaseService = new DatabaseService();
         movieAdapter = new MovieAdapter(requireContext());
     }
 
@@ -86,7 +86,7 @@ public class UpcomingFragment extends Fragment {
 
         // Remove previous listener if exists
         if (movieListener != null) {
-            movieService.getUpcomingMovies().removeEventListener(movieListener);
+            databaseService.getNowShowingMovies().removeEventListener(movieListener);
         }
 
         movieListener = new ValueEventListener() {
@@ -115,7 +115,7 @@ public class UpcomingFragment extends Fragment {
             }
         };
 
-        movieService.getUpcomingMovies().addValueEventListener(movieListener);
+        databaseService.getComingSoonMovies().addValueEventListener(movieListener);
     }
 
     private void updateUI(List<Movie> movies) {
@@ -142,7 +142,7 @@ public class UpcomingFragment extends Fragment {
     @Override
     public void onDestroyView() {
         if (movieListener != null) {
-            movieService.getNowPlayingMovies().removeEventListener(movieListener);
+            databaseService.getComingSoonMovies().removeEventListener(movieListener);
         }
 
         if (recyclerView != null) {
@@ -153,7 +153,7 @@ public class UpcomingFragment extends Fragment {
         movieAdapter = null;
         recyclerView = null;
         progressBar = null;
-        movieService = null;
+        databaseService = null;
 
         super.onDestroyView();
     }

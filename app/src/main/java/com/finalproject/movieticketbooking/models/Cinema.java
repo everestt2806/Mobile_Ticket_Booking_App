@@ -12,10 +12,7 @@ public class Cinema implements Parcelable {
     private String city;
     private String image;
 
-    public Cinema() {
-        // Required empty constructor for Firebase
-    }
-
+    public Cinema() {}
     public Cinema(String id, String name, String address, String city, String image) {
         this.id = id;
         this.name = name;
@@ -44,20 +41,6 @@ public class Cinema implements Parcelable {
         }
     };
 
-    // Getters
-    public String getId() { return id; }
-    public String getName() { return name; }
-    public String getAddress() { return address; }
-    public String getCity() { return city; }
-    public String getImage() { return image; }
-
-    // Setters
-    public void setId(String id) { this.id = id; }
-    public void setName(String name) { this.name = name; }
-    public void setAddress(String address) { this.address = address; }
-    public void setCity(String city) { this.city = city; }
-    public void setImage(String image) { this.image = image; }
-
     @Override
     public int describeContents() {
         return 0;
@@ -71,4 +54,18 @@ public class Cinema implements Parcelable {
         dest.writeString(city);
         dest.writeString(image);
     }
+
+    // Getters
+    public String getId() { return id; }
+    public String getName() { return name; }
+    public String getAddress() { return address; }
+    public String getCity() { return city; }
+    public String getImage() { return image; }
+
+    // Setters
+    public void setId(String id) { this.id = id; }
+    public void setName(String name) { this.name = name; }
+    public void setAddress(String address) { this.address = address; }
+    public void setCity(String city) { this.city = city; }
+    public void setImage(String image) { this.image = image; }
 }

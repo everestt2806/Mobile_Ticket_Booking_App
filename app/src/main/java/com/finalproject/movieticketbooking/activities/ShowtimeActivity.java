@@ -1,252 +1,334 @@
 package com.finalproject.movieticketbooking.activities;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.finalproject.movieticketbooking.R;
-import com.finalproject.movieticketbooking.adapters.CinemaShowtimeAdapter;
+import com.finalproject.movieticketbooking.adapters.CinemaAdapter;
+import com.finalproject.movieticketbooking.adapters.DateAdapter;
+import com.finalproject.movieticketbooking.adapters.ShowtimeAdapter;
+import com.finalproject.movieticketbooking.custom.SpacingItemDecoration;
 import com.finalproject.movieticketbooking.models.Cinema;
-import com.finalproject.movieticketbooking.models.CinemaWithShowtimes;
+import com.finalproject.movieticketbooking.models.Movie;
 import com.finalproject.movieticketbooking.models.Showtime;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
+import com.finalproject.movieticketbooking.services.DatabaseService;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.imageview.ShapeableImageView;
 
+
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.HashMap;
+import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 
-public class ShowtimeActivity extends AppCompatActivity implements CinemaShowtimeAdapter.OnShowtimeSelectedListener {
-    private String movieId, movieTitle, moviePoster, movieDuration, movieAgeRating;
+public class ShowtimeActivity extends AppCompatActivity {
 
-    private RecyclerView rvShowtimes;
-    private CinemaShowtimeAdapter adapter;
-    private List<CinemaWithShowtimes> cinemaShowtimesList;
-    private ProgressBar progressBar;
-    private TextView tvNoShowtimes, tvErrorMessage, title, duration, ageRating;
-    private ImageView btnBack;
+    private RecyclerView dateRecyclerView;
+    private RecyclerView cinemaRecyclerView;
 
-    private ImageView poster;
+    private DateAdapter dateAdapter;
+    private CinemaAdapter cinemaAdapter;
+
+    private List<String> datesList = new ArrayList<>();
+    private List<Cinema> cinemaList = new ArrayList<>();
+
+    private DatabaseService databaseService;
+    private Movie selectedMovie;
+
+    ShapeableImageView poster;
+    TextView movieTitle, movieDuration;
+    Chip movieAgeRating;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_showtime);
 
-        // Lấy dữ liệu từ Intent
-        Intent intent = getIntent();
-        if (intent != null) {
-            movieId = intent.getStringExtra("movieId");
-            movieTitle = intent.getStringExtra("movieTitle");
-            moviePoster = intent.getStringExtra("moviePoster");
-            movieDuration = intent.getStringExtra("movieDuration");
-            movieAgeRating = intent.getStringExtra("movieAgeRating");
-            // Kiểm tra dữ liệu bắt buộc
-            if (movieId == null) {
-                Toast.makeText(this, "Error: Movie data not found", Toast.LENGTH_SHORT).show();
-                finish();
-                return;
-            }
-        }
+        poster = findViewById(R.id.movie_poster);
+        movieTitle = findViewById(R.id.movie_title);
+        movieDuration = findViewById(R.id.movie_duration);
+        movieAgeRating = findViewById(R.id.movie_age_rating);
+        // Nhận dữ liệu Movie từ Intent
+        selectedMovie = getIntent().getParcelableExtra("MOVIE_DATA");
 
-        // Khởi tạo các view
-        btnBack = findViewById(R.id.btnBack);
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
-        rvShowtimes = findViewById(R.id.rvShowtimes);
-        progressBar = findViewById(R.id.progressBar);
-        tvNoShowtimes = findViewById(R.id.tvNoShowtimes);
-        tvErrorMessage = findViewById(R.id.tvErrorMessage);
-        title = findViewById(R.id.tvMovieTitle);
-        duration = findViewById(R.id.tvDuration);
-        ageRating = findViewById(R.id.tvAgeRating);
-        poster = findViewById(R.id.ivMoviePoster);
-        cinemaShowtimesList = new ArrayList<>();
-        adapter = new CinemaShowtimeAdapter(cinemaShowtimesList, this);
-        rvShowtimes.setLayoutManager(new LinearLayoutManager(this));
-        rvShowtimes.setAdapter(adapter);
-
-        // Load dữ liệu showtimes
-        if (movieId != null) {
-            title.setText(movieTitle);
-            duration.setText("Duration: "+ movieDuration + " minutes");
-            ageRating.setText("Age Rating: "+ movieAgeRating);
-            if(moviePoster != null){
-                Glide.with(this)
-                        .load(moviePoster) // URL của hình ảnh
-                        .placeholder(R.drawable.placeholder_movie) // Hình ảnh hiển thị khi đang tải
-                        .error(R.drawable.placeholder_movie) // Hình ảnh hiển thị khi tải lỗi
-                        .into(poster); // Đặt hình vào ImageView
-            }
-            loadCinemasAndShowtimes();
-        }
-    }
-
-    @Override
-    public void onShowtimeSelected(Showtime showtime) {
-        // Xử lý khi người dùng chọn một showtime
-        if (showtime != null) {
-//            Intent intent = new Intent(this, SeatSelectionActivity.class);
-//            intent.putExtra("showtime", showtime);
-//            intent.putExtra("movieId", movieId);
-//            intent.putExtra("movieTitle", movieTitle);
-//            intent.putExtra("moviePoster", moviePoster);
-//            startActivity(intent);
+        if (selectedMovie == null) {
+            Toast.makeText(this, "Movie data not found!", Toast.LENGTH_SHORT).show();
+            finish();
         } else {
-            Toast.makeText(this, "Invalid showtime selected", Toast.LENGTH_SHORT).show();
+            Glide.with(this)
+                    .load(selectedMovie.getPoster())
+                    .into(poster);
+            movieTitle.setText(selectedMovie.getTitle());
+            movieDuration.setText("Duration: "+ String.valueOf(selectedMovie.getDuration()) + "minutes");
+            movieAgeRating.setText(selectedMovie.getAgeRating());
+
+            Log.d("ShowtimeActivity", "Selected Movie: " + selectedMovie.getTitle());
         }
+
+        // Khởi tạo DatabaseService
+        databaseService = new DatabaseService();
+
+        // Ánh xạ View
+        dateRecyclerView = findViewById(R.id.date_list);
+        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.item_spacing);
+        dateRecyclerView.addItemDecoration(new SpacingItemDecoration(spacingInPixels));
+        cinemaRecyclerView = findViewById(R.id.cinema_list);
+
+        findViewById(R.id.btnBack).setOnClickListener(v -> finish());
+
+        // Thiết lập danh sách ngày
+        setupDates();
+
+        SimpleDateFormat apiDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        String today = apiDateFormat.format(Calendar.getInstance().getTime());
+        Log.d("Today is: ", today);
+        // Thiết lập danh sách rạp
+        setupCinemas();
+        updateCinemasForDate(today);
     }
 
-    private void loadCinemasAndShowtimes() {
-        showLoadingIndicator();
+    private void setupDates() {
+        // Tạo danh sách 7 ngày từ hôm nay
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, MMM dd", Locale.getDefault());
 
-        // Query để lấy showtimes theo movieId
-        DatabaseReference showtimesRef = FirebaseDatabase.getInstance().getReference("showtimes");
-        Query query = showtimesRef.orderByChild("movieId").equalTo(movieId);
+        for (int i = 0; i < 7; i++) {
+            datesList.add(dateFormat.format(calendar.getTime()));
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
+        }
 
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                try {
-                    Map<String, List<Showtime>> cinemaShowtimesMap = new HashMap<>();
+        Log.d("ShowtimeActivity", "Dates List: " + datesList);
 
-                    // Duyệt qua các showtimes
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        Showtime showtime = snapshot.getValue(Showtime.class);
-                        if (showtime != null) {
-                            String cinemaId = showtime.getCinemaId();
-                            cinemaShowtimesMap
-                                    .computeIfAbsent(cinemaId, k -> new ArrayList<>())
-                                    .add(showtime);
-                        }
-                    }
+        // Khởi tạo Adapter cho danh sách ngày
+        dateAdapter = new DateAdapter(datesList, selectedDate -> {
+            Log.d("ShowtimeActivity", "Raw selected date: " + selectedDate);
 
-                    if (cinemaShowtimesMap.isEmpty()) {
-                        hideLoadingIndicator();
-                        showNoShowtimesMessage();
-                        return;
-                    }
+            try {
+                // Thêm năm hiện tại vào ngày được chọn
+                String currentYear = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
+                String fullDate = selectedDate + " " + currentYear; // "Sat, Dec 14 2024"
 
-                    // Load thông tin rạp chiếu
-                    loadCinemaDetails(cinemaShowtimesMap);
+                // Định dạng đầu vào và đầu ra
+                SimpleDateFormat inputFormat = new SimpleDateFormat("EEE, MMM dd yyyy", Locale.getDefault());
+                SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
-                } catch (Exception e) {
-                    hideLoadingIndicator();
-                    handleError("Error processing showtimes: " + e.getMessage());
-                }
-            }
+                // Chuyển đổi ngày
+                Date date = inputFormat.parse(fullDate);
+                String formattedDate = outputFormat.format(date);
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                hideLoadingIndicator();
-                handleError("Database error: " + error.getMessage());
+                Log.d("ShowtimeActivity", "Selected Date (formatted): " + formattedDate);
+
+                // Gọi updateCinemasForDate với ngày đã định dạng đúng
+                updateCinemasForDate(formattedDate);
+            } catch (ParseException e) {
+                Log.e("ShowtimeActivity", "Date parsing error: " + e.getMessage());
+                e.printStackTrace();
             }
         });
+
+
+
+        dateRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        dateRecyclerView.setAdapter(dateAdapter);
     }
 
-    private void loadCinemaDetails(Map<String, List<Showtime>> cinemaShowtimesMap) {
-        DatabaseReference cinemasRef = FirebaseDatabase.getInstance().getReference("cinemas");
-
-        cinemasRef.addListenerForSingleValueEvent(new ValueEventListener() {
+    private void setupCinemas() {
+        databaseService.getShowtimesByMovie(selectedMovie.getId(), new DatabaseService.OnShowtimesCallback() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                try {
-                    cinemaShowtimesList.clear();
+            public void onSuccess(List<Showtime> showtimes) {
+                Log.d("ShowtimeActivity", "Showtimes received: " + showtimes.size());
+                for (Showtime showtime : showtimes) {
+                    Log.d("ShowtimeActivity", "Showtime: " + showtime.toString());
+                }
 
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        Cinema cinema = snapshot.getValue(Cinema.class);
-                        if (cinema != null && cinemaShowtimesMap.containsKey(cinema.getId())) {
-                            List<Showtime> showtimes = cinemaShowtimesMap.get(cinema.getId());
-                            if (showtimes != null) {
-                                // Sắp xếp showtimes theo thời gian bắt đầu
-                                Collections.sort(showtimes, (s1, s2) -> {
-                                    try {
-                                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault());
-                                        Date date1 = sdf.parse(s1.getStartTime());
-                                        Date date2 = sdf.parse(s2.getStartTime());
-                                        return date1.compareTo(date2);
-                                    } catch (Exception e) {
-                                        Log.e("ShowtimeActivity", "Error parsing showtime start times: " + e.getMessage());
-                                        return 0;
-                                    }
-                                });
+                Map<String, List<Showtime>> groupedShowtimes = groupShowtimesByCinema(showtimes);
+                Log.d("ShowtimeActivity", "Grouped Showtimes: " + groupedShowtimes.size());
 
-                                cinemaShowtimesList.add(new CinemaWithShowtimes(cinema, showtimes));
+                databaseService.getAllCinemas(new DatabaseService.OnCinemasCallback() {
+                    @Override
+                    public void onSuccess(List<Cinema> cinemas) {
+                        Log.d("ShowtimeActivity", "Cinemas received: " + cinemas.size());
+                        cinemaList.clear();
+                        for (Cinema cinema : cinemas) {
+                            if (groupedShowtimes.containsKey(cinema.getId())) {
+                                cinemaList.add(cinema);
+                                Log.d("ShowtimeActivity", "Cinema added: " + cinema.toString());
                             }
                         }
+
+                        cinemaAdapter = new CinemaAdapter(cinemaList, groupedShowtimes, selectedShowtime -> {
+                            Log.d("ShowtimeActivity", "Showtime selected: " + selectedShowtime.toString());
+                        });
+
+                        cinemaRecyclerView.setLayoutManager(new LinearLayoutManager(ShowtimeActivity.this));
+                        cinemaRecyclerView.setAdapter(cinemaAdapter);
                     }
 
-                    // Sắp xếp danh sách rạp theo tên
-                    Collections.sort(cinemaShowtimesList, (c1, c2) ->
-                            c1.getCinema().getName().compareTo(c2.getCinema().getName()));
-
-                    adapter.notifyDataSetChanged();
-                    hideLoadingIndicator();
-
-                } catch (Exception e) {
-                    hideLoadingIndicator();
-                    handleError("Error processing cinema data: " + e.getMessage());
-                }
+                    @Override
+                    public void onFailure(String errorMessage) {
+                        Log.e("ShowtimeActivity", "Failed to load cinemas: " + errorMessage);
+                        Toast.makeText(ShowtimeActivity.this, "Failed to load cinemas: " + errorMessage, Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                hideLoadingIndicator();
-                handleError("Database error: " + error.getMessage());
+            public void onFailure(String errorMessage) {
+                Log.e("ShowtimeActivity", "Failed to load showtimes: " + errorMessage);
+                Toast.makeText(ShowtimeActivity.this, "Failed to load showtimes: " + errorMessage, Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    // Hiển thị loading indicator
-    private void showLoadingIndicator() {
-        progressBar.setVisibility(View.VISIBLE);
-        rvShowtimes.setVisibility(View.GONE);
-        tvNoShowtimes.setVisibility(View.GONE);
-        tvErrorMessage.setVisibility(View.GONE);
+    private void updateCinemasForDate(String selectedDate) {
+        Log.d("ShowtimeActivity", "Updating cinemas for selected date: " + selectedDate);
+
+        databaseService.getShowtimesByMovie(selectedMovie.getId(), new DatabaseService.OnShowtimesCallback() {
+            @Override
+            public void onSuccess(List<Showtime> showtimes) {
+                Log.d("ShowtimeActivity", "Showtimes received for date update: " + showtimes.size());
+                for (Showtime showtime : showtimes) {
+                    Log.d("ShowtimeActivity", "Showtime start time: " + showtime.getStartTime());
+                }
+
+                // Lọc danh sách showtimes theo ngày đã chọn
+                List<Showtime> filteredShowtimes = new ArrayList<>();
+                for (Showtime showtime : showtimes) {
+                    if (showtime.getStartTime() != null && isSameDate(showtime.getStartTime(), selectedDate)) {
+                        filteredShowtimes.add(showtime);
+                        Log.d("ShowtimeActivity", "Filtered Showtime: " + showtime.toString());
+                    }
+                }
+
+                Log.d("ShowtimeActivity", "Filtered Showtimes: " + filteredShowtimes.size());
+
+                // Nhóm các suất chiếu đã lọc theo CinemaId
+                Map<String, List<Showtime>> groupedShowtimes = groupShowtimesByCinema(filteredShowtimes);
+                Log.d("ShowtimeActivity", "Grouped Showtimes after filtering: " + groupedShowtimes.size());
+
+                if (groupedShowtimes.isEmpty()) {
+                    showEmptyView();
+                    return;
+                }
+
+                databaseService.getAllCinemas(new DatabaseService.OnCinemasCallback() {
+                    @Override
+                    public void onSuccess(List<Cinema> cinemas) {
+                        Log.d("ShowtimeActivity", "Cinemas received for date update: " + cinemas.size());
+                        cinemaList.clear();
+                        for (Cinema cinema : cinemas) {
+                            if (groupedShowtimes.containsKey(cinema.getId())) {
+                                cinemaList.add(cinema);
+                                Log.d("ShowtimeActivity", "Cinema added for date update: " + cinema.toString());
+                            }
+                        }
+
+                        if (cinemaList.isEmpty()) {
+                            showEmptyView();
+                        } else {
+                            showCinemaList(groupedShowtimes);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(String errorMessage) {
+                        Log.e("ShowtimeActivity", "Failed to load cinemas for date update: " + errorMessage);
+                        Toast.makeText(ShowtimeActivity.this, "Failed to load cinemas: " + errorMessage, Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+                Log.e("ShowtimeActivity", "Failed to load showtimes for date update: " + errorMessage);
+                Toast.makeText(ShowtimeActivity.this, "Failed to load showtimes: " + errorMessage, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
-    // Ẩn loading indicator
-    private void hideLoadingIndicator() {
-        progressBar.setVisibility(View.GONE);
-        rvShowtimes.setVisibility(View.VISIBLE);
+
+    private void showEmptyView() {
+        Log.d("ShowtimeActivity", "No data available, showing empty view.");
+        RecyclerView cinemaListRecyclerView = findViewById(R.id.cinema_list);
+        TextView emptyView = findViewById(R.id.empty_view);
+
+        cinemaListRecyclerView.setVisibility(View.GONE);
+        emptyView.setVisibility(View.VISIBLE);
     }
 
-    // Hiển thị thông báo không có showtimes
-    private void showNoShowtimesMessage() {
-        tvNoShowtimes.setVisibility(View.VISIBLE);
-        rvShowtimes.setVisibility(View.GONE);
+    private void showCinemaList(Map<String, List<Showtime>> groupedShowtimes) {
+        Log.d("ShowtimeActivity", "Showing cinema list with size: " + cinemaList.size());
+        RecyclerView cinemaListRecyclerView = findViewById(R.id.cinema_list);
+        TextView emptyView = findViewById(R.id.empty_view);
+
+        cinemaListRecyclerView.setVisibility(View.VISIBLE);
+        emptyView.setVisibility(View.GONE);
+
+        if (cinemaAdapter != null) {
+            cinemaAdapter.updateData(cinemaList, groupedShowtimes);
+        } else {
+            Log.e("ShowtimeActivity", "CinemaAdapter is null!");
+        }
     }
 
-    // Hiển thị thông báo lỗi
-    private void handleError(String errorMessage) {
-        Log.e("ShowtimeActivity", errorMessage);
-        tvErrorMessage.setVisibility(View.VISIBLE);
-        tvErrorMessage.setText("An error occurred: " + errorMessage);
-        rvShowtimes.setVisibility(View.GONE);
+    private Map<String, List<Showtime>> groupShowtimesByCinema(List<Showtime> showtimes) {
+        Map<String, List<Showtime>> groupedShowtimes = new HashMap<>();
+        for (Showtime showtime : showtimes) {
+            String cinemaId = showtime.getCinemaId();
+            if (!groupedShowtimes.containsKey(cinemaId)) {
+                groupedShowtimes.put(cinemaId, new ArrayList<>());
+            }
+            groupedShowtimes.get(cinemaId).add(showtime);
+        }
+        Log.d("ShowtimeActivity", "Grouped Showtimes: " + groupedShowtimes.size());
+        return groupedShowtimes;
     }
+
+    private boolean isSameDate(String showtimeDateTime, String selectedDate) {
+        try {
+            // Định dạng ngày giờ từ database
+            SimpleDateFormat showtimeFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault());
+            // Định dạng ngày từ bộ lọc
+            SimpleDateFormat selectedDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+
+            // Chuyển đổi chuỗi thành đối tượng Date
+            Date showtimeDate = showtimeFormat.parse(showtimeDateTime);
+            Date selected = selectedDateFormat.parse(selectedDate);
+
+            // So sánh ngày (chỉ lấy phần ngày, bỏ qua giờ)
+            boolean isSame = selectedDateFormat.format(showtimeDate).equals(selectedDateFormat.format(selected));
+            Log.d("ShowtimeActivity", "Comparing dates: Showtime Date = " + showtimeDate + ", Selected Date = " + selected + ", Result = " + isSame);
+            return isSame;
+        } catch (ParseException e) {
+            Log.e("ShowtimeActivity", "Date comparison error: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
 }
+
+

@@ -1,0 +1,599 @@
+Tôi muốn khi vừa chạy ShowtimeActivity thì áp dụng filter ngày hiện tại, Date Selection cũng là date hiện tại:
+
+ShowtimeActivity.java:
+public class ShowtimeActivity extends AppCompatActivity {
+
+    private RecyclerView dateRecyclerView;
+    private RecyclerView cinemaRecyclerView;
+
+    private DateAdapter dateAdapter;
+    private CinemaAdapter cinemaAdapter;
+
+    private List<String> datesList = new ArrayList<>();
+    private List<Cinema> cinemaList = new ArrayList<>();
+
+    private DatabaseService databaseService;
+    private Movie selectedMovie;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_showtime);
+
+        // Nhận dữ liệu Movie từ Intent
+        selectedMovie = getIntent().getParcelableExtra("MOVIE_DATA");
+
+        if (selectedMovie == null) {
+            Toast.makeText(this, "Movie data not found!", Toast.LENGTH_SHORT).show();
+            finish();
+        } else {
+            Log.d("ShowtimeActivity", "Selected Movie: " + selectedMovie.getTitle());
+        }
+
+        // Khởi tạo DatabaseService
+        databaseService = new DatabaseService();
+
+        // Ánh xạ View
+        dateRecyclerView = findViewById(R.id.date_list);
+        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.item_spacing);
+        dateRecyclerView.addItemDecoration(new SpacingItemDecoration(spacingInPixels));
+        cinemaRecyclerView = findViewById(R.id.cinema_list);
+
+        findViewById(R.id.btnBack).setOnClickListener(v -> finish());
+
+        // Thiết lập danh sách ngày
+        setupDates();
+
+        // Thiết lập danh sách rạp
+        setupCinemas();
+    }
+
+    private void setupDates() {
+        // Tạo danh sách 7 ngày từ hôm nay
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, MMM dd", Locale.getDefault());
+
+        for (int i = 0; i < 7; i++) {
+            datesList.add(dateFormat.format(calendar.getTime()));
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
+        }
+
+        Log.d("ShowtimeActivity", "Dates List: " + datesList);
+
+        // Khởi tạo Adapter cho danh sách ngày
+        dateAdapter = new DateAdapter(datesList, selectedDate -> {
+            Log.d("ShowtimeActivity", "Raw selected date: " + selectedDate);
+
+            try {
+                // Thêm năm hiện tại vào ngày được chọn
+                String currentYear = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
+                String fullDate = selectedDate + " " + currentYear; // "Sat, Dec 14 2024"
+
+                // Định dạng đầu vào và đầu ra
+                SimpleDateFormat inputFormat = new SimpleDateFormat("EEE, MMM dd yyyy", Locale.getDefault());
+                SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+
+                // Chuyển đổi ngày
+                Date date = inputFormat.parse(fullDate);
+                String formattedDate = outputFormat.format(date);
+
+                Log.d("ShowtimeActivity", "Selected Date (formatted): " + formattedDate);
+
+                // Gọi updateCinemasForDate với ngày đã định dạng đúng
+                updateCinemasForDate(formattedDate);
+            } catch (ParseException e) {
+                Log.e("ShowtimeActivity", "Date parsing error: " + e.getMessage());
+                e.printStackTrace();
+            }
+        });
+
+
+
+        dateRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        dateRecyclerView.setAdapter(dateAdapter);
+    }
+
+    private void setupCinemas() {
+        databaseService.getShowtimesByMovie(selectedMovie.getId(), new DatabaseService.OnShowtimesCallback() {
+            @Override
+            public void onSuccess(List<Showtime> showtimes) {
+                Log.d("ShowtimeActivity", "Showtimes received: " + showtimes.size());
+                for (Showtime showtime : showtimes) {
+                    Log.d("ShowtimeActivity", "Showtime: " + showtime.toString());
+                }
+
+                Map<String, List<Showtime>> groupedShowtimes = groupShowtimesByCinema(showtimes);
+                Log.d("ShowtimeActivity", "Grouped Showtimes: " + groupedShowtimes.size());
+
+                databaseService.getAllCinemas(new DatabaseService.OnCinemasCallback() {
+                    @Override
+                    public void onSuccess(List<Cinema> cinemas) {
+                        Log.d("ShowtimeActivity", "Cinemas received: " + cinemas.size());
+                        cinemaList.clear();
+                        for (Cinema cinema : cinemas) {
+                            if (groupedShowtimes.containsKey(cinema.getId())) {
+                                cinemaList.add(cinema);
+                                Log.d("ShowtimeActivity", "Cinema added: " + cinema.toString());
+                            }
+                        }
+
+                        cinemaAdapter = new CinemaAdapter(cinemaList, groupedShowtimes, selectedShowtime -> {
+                            Log.d("ShowtimeActivity", "Showtime selected: " + selectedShowtime.toString());
+                        });
+
+                        cinemaRecyclerView.setLayoutManager(new LinearLayoutManager(ShowtimeActivity.this));
+                        cinemaRecyclerView.setAdapter(cinemaAdapter);
+                    }
+
+                    @Override
+                    public void onFailure(String errorMessage) {
+                        Log.e("ShowtimeActivity", "Failed to load cinemas: " + errorMessage);
+                        Toast.makeText(ShowtimeActivity.this, "Failed to load cinemas: " + errorMessage, Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+                Log.e("ShowtimeActivity", "Failed to load showtimes: " + errorMessage);
+                Toast.makeText(ShowtimeActivity.this, "Failed to load showtimes: " + errorMessage, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void updateCinemasForDate(String selectedDate) {
+        Log.d("ShowtimeActivity", "Updating cinemas for selected date: " + selectedDate);
+
+        databaseService.getShowtimesByMovie(selectedMovie.getId(), new DatabaseService.OnShowtimesCallback() {
+            @Override
+            public void onSuccess(List<Showtime> showtimes) {
+                Log.d("ShowtimeActivity", "Showtimes received for date update: " + showtimes.size());
+                for (Showtime showtime : showtimes) {
+                    Log.d("ShowtimeActivity", "Showtime start time: " + showtime.getStartTime());
+                }
+
+                // Lọc danh sách showtimes theo ngày đã chọn
+                List<Showtime> filteredShowtimes = new ArrayList<>();
+                for (Showtime showtime : showtimes) {
+                    if (showtime.getStartTime() != null && isSameDate(showtime.getStartTime(), selectedDate)) {
+                        filteredShowtimes.add(showtime);
+                        Log.d("ShowtimeActivity", "Filtered Showtime: " + showtime.toString());
+                    }
+                }
+
+                Log.d("ShowtimeActivity", "Filtered Showtimes: " + filteredShowtimes.size());
+
+                // Nhóm các suất chiếu đã lọc theo CinemaId
+                Map<String, List<Showtime>> groupedShowtimes = groupShowtimesByCinema(filteredShowtimes);
+                Log.d("ShowtimeActivity", "Grouped Showtimes after filtering: " + groupedShowtimes.size());
+
+                if (groupedShowtimes.isEmpty()) {
+                    showEmptyView();
+                    return;
+                }
+
+                databaseService.getAllCinemas(new DatabaseService.OnCinemasCallback() {
+                    @Override
+                    public void onSuccess(List<Cinema> cinemas) {
+                        Log.d("ShowtimeActivity", "Cinemas received for date update: " + cinemas.size());
+                        cinemaList.clear();
+                        for (Cinema cinema : cinemas) {
+                            if (groupedShowtimes.containsKey(cinema.getId())) {
+                                cinemaList.add(cinema);
+                                Log.d("ShowtimeActivity", "Cinema added for date update: " + cinema.toString());
+                            }
+                        }
+
+                        if (cinemaList.isEmpty()) {
+                            showEmptyView();
+                        } else {
+                            showCinemaList(groupedShowtimes);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(String errorMessage) {
+                        Log.e("ShowtimeActivity", "Failed to load cinemas for date update: " + errorMessage);
+                        Toast.makeText(ShowtimeActivity.this, "Failed to load cinemas: " + errorMessage, Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+                Log.e("ShowtimeActivity", "Failed to load showtimes for date update: " + errorMessage);
+                Toast.makeText(ShowtimeActivity.this, "Failed to load showtimes: " + errorMessage, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
+    private void showEmptyView() {
+        Log.d("ShowtimeActivity", "No data available, showing empty view.");
+        RecyclerView cinemaListRecyclerView = findViewById(R.id.cinema_list);
+        TextView emptyView = findViewById(R.id.empty_view);
+
+        cinemaListRecyclerView.setVisibility(View.GONE);
+        emptyView.setVisibility(View.VISIBLE);
+    }
+
+    private void showCinemaList(Map<String, List<Showtime>> groupedShowtimes) {
+        Log.d("ShowtimeActivity", "Showing cinema list with size: " + cinemaList.size());
+        RecyclerView cinemaListRecyclerView = findViewById(R.id.cinema_list);
+        TextView emptyView = findViewById(R.id.empty_view);
+
+        cinemaListRecyclerView.setVisibility(View.VISIBLE);
+        emptyView.setVisibility(View.GONE);
+
+        if (cinemaAdapter != null) {
+            cinemaAdapter.updateData(cinemaList, groupedShowtimes);
+        } else {
+            Log.e("ShowtimeActivity", "CinemaAdapter is null!");
+        }
+    }
+
+    private Map<String, List<Showtime>> groupShowtimesByCinema(List<Showtime> showtimes) {
+        Map<String, List<Showtime>> groupedShowtimes = new HashMap<>();
+        for (Showtime showtime : showtimes) {
+            String cinemaId = showtime.getCinemaId();
+            if (!groupedShowtimes.containsKey(cinemaId)) {
+                groupedShowtimes.put(cinemaId, new ArrayList<>());
+            }
+            groupedShowtimes.get(cinemaId).add(showtime);
+        }
+        Log.d("ShowtimeActivity", "Grouped Showtimes: " + groupedShowtimes.size());
+        return groupedShowtimes;
+    }
+
+    private boolean isSameDate(String showtimeDateTime, String selectedDate) {
+        try {
+            // Định dạng ngày giờ từ database
+            SimpleDateFormat showtimeFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault());
+            // Định dạng ngày từ bộ lọc
+            SimpleDateFormat selectedDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+
+            // Chuyển đổi chuỗi thành đối tượng Date
+            Date showtimeDate = showtimeFormat.parse(showtimeDateTime);
+            Date selected = selectedDateFormat.parse(selectedDate);
+
+            // So sánh ngày (chỉ lấy phần ngày, bỏ qua giờ)
+            boolean isSame = selectedDateFormat.format(showtimeDate).equals(selectedDateFormat.format(selected));
+            Log.d("ShowtimeActivity", "Comparing dates: Showtime Date = " + showtimeDate + ", Selected Date = " + selected + ", Result = " + isSame);
+            return isSame;
+        } catch (ParseException e) {
+            Log.e("ShowtimeActivity", "Date comparison error: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    }
+}
+
+//DateAdapter.java:
+public class DateAdapter extends RecyclerView.Adapter<DateAdapter.DateViewHolder> {
+
+    private final List<String> dates;
+    private final OnDateSelectedListener listener;
+
+    public DateAdapter(List<String> dates, OnDateSelectedListener listener) {
+        this.dates = dates;
+        this.listener = listener;
+    }
+
+    @NonNull
+    @Override
+    public DateViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_date, parent, false);
+        return new DateViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull DateViewHolder holder, int position) {
+        String date = dates.get(position);
+        holder.dateText.setText(date);
+
+        holder.itemView.setOnClickListener(v -> {
+            // Gọi callback để xử lý sự kiện chọn ngày
+            listener.onDateSelected(date);
+        });
+    }
+
+
+    @Override
+    public int getItemCount() {
+        return dates.size();
+    }
+
+    static class DateViewHolder extends RecyclerView.ViewHolder {
+        TextView dateText;
+
+        public DateViewHolder(@NonNull View itemView) {
+            super(itemView);
+            dateText = itemView.findViewById(R.id.date_text);
+        }
+    }
+
+    public interface OnDateSelectedListener {
+        void onDateSelected(String selectedDate);
+    }
+}
+
+
+//CinemaAdapter.java:
+public class CinemaAdapter extends RecyclerView.Adapter<CinemaAdapter.CinemaViewHolder> {
+
+    private List<Cinema> cinemas; // Danh sách các rạp
+    private Map<String, List<Showtime>> groupedShowtimes; // Map nhóm các suất chiếu theo id rạp
+    private final OnShowtimeSelectedListener listener; // Listener xử lý sự kiện click vào suất chiếu
+
+    public CinemaAdapter(List<Cinema> cinemas, Map<String, List<Showtime>> groupedShowtimes, OnShowtimeSelectedListener listener) {
+        this.cinemas = cinemas != null ? cinemas : new ArrayList<>();
+        this.groupedShowtimes = groupedShowtimes != null ? groupedShowtimes : new HashMap<>();
+        this.listener = listener;
+    }
+
+    @NonNull
+    @Override
+    public CinemaViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_cinema, parent, false);
+        return new CinemaViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull CinemaViewHolder holder, int position) {
+        // Kiểm tra để tránh lỗi IndexOutOfBoundsException
+        if (cinemas == null || position >= cinemas.size()) {
+            Log.e("CinemaAdapter", "Invalid position: " + position + ", List size: " + (cinemas == null ? 0 : cinemas.size()));
+            return;
+        }
+
+        // Lấy thông tin rạp tại vị trí hiện tại
+        Cinema cinema = cinemas.get(position);
+
+        // Hiển thị thông tin rạp
+        holder.cinemaName.setText(cinema.getName());
+        holder.cinemaAddress.setText(cinema.getAddress());
+
+        // Lấy danh sách suất chiếu của rạp này từ groupedShowtimes
+        List<Showtime> showtimes = groupedShowtimes.get(cinema.getId());
+
+        // Nếu không có suất chiếu, khởi tạo danh sách rỗng
+        if (showtimes == null) {
+            showtimes = new ArrayList<>();
+        }
+
+        // Xóa các nút cũ để tránh lỗi khi tái sử dụng ViewHolder
+        holder.showtimeContainer.removeAllViews();
+
+        // Tạo nút động cho từng suất chiếu
+        for (Showtime showtime : showtimes) {
+            Button showtimeButton = new Button(holder.itemView.getContext());
+            showtimeButton.setText(formatTime(showtime.getStartTime())); // Hiển thị giờ chiếu
+            showtimeButton.setBackgroundTintList(holder.itemView.getContext().getResources().getColorStateList(R.color.main_color)); // Đặt màu nền
+            showtimeButton.setTextColor(holder.itemView.getContext().getResources().getColor(android.R.color.white)); // Đặt màu chữ
+            showtimeButton.setPadding(16, 8, 16, 8);
+
+            // Xử lý sự kiện click vào suất chiếu
+            showtimeButton.setOnClickListener(v -> listener.onShowtimeSelected(showtime));
+
+            // Thêm nút vào container
+            holder.showtimeContainer.addView(showtimeButton);
+        }
+    }
+
+    @Override
+    public int getItemCount() {
+        return cinemas == null ? 0 : cinemas.size(); // Trả về số lượng rạp
+    }
+
+    /**
+     * Cập nhật dữ liệu cho Adapter
+     *
+     * @param cinemas           Danh sách rạp
+     * @param groupedShowtimes  Map nhóm suất chiếu theo id rạp
+     */
+    public void updateData(List<Cinema> cinemas, Map<String, List<Showtime>> groupedShowtimes) {
+        this.cinemas = cinemas != null ? cinemas : new ArrayList<>();
+        this.groupedShowtimes = groupedShowtimes != null ? groupedShowtimes : new HashMap<>();
+        notifyDataSetChanged(); // Cập nhật RecyclerView
+    }
+
+    /**
+     * Format giờ chiếu từ chuỗi thời gian
+     *
+     * @param startTime Chuỗi thời gian (ISO format)
+     * @return Chuỗi thời gian đã được format (ví dụ: "10:00 AM")
+     */
+    private String formatTime(String startTime) {
+        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault());
+        SimpleDateFormat outputFormat = new SimpleDateFormat("hh:mm a", Locale.getDefault());
+        try {
+            return outputFormat.format(inputFormat.parse(startTime));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ""; // Trả về chuỗi rỗng nếu có lỗi
+        }
+    }
+
+    /**
+     * ViewHolder cho CinemaAdapter
+     */
+    static class CinemaViewHolder extends RecyclerView.ViewHolder {
+        TextView cinemaName, cinemaAddress;
+        LinearLayout showtimeContainer; // Container để chứa các nút suất chiếu
+
+        public CinemaViewHolder(@NonNull View itemView) {
+            super(itemView);
+            cinemaName = itemView.findViewById(R.id.cinema_name);
+            cinemaAddress = itemView.findViewById(R.id.cinema_address);
+            showtimeContainer = itemView.findViewById(R.id.showtime_container); // Ánh xạ container
+        }
+    }
+
+    /**
+     * Interface để xử lý sự kiện chọn suất chiếu
+     */
+    public interface OnShowtimeSelectedListener {
+        void onShowtimeSelected(Showtime showtime);
+    }
+}
+
+
+//activity_showtime.xml:
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_color"
+    android:orientation="vertical"
+    tools:context=".activities.ShowtimeActivity">
+
+    <!-- Custom Title Bar -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            app:srcCompat="@drawable/back_dark" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Select Showtime"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="23sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp">
+        <!-- Movie Info Card -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/movie_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/movie_poster"
+                    android:layout_width="120dp"
+                    android:layout_height="180dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/placeholder_movie"
+                    app:shapeAppearanceOverlay="@style/RoundedImageView" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/movie_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Movie Title"
+                        android:textColor="@android:color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/movie_age_rating"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="C16"
+                        android:textColor="@android:color/white"
+                        app:chipBackgroundColor="@android:color/holo_red_dark" />
+
+                    <TextView
+                        android:id="@+id/movie_duration"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Duration: 132 mins"
+                        android:textColor="@android:color/darker_gray"
+                        android:textSize="16sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Date Selection -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/date_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:padding="8dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_date" />
+        </com.google.android.material.card.MaterialCardView>
+
+
+    </LinearLayout>
+
+    <!-- Scrollable Content -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Cinema List -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/cinema_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:nestedScrollingEnabled="false"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_cinema" />
+
+            <TextView
+                android:id="@+id/empty_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:padding="16dp"
+                android:text="Không có suất chiếu cho ngày này"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="18sp"
+                android:visibility="gone" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>
+
+

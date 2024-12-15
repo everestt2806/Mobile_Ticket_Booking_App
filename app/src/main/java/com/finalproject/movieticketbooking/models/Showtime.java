@@ -13,14 +13,10 @@ public class Showtime implements Parcelable {
     private String cinemaId;
     private String roomId;
     private String startTime;
-    private Map<String, Integer> price;
+    private HashMap<String, Integer> price;
 
-    public Showtime() {
-        // Required empty constructor for Firebase
-    }
-
-    public Showtime(String id, String movieId, String cinemaId, String roomId,
-                    String startTime, Map<String, Integer> price) {
+    public Showtime() {} // Required empty constructor for Firebase
+    public Showtime(String id, String movieId, String cinemaId, String roomId, String startTime, HashMap<String, Integer> price) {
         this.id = id;
         this.movieId = movieId;
         this.cinemaId = cinemaId;
@@ -35,13 +31,7 @@ public class Showtime implements Parcelable {
         cinemaId = in.readString();
         roomId = in.readString();
         startTime = in.readString();
-        price = new HashMap<>();
-        int size = in.readInt();
-        for (int i = 0; i < size; i++) {
-            String key = in.readString();
-            Integer value = in.readInt();
-            price.put(key, value);
-        }
+        price = (HashMap<String, Integer>) in.readSerializable();
     }
 
     public static final Creator<Showtime> CREATOR = new Creator<Showtime>() {
@@ -55,6 +45,21 @@ public class Showtime implements Parcelable {
             return new Showtime[size];
         }
     };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(movieId);
+        dest.writeString(cinemaId);
+        dest.writeString(roomId);
+        dest.writeString(startTime);
+        dest.writeSerializable(price);
+    }
 
     // Getters
     public String getId() { return id; }
@@ -70,24 +75,15 @@ public class Showtime implements Parcelable {
     public void setCinemaId(String cinemaId) { this.cinemaId = cinemaId; }
     public void setRoomId(String roomId) { this.roomId = roomId; }
     public void setStartTime(String startTime) { this.startTime = startTime; }
-    public void setPrice(Map<String, Integer> price) { this.price = price; }
+    public void setPrice(HashMap<String, Integer> price) { this.price = price; }
 
     @Override
-    public int describeContents() {
-        return 0;
+    public String toString() {
+        return "Showtime{" +
+                "id='" + id + '\'' +
+                ", cinemaId='" + cinemaId + '\'' +
+                ", startTime='" + startTime + '\'' +
+                '}';
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(id);
-        dest.writeString(movieId);
-        dest.writeString(cinemaId);
-        dest.writeString(roomId);
-        dest.writeString(startTime);
-        dest.writeInt(price.size());
-        for (Map.Entry<String, Integer> entry : price.entrySet()) {
-            dest.writeString(entry.getKey());
-            dest.writeInt(entry.getValue());
-        }
-    }
 }
